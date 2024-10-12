@@ -1,4 +1,3 @@
-
 package main.cinemaproject.Main;
 
 import main.cinemaproject.view.Login.LoginFrame.LoginFrame;
@@ -13,5 +12,5 @@ public class CinemaProject {
         LoginFrame loginFrame = new LoginFrame();
         loginFrame.setVisible(true);
     }
-    
+
 }

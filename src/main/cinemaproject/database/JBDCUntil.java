@@ -19,6 +19,7 @@ public class JBDCUntil {
             String url = "jdbc:mysql://localhost:3306/cinema";
             String user = "root";
             String password = "Dinhan.0321@";
+//            String password = "Duong.28";
             
             //đăng kí driver
             Class.forName("com.mysql.cj.jdbc.Driver");
