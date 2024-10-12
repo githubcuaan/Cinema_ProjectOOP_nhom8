@@ -2,14 +2,10 @@ package main.cinemaproject.view.Login.components;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GradientPaint;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
-import javax.swing.JPasswordField;
 import net.miginfocom.swing.MigLayout;
 import main.cinemaproject.view.Login.swing.Button;
 import main.cinemaproject.view.Login.swing.MyTextField;
