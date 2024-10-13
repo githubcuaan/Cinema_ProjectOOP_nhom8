@@ -11,20 +11,39 @@ public class Employee {
     private String email;
     private String phone;
     private String role;
-    private String salary;
+    private double salary;
     private String password;
     private String username;
 
-    public Employee(int id, String name, String email, String phone, String role, String salary, String password, String username) {
+    public Employee() {
+    }
+
+    public Employee(int id, String name, String email, String phone, String role, double salary, String username, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.role = role;
         this.salary = salary;
-        this.password = password;
         this.username = username;
+        this.password = password;
+    }
 
+    public Employee(int id, String name, String email, String phone, String role, double salary) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.role = role;
+        this.salary = salary;
+    }
+
+    public Employee(int id, String name, String email, String phone, double salary) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.salary = salary;
     }
 
     public int getId() {
@@ -67,11 +86,11 @@ public class Employee {
         this.role = role;
     }
 
-    public String getSalary() {
+    public double getSalary() {
         return salary;
     }
 
-    public void setSalary(String salary) {
+    public void setSalary(double salary) {
         this.salary = salary;
     }
 
