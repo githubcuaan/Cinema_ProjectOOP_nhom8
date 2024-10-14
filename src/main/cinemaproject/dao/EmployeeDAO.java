@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class EmployeeDAO implements IEmployeeDAO{
     private Connection connection;
@@ -106,60 +107,68 @@ public class EmployeeDAO implements IEmployeeDAO{
     }
 
     @Override
-    public void deleteEmployee(int employeeId) throws SQLException {
+    public boolean deleteEmployee(int employeeId) {
         String query = "DELETE FROM employees WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, employeeId);
             int rowsAffected = statement.executeUpdate();
-            if (rowsAffected == 0) {
-                throw new SQLException("Xóa nhân viên thất bại, không tìm thấy ID: " + employeeId);
-            }
+            return rowsAffected > 0;
         } catch (SQLException e) {
             System.err.println("Lỗi khi xóa nhân viên: " + e.getMessage());
-            throw e; // Re-throw để caller có thể xử lý
+            e.printStackTrace();
+            return false;
         }
     }
 
-    public void updateEmployee(Employee employee) throws SQLException {
-        String query = "UPDATE employees SET name = ?, email = ?, phone = ?, salary = ? WHERE id = ?";
+    public boolean updateEmployee(Employee employee) {
+        String query = "UPDATE employees SET name = ?, email = ?, phone = ?, role = ?, salary = ?, username = ?, password = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, employee.getName());
-            statement.setString(2, employee.getEmail());
-            statement.setString(3, employee.getPhone());
-            statement.setDouble(4, employee.getSalary());
-            statement.setInt(5, employee.getId());
-            statement.executeUpdate();
-        }
-    }
-
-    public void updateEmployeeCredentials(int employeeId, String username, String password) throws SQLException {
-        String query = "UPDATE employees SET username = ?, password = ? WHERE id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, username);
-            statement.setString(2, password);
-            statement.setInt(3, employeeId);
-            statement.executeUpdate();
-        }
-    }
-
-    public int addEmployee(Employee employee) throws SQLException {
-        String query = "INSERT INTO employees (name, email, phone, role, salary, username, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, employee.getName());
             statement.setString(2, employee.getEmail());
             statement.setString(3, employee.getPhone());
             statement.setString(4, employee.getRole());
             statement.setDouble(5, employee.getSalary());
-            statement.setString(6, employee.getUsername()); // Thêm username
-            statement.setString(7, employee.getPassword()); // Thêm password
-            statement.executeUpdate();
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    return generatedKeys.getInt(1);
-                }
-            }
+            statement.setString(6, employee.getUsername());
+            statement.setString(7, employee.getPassword());
+            statement.setInt(8, employee.getId());
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
-        return -1;
+    }
+
+    public boolean updateEmployeeCredentials(int employeeId, String username, String password) {
+        String query = "UPDATE employees SET username = ?, password = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, username);
+            statement.setString(2, password);
+            statement.setInt(3, employeeId);
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean addEmployee(Employee employee) {
+        String query = "INSERT INTO employees (name, email, phone, role, salary, username, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, employee.getName());
+            statement.setString(2, employee.getEmail());
+            statement.setString(3, employee.getPhone());
+            statement.setString(4, employee.getRole());
+            statement.setDouble(5, employee.getSalary());
+            statement.setString(6, employee.getUsername());
+            statement.setString(7, employee.getPassword());
+            int affectedRows = statement.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public void addEmployeeCredentials(int employeeId, String username, String password) throws SQLException {

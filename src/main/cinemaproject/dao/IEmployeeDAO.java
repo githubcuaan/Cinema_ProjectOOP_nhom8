@@ -8,9 +8,9 @@ public interface IEmployeeDAO {
     Employee getEmployeeById(int id);
     ArrayList<Employee> getAllEmployee();
     String[] getEmployeeCredentials(int employeeId) throws SQLException;
-    void deleteEmployee(int employeeId) throws SQLException;
-    void updateEmployee(Employee employee) throws SQLException;
-    void updateEmployeeCredentials(int employeeId, String username, String password) throws SQLException;
-    int addEmployee(Employee employee) throws SQLException;
+    boolean deleteEmployee(int employeeId) throws SQLException;
+    boolean updateEmployee(Employee employee) throws SQLException;
+    boolean updateEmployeeCredentials(int employeeId, String username, String password) throws SQLException;
+    boolean addEmployee(Employee employee) throws SQLException;
     void addEmployeeCredentials(int employeeId, String username, String password) throws SQLException;
 }

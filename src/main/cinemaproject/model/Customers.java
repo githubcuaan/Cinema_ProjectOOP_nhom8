@@ -12,6 +12,10 @@ public class Customers {
     private String phone;
     private String username;
     private String password;
+    private String membershipLevel;
+
+    public Customers() {
+    }
 
     public Customers(int id, String name, String email, String phone)
     {
@@ -21,13 +25,14 @@ public class Customers {
         this.phone = phone; 
     }
     
-    public Customers(int id, String name, String email, String phone, String username, String password) {
+    public Customers(int id, String name, String email, String phone, String username, String password, String membershipLevel) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.username = username;
         this.password = password;
+        this.membershipLevel = membershipLevel;
     }
 
     public int getId() {
@@ -77,5 +82,12 @@ public class Customers {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
+    public String getMembershipLevel() {
+        return membershipLevel;
+    }
+
+    public void setMembershipLevel(String membershipLevel) {
+        this.membershipLevel = membershipLevel;
+    }
 }

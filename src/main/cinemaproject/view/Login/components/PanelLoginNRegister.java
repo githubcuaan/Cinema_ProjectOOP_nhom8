@@ -18,6 +18,12 @@ import main.cinemaproject.database.JBDCUntil;
 import main.cinemaproject.model.Customers;
 import main.cinemaproject.model.Employee;
 import java.awt.event.ActionEvent;
+import main.cinemaproject.view.Customer.Customer;
+import main.cinemaproject.view.Admin.Admin;
+import javax.swing.SwingUtilities;
+import main.cinemaproject.dao.IEmployeeDAO;
+import java.sql.SQLException;
+
 /**
  *
  * @author DinhAn
@@ -134,21 +140,31 @@ public class PanelLoginNRegister extends javax.swing.JLayeredPane {
                 Customers customer = customerDAO.login(username, password);
                 if (customer != null) {
                     JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
-                    // TODO: Navigate to the customer's main screen
+                    Customer customerScreen = new Customer();
+                    customerScreen.setVisible(true);
+                    SwingUtilities.getWindowAncestor(this).dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
                 }
             } else if (role.equals("Admin")) {
-                EmployeeDAO employeeDAO = new EmployeeDAO(connection);
-                Employee employee = employeeDAO.login(username, password);
-                if (employee != null) {
-                    JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
-                    // TODO: Navigate to the employee's main screen
-                } else {
-                    JOptionPane.showMessageDialog(this, "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
+                IEmployeeDAO employeeDAO = new EmployeeDAO(connection);
+                try {
+                    Employee employee = employeeDAO.login(username, password);
+                    if (employee != null) {
+                        JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
+                        Admin adminScreen = new Admin();
+                        adminScreen.setVisible(true);
+                        SwingUtilities.getWindowAncestor(this).dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi khi đăng nhập. Vui lòng thử lại sau.");
+                } finally {
+                    JBDCUntil.closeConnection(connection);
                 }
             }
-            JBDCUntil.closeConnection(connection);
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi khi đăng nhập. Vui lòng thử lại sau.");

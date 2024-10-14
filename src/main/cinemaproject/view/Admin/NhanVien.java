@@ -6,6 +6,7 @@ import main.cinemaproject.database.JBDCUntil;
 import java.sql.Connection;
 import main.cinemaproject.dao.EmployeeDAO;
 import java.sql.SQLException;
+import main.cinemaproject.dao.IEmployeeDAO;
 /**
  *
  * @author DinhAn
@@ -21,21 +22,17 @@ public class NhanVien extends javax.swing.JPanel {
     }
     
     // Phương thức để lấy danh sách nhân viên từ cơ sở dữ liệu
-    public ArrayList<Employee> eList() {
+    public ArrayList<Employee> eList() throws SQLException {
         ArrayList<Employee> eList = new ArrayList<>();
         Connection connection = null;
         try {
-            // Tạo kết nối đến cơ sở dữ liệu
             connection = JBDCUntil.getConnection();
-            EmployeeDAO employeeDAO = new EmployeeDAO(connection);
-            // Lấy danh sách tất cả nhân viên
+            IEmployeeDAO employeeDAO = new EmployeeDAO(connection);
             eList = employeeDAO.getAllEmployee();
         } catch (Exception e) {
-            // Ghi log lỗi hoặc hiển thị thông báo lỗi thân thiện với người dùng
             System.err.println("Lỗi khi lấy danh sách nhân viên: " + e.getMessage());
-            // TODO: Hiển thị thông báo lỗi cho người dùng
+            e.printStackTrace();
         } finally {
-            // Đảm bảo kết nối luôn được đóng
             if (connection != null) {
                 JBDCUntil.closeConnection(connection);
             }
@@ -45,7 +42,13 @@ public class NhanVien extends javax.swing.JPanel {
 
     // Phương thức để hiển thị danh sách nhân viên trong bảng
     public void showEmployeeTable() {
-        ArrayList<Employee> eTable = eList();
+        ArrayList<Employee> eTable;
+        try {
+            eTable = eList();
+        } catch (SQLException e) {
+            System.err.println("Error fetching employee list: " + e.getMessage());
+            return;
+        }
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) BangNhanVien.getModel();
         model.setRowCount(0);
         
@@ -410,19 +413,17 @@ public class NhanVien extends javax.swing.JPanel {
             Connection connection = null;
             try {
                 connection = JBDCUntil.getConnection();
-                EmployeeDAO employeeDAO = new EmployeeDAO(connection);
-                int employeeId = employeeDAO.addEmployee(newEmployee);
+                IEmployeeDAO employeeDAO = new EmployeeDAO(connection);
+                boolean success = employeeDAO.addEmployee(newEmployee);
                 
-                // Thêm thông tin đăng nhập cho nhân viên
-                employeeDAO.addEmployeeCredentials(employeeId, username, password);
-
-                // Cập nhật bảng hiển thị
-                showEmployeeTable();
-
-                // Xóa nội dung các trường nhập liệu
-                clearInputFields();
-
-                javax.swing.JOptionPane.showMessageDialog(this, "Thêm nhân viên thành công.");
+                if (success) {
+                    employeeDAO.addEmployeeCredentials(newEmployee.getId(), username, password);
+                    showEmployeeTable();
+                    clearInputFields();
+                    javax.swing.JOptionPane.showMessageDialog(this, "Thêm nhân viên thành công.");
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Thêm nhân viên thất bại.");
+                }
             } catch (SQLException e) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Lỗi khi thêm nhân viên: " + e.getMessage());
             } finally {
@@ -468,7 +469,7 @@ public class NhanVien extends javax.swing.JPanel {
                 clearInputFields();
                 
                 javax.swing.JOptionPane.showMessageDialog(this, "Xóa nhân viên thành công.");
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Lỗi khi xóa nhân viên: " + e.getMessage());
             } finally {
                 if (connection != null) {
@@ -571,7 +572,7 @@ public class NhanVien extends javax.swing.JPanel {
             showEmployeeTable();
             // Clear input fields
             clearInputFields();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật nhân viên: " + e.getMessage());
         } finally {
             if (connection != null) {
@@ -627,7 +628,7 @@ public class NhanVien extends javax.swing.JPanel {
             Employee employee = employeeDAO.getEmployeeById(employeeId);
 
             if (employee != null) {
-                // Hiển thị thông tin nhân viên tìm được
+                // Hiển thị thông tin nhân vin tìm được
                 idTextField.setText(String.valueOf(employee.getId()));
                 nameTextField.setText(employee.getName());
                 emailTextField.setText(employee.getEmail());
@@ -673,6 +674,9 @@ public class NhanVien extends javax.swing.JPanel {
         salaryTextField.setText("");
         usernameTextField.setText("");
         passwordTextField.setText("");
+    }
+    public void deleteEmployee(int employeeId) throws SQLException {
+        // Implementation
     }
 
    
