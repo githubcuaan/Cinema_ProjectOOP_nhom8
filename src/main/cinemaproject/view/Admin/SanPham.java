@@ -4,12 +4,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 import javax.swing.JOptionPane;
-import main.cinemaproject.dao.IProductDAO;
-import main.cinemaproject.dao.ProductDAO;
-import main.cinemaproject.database.JBDCUntil;
+import main.cinemaproject.controller.ProductController;
 import main.cinemaproject.model.Product;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -18,11 +14,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class SanPham extends javax.swing.JPanel {
 
+    private ProductController productController;
+
     /**
      * Creates new form SanPham
      */
     public SanPham() {
         initComponents();
+        productController = new ProductController();
         loadLoaiSP();
         loadAllProducts();
     }
@@ -30,9 +29,7 @@ public class SanPham extends javax.swing.JPanel {
     // Load loại sản phẩm vào combobox
     public void loadLoaiSP()
     {
-        Connection connection = JBDCUntil.getConnection();
-        IProductDAO productDAO = new ProductDAO(connection);
-        List<Product> products = productDAO.getAllProducts();
+        List<Product> products = productController.getAllProducts();
         
         // Sử dụng Set để lưu trữ các loại sản phẩm duy nhất
         Set<String> uniqueProductTypes = new HashSet<>();
@@ -48,9 +45,7 @@ public class SanPham extends javax.swing.JPanel {
     
     // Load tất cả sản phẩm vào bảng
     private void loadAllProducts() {
-        Connection connection = JBDCUntil.getConnection();
-        IProductDAO productDAO = new ProductDAO(connection);
-        List<Product> products = productDAO.getAllProducts();
+        List<Product> products = productController.getAllProducts();
         
         // Clear existing rows
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) BangSanPham.getModel();
@@ -116,12 +111,6 @@ public class SanPham extends javax.swing.JPanel {
         jLabel4.setText("Giá Bán");
 
         jLabel5.setText("Số Lượng");
-
-        loaiSPBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loaiSPBoxActionPerformed(evt);
-            }
-        });
 
         nameTextField.setPreferredSize(new java.awt.Dimension(71, 30));
 
@@ -282,10 +271,7 @@ public class SanPham extends javax.swing.JPanel {
         add(findBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 170, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loaiSPBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loaiSPBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_loaiSPBoxActionPerformed
-
+    
     private void XemBut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_XemBut1ActionPerformed
         // xem sản phẩm cụ thể
         int selectedRow = BangSanPham.getSelectedRow();
@@ -296,11 +282,8 @@ public class SanPham extends javax.swing.JPanel {
         }
 
         int productId = (int) BangSanPham.getValueAt(selectedRow, 0);
-        Connection connection = null;
         try {
-            connection = JBDCUntil.getConnection();
-            IProductDAO productDAO = new ProductDAO(connection);
-            Product product = productDAO.getProductById(productId);
+            Product product = productController.getProductById(productId);
             
             if (product != null) {
                 idTextField.setText(String.valueOf(product.getId()));
@@ -312,10 +295,6 @@ public class SanPham extends javax.swing.JPanel {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lỗi khi lấy thông tin sản phẩm: " + e.getMessage());
-        } finally {
-            if (connection != null) {
-                JBDCUntil.closeConnection(connection);
-            }
         }
     }//GEN-LAST:event_XemBut1ActionPerformed
 
@@ -349,19 +328,15 @@ public class SanPham extends javax.swing.JPanel {
             return;
         }
 
-        Connection connection = null;
         try {
-            connection = JBDCUntil.getConnection();
-            IProductDAO productDAO = new ProductDAO(connection);
-            
             // Kiểm tra xem sản phẩm đã tồn tại chưa
-            if (productDAO.isProductExist(name, nhaCungCap)) {
+            if (productController.isProductExist(name, nhaCungCap)) {
                 // Nếu sản phẩm đã tồn tại, cập nhật số lượng
-                Product existingProduct = productDAO.getProductByNameAndSupplier(name, nhaCungCap);
+                Product existingProduct = productController.getProductByNameAndSupplier(name, nhaCungCap);
                 if (existingProduct != null) {
                     int newQuantity = existingProduct.getSoLuong() + soLuong;
                     existingProduct.setSoLuong(newQuantity);
-                    productDAO.updateProduct(existingProduct);
+                    productController.updateProduct(existingProduct);
                     JOptionPane.showMessageDialog(this, "Sản phẩm đã tồn tại. Đã cập nhật số lượng.");
                 }
             } else {
@@ -374,7 +349,7 @@ public class SanPham extends javax.swing.JPanel {
                 newProduct.setNhaCungCap(nhaCungCap);
                 
                 // Thêm sản phẩm vào cơ sở dữ liệu
-                productDAO.addProduct(newProduct);
+                productController.addProduct(newProduct);
                 JOptionPane.showMessageDialog(this, "Thêm sản phẩm mới thành công.");
             }
             
@@ -385,10 +360,6 @@ public class SanPham extends javax.swing.JPanel {
             clearInputFields();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lỗi khi thêm/cập nhật sản phẩm: " + e.getMessage());
-        } finally {
-            if (connection != null) {
-                JBDCUntil.closeConnection(connection);
-            }
         }
     }//GEN-LAST:event_ThemButActionPerformed
 
@@ -419,13 +390,9 @@ public class SanPham extends javax.swing.JPanel {
             return;
         }
 
-        Connection connection = null;
         try {
-            connection = JBDCUntil.getConnection();
-            IProductDAO productDAO = new ProductDAO(connection);
-            
             // Kiểm tra xem sản phẩm có tồn tại không
-            Product existingProduct = productDAO.getProductById(id);
+            Product existingProduct = productController.getProductById(id);
             if (existingProduct == null) {
                 JOptionPane.showMessageDialog(this, "Không tìm thấy sản phẩm với ID đã cho.");
                 return;
@@ -439,7 +406,7 @@ public class SanPham extends javax.swing.JPanel {
             existingProduct.setNhaCungCap(nhaCungCap);
             
             // Cập nhật sản phẩm trong cơ sở dữ liệu
-            productDAO.updateProduct(existingProduct);
+            productController.updateProduct(existingProduct);
             JOptionPane.showMessageDialog(this, "Cập nhật sản phẩm thành công.");
             
             // Cập nhật lại bảng sản phẩm
@@ -449,10 +416,6 @@ public class SanPham extends javax.swing.JPanel {
             clearInputFields();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật sản phẩm: " + e.getMessage());
-        } finally {
-            if (connection != null) {
-                JBDCUntil.closeConnection(connection);
-            }
         }
     }//GEN-LAST:event_SuaButActionPerformed
 
@@ -478,20 +441,16 @@ public class SanPham extends javax.swing.JPanel {
             return;
         }
 
-        Connection connection = null;
         try {
-            connection = JBDCUntil.getConnection();
-            IProductDAO productDAO = new ProductDAO(connection);
-            
             // Kiểm tra xem sản phẩm có tồn tại không
-            Product existingProduct = productDAO.getProductById(id);
+            Product existingProduct = productController.getProductById(id);
             if (existingProduct == null) {
                 JOptionPane.showMessageDialog(this, "Không tìm thấy sản phẩm với ID đã cho.");
                 return;
             }
 
             // Xóa sản phẩm
-            productDAO.deleteProduct(id);
+            productController.deleteProduct(id);
             JOptionPane.showMessageDialog(this, "Xóa sản phẩm thành công.");
             
             // Cập nhật lại bảng sản phẩm
@@ -501,10 +460,6 @@ public class SanPham extends javax.swing.JPanel {
             clearInputFields();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lỗi khi xóa sản phẩm: " + e.getMessage());
-        } finally {
-            if (connection != null) {
-                JBDCUntil.closeConnection(connection);
-            }
         }
     }//GEN-LAST:event_XoaButActionPerformed
 
@@ -522,11 +477,8 @@ public class SanPham extends javax.swing.JPanel {
             return;
         }
 
-        Connection connection = null;
         try {
-            connection = JBDCUntil.getConnection();
-            IProductDAO productDAO = new ProductDAO(connection);
-            List<Product> allProducts = productDAO.getAllProducts();
+            List<Product> allProducts = productController.getAllProducts();
             List<Product> filteredProducts = new ArrayList<>();
 
             for (Product product : allProducts) {
@@ -563,10 +515,6 @@ public class SanPham extends javax.swing.JPanel {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lỗi khi tìm kiếm sản phẩm: " + e.getMessage());
-        } finally {
-            if (connection != null) {
-                JBDCUntil.closeConnection(connection);
-            }
         }
     }//GEN-LAST:event_findButActionPerformed
 

@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 public class CustomerController {
-
+    //lấy tất cả thông tin khách hàng
     public ArrayList<Customers> getAllCustomers() {
         Connection connection = null;
         try {
@@ -23,6 +23,7 @@ public class CustomerController {
         }
     }
 
+    //thêm khách hàng
     public boolean addCustomer(Customers customer) {
         Connection connection = null;
         try {
@@ -38,6 +39,7 @@ public class CustomerController {
         }
     }
 
+    //cập nhật thông tin khách hàng
     public boolean updateCustomer(Customers customer) {
         Connection connection = null;
         try {
@@ -53,6 +55,7 @@ public class CustomerController {
         }
     }
 
+    //xóa khách hàng theo id
     public boolean deleteCustomer(int customerId) {
         Connection connection = null;
         try {
@@ -68,6 +71,7 @@ public class CustomerController {
         }
     }
 
+    //lấy thông tin khách hàng theo id
     public Customers getCustomerById(int customerId) {
         Connection connection = null;
         try {
@@ -80,5 +84,10 @@ public class CustomerController {
         } finally {
             JBDCUntil.closeConnection(connection);
         }
+    }
+
+    public ArrayList<Customers> searchCustomers(String searchTerm) {
+        CustomersDAO customersDAO = new CustomersDAO();
+        return customersDAO.searchCustomers(searchTerm);
     }
 }

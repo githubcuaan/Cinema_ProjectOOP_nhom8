@@ -14,6 +14,8 @@ public class EmployeeDAO implements IEmployeeDAO{
     public EmployeeDAO(Connection connection) {
         this.connection = connection;
     }
+
+    //lấy thông tin nhân viên theo id
     @Override
     public Employee getEmployeeById(int id) {
         String query = "SELECT * FROM employees WHERE id = ?";
@@ -40,6 +42,7 @@ public class EmployeeDAO implements IEmployeeDAO{
         return null;
     }
 
+    //lấy tất cả thông tin nhân viên
     @Override
     public ArrayList<Employee> getAllEmployee() {
         ArrayList<Employee> eList = new ArrayList<>();
@@ -67,6 +70,7 @@ public class EmployeeDAO implements IEmployeeDAO{
         return eList;
     }
 
+    //đăng nhập
     @Override
     public Employee login(String username, String password) {
         String query = "SELECT * FROM employees WHERE username = ? AND password = ?";
@@ -93,19 +97,7 @@ public class EmployeeDAO implements IEmployeeDAO{
         return null;
     }
 
-    public String[] getEmployeeCredentials(int employeeId) throws SQLException {
-        String query = "SELECT username, password FROM employees WHERE id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, employeeId);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    return new String[]{resultSet.getString("username"), resultSet.getString("password")};
-                }
-            }
-        }
-        return new String[]{"", ""};
-    }
-
+    //xóa nhân viên theo id
     @Override
     public boolean deleteEmployee(int employeeId) {
         String query = "DELETE FROM employees WHERE id = ?";
@@ -120,6 +112,8 @@ public class EmployeeDAO implements IEmployeeDAO{
         }
     }
 
+    //cập nhật thông tin nhân viên
+    @Override
     public boolean updateEmployee(Employee employee) {
         String query = "UPDATE employees SET name = ?, email = ?, phone = ?, role = ?, salary = ?, username = ?, password = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -139,20 +133,8 @@ public class EmployeeDAO implements IEmployeeDAO{
         }
     }
 
-    public boolean updateEmployeeCredentials(int employeeId, String username, String password) {
-        String query = "UPDATE employees SET username = ?, password = ? WHERE id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, username);
-            statement.setString(2, password);
-            statement.setInt(3, employeeId);
-            int rowsAffected = statement.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
+    //thêm nhân viên
+    @Override
     public boolean addEmployee(Employee employee) {
         String query = "INSERT INTO employees (name, email, phone, role, salary, username, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -171,16 +153,8 @@ public class EmployeeDAO implements IEmployeeDAO{
         }
     }
 
-    public void addEmployeeCredentials(int employeeId, String username, String password) throws SQLException {
-        String query = "UPDATE employees SET username = ?, password = ? WHERE id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, username);
-            statement.setString(2, password);
-            statement.setInt(3, employeeId);
-            statement.executeUpdate();
-        }
-    }
-
+    //kiểm tra username đã tồn tại chưa
+    @Override
     public boolean isUsernameExists(String username) throws SQLException {
         String query = "SELECT COUNT(*) FROM employees WHERE username = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {

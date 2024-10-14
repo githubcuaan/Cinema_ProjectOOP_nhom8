@@ -9,7 +9,7 @@ import main.cinemaproject.database.JBDCUntil;
 import java.sql.Connection;
 
 public class AuthController {
-    
+    //đăng nhập nhân viên
     public Employee loginEmployee(String username, String password) {
         Connection connection = null;
         try {
@@ -24,6 +24,7 @@ public class AuthController {
         }
     }
 
+    //đăng nhập khách hàng
     public Customers loginCustomer(String username, String password) {
         Connection connection = null;
         try {
@@ -38,6 +39,7 @@ public class AuthController {
         }
     }
 
+    //đăng ký khách hàng
     public boolean registerCustomer(String username, String email, String password) {
         Connection connection = null;
         try {

@@ -7,9 +7,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.Statement;
+import main.cinemaproject.database.JBDCUntil;
 
 public class CustomersDAO implements ICustomerDAO {
     private Connection connection;
+
+    public CustomersDAO() {
+        this.connection = JBDCUntil.getConnection();
+    }
 
     public CustomersDAO(Connection connection) {
         this.connection = connection;
@@ -61,25 +66,6 @@ public class CustomersDAO implements ICustomerDAO {
                 e.printStackTrace();
             }
         return null;
-    }
-
-    //thêm khách hàng
-    @Override
-    public boolean addCustomer(Customers customer) {
-        String query = "INSERT INTO customers (name, email, phone, username, password, membershipLevel) VALUES (?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1, customer.getName());
-            statement.setString(2, customer.getEmail());
-            statement.setString(3, customer.getPhone());
-            statement.setString(4, customer.getUsername());
-            statement.setString(5, customer.getPassword());
-            statement.setString(6, customer.getMembershipLevel());
-            int affectedRows = statement.executeUpdate();
-            return affectedRows > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 
     //cập nhật thông tin khách hàng
@@ -158,63 +144,95 @@ public class CustomersDAO implements ICustomerDAO {
         }
     }
 
-    // Add customer credentials
+    //thêm khách hàng
     @Override
-    public void addCustomerCredentials(int customerId, String username, String password) {
-        String sql = "INSERT INTO customers (customer_id, username, password) VALUES (?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, customerId);
-            stmt.setString(2, username);
-            stmt.setString(3, password);
-            stmt.executeUpdate();
+    public boolean addCustomer(Customers customer) {
+        String checkUsernameQuery = "SELECT COUNT(*) FROM customers WHERE username = ?";
+        String addCustomerQuery = "INSERT INTO customers (name, email, phone, username, password, membershipLevel) VALUES (?, ?, ?, ?, ?, ?)";
+
+        Connection localConnection = null;
+        PreparedStatement checkUsernameStmt = null;
+        PreparedStatement customerStmt = null;
+
+        try {
+            localConnection = this.connection;
+            localConnection.setAutoCommit(false);
+
+            // Kiểm tra xem username đã tồn tại chưa
+            checkUsernameStmt = localConnection.prepareStatement(checkUsernameQuery);
+            checkUsernameStmt.setString(1, customer.getUsername());
+            ResultSet resultSet = checkUsernameStmt.executeQuery();
+            if (resultSet.next() && resultSet.getInt(1) > 0) {
+                throw new SQLException("Username already exists");
+            }
+
+            // Thêm khách hàng
+            customerStmt = localConnection.prepareStatement(addCustomerQuery, Statement.RETURN_GENERATED_KEYS);
+            customerStmt.setString(1, customer.getName());
+            customerStmt.setString(2, customer.getEmail());
+            customerStmt.setString(3, customer.getPhone());
+            customerStmt.setString(4, customer.getUsername());
+            customerStmt.setString(5, customer.getPassword());
+            customerStmt.setString(6, customer.getMembershipLevel());
+
+            int affectedRows = customerStmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Creating customer failed, no rows affected.");
+            }
+
+            localConnection.commit();
+            return true;
         } catch (SQLException e) {
-            e.printStackTrace();
-            // Consider logging the error or throwing a custom exception
+            if (localConnection != null) {
+                try {
+                    localConnection.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            if (e.getMessage().equals("Username already exists")) {
+                javax.swing.JOptionPane.showMessageDialog(null, "Lỗi: Tên tài khoản đã tồn tại. Vui lòng chọn tên tài khoản khác.", "Lỗi đăng ký", javax.swing.JOptionPane.ERROR_MESSAGE);
+            } else if (e instanceof java.sql.SQLDataException) {
+                javax.swing.JOptionPane.showMessageDialog(null, "Lỗi: Sai kiểu dữ liệu. Vui lòng kiểm tra lại thông tin nhập vào.", "Lỗi dữ liệu", javax.swing.JOptionPane.ERROR_MESSAGE);
+            } else {
+                e.printStackTrace();
+                javax.swing.JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi khi thêm khách hàng. Vui lòng thử lại.", "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+            return false;
+        } finally {
+            if (checkUsernameStmt != null) try { checkUsernameStmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+            if (customerStmt != null) try { customerStmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+            if (localConnection != null) {
+                try {
+                    localConnection.setAutoCommit(true);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
-    // Get customer credentials
+    //tìm kiếm khách hàng
     @Override
-    public String[] getCustomerCredentials(int customerId) {
-        String sql = "SELECT username, password FROM customers WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, customerId);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return new String[]{rs.getString("username"), rs.getString("password")};
-                }
+    public ArrayList<Customers> searchCustomers(String searchTerm) {
+        ArrayList<Customers> filteredCustomers = new ArrayList<>();
+        String sql = "SELECT * FROM customers WHERE name LIKE ? OR email LIKE ? OR phone LIKE ?";
+        try (Connection conn = JBDCUntil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            String likeSearchTerm = "%" + searchTerm + "%";
+            pstmt.setString(1, likeSearchTerm);
+            pstmt.setString(2, likeSearchTerm);
+            pstmt.setString(3, likeSearchTerm);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Customers customer = new Customers();
+                // Set customer properties from ResultSet
+                filteredCustomers.add(customer);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Consider logging the error or throwing a custom exception
         }
-        return null;
-    }
-
-    // Update customer credentials
-    @Override
-    public void updateCustomerCredentials(int customerId, String username, String password) {
-        String sql = "UPDATE customers SET username = ?, password = ? WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, username);
-            stmt.setString(2, password);
-            stmt.setInt(3, customerId);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Consider logging the error or throwing a custom exception
-        }
-    }
-
-    // Delete customer credentials
-    public void deleteCustomerCredentials(int customerId) {
-        String sql = "DELETE FROM customers WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, customerId);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Consider logging the error or throwing a custom exception
-        }
+        return filteredCustomers;
     }
 }

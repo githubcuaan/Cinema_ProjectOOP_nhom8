@@ -1,6 +1,8 @@
 
 package main.cinemaproject.view.Admin;
 
+import main.cinemaproject.view.Login.LoginFrame.LoginFrame;
+
 /**
  *
  * @author DinhAn
@@ -308,7 +310,20 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_SanPhamButMouseClicked
 
     private void DangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DangXuatMouseClicked
-        // TODO add your handling code here:
+        int choice = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "Bạn có chắc chắn muốn đăng xuất?",
+            "Xác nhận đăng xuất",
+            javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.QUESTION_MESSAGE
+        );
+        
+        if (choice == javax.swing.JOptionPane.YES_OPTION) {
+            this.dispose();
+            LoginFrame login = new LoginFrame();
+            login.setLocationRelativeTo(null); // Center the login frame
+            login.setVisible(true);
+        }
     }//GEN-LAST:event_DangXuatMouseClicked
 
     /**

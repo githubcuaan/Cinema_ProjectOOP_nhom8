@@ -29,7 +29,6 @@ public class EmployeeController {
             connection = JBDCUntil.getConnection();
             EmployeeDAO employeeDAO = new EmployeeDAO(connection);
             boolean success = employeeDAO.addEmployee(employee); 
-            employeeDAO.addEmployeeCredentials(employee.getId(), employee.getUsername(), employee.getPassword());
             return success;
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,7 +44,6 @@ public class EmployeeController {
             connection = JBDCUntil.getConnection();
             EmployeeDAO employeeDAO = new EmployeeDAO(connection);
             employeeDAO.updateEmployee(employee);
-            employeeDAO.updateEmployeeCredentials(employee.getId(), employee.getUsername(), employee.getPassword());
             return true;
         } catch (Exception e) {
             e.printStackTrace();

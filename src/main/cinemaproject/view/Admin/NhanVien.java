@@ -4,40 +4,28 @@ import java.util.ArrayList;
 import main.cinemaproject.model.Employee;
 import main.cinemaproject.database.JBDCUntil;
 import java.sql.Connection;
-import main.cinemaproject.dao.EmployeeDAO;
+import main.cinemaproject.controller.EmployeeController;
 import java.sql.SQLException;
-import main.cinemaproject.dao.IEmployeeDAO;
 /**
  *
  * @author DinhAn
  */
 public class NhanVien extends javax.swing.JPanel {
 
+    private EmployeeController employeeController;
+
     /**
      * Creates new form NhanVien
      */
     public NhanVien() {
         initComponents();
+        employeeController = new EmployeeController();
         showEmployeeTable();
     }
     
     // Phương thức để lấy danh sách nhân viên từ cơ sở dữ liệu
     public ArrayList<Employee> eList() throws SQLException {
-        ArrayList<Employee> eList = new ArrayList<>();
-        Connection connection = null;
-        try {
-            connection = JBDCUntil.getConnection();
-            IEmployeeDAO employeeDAO = new EmployeeDAO(connection);
-            eList = employeeDAO.getAllEmployee();
-        } catch (Exception e) {
-            System.err.println("Lỗi khi lấy danh sách nhân viên: " + e.getMessage());
-            e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                JBDCUntil.closeConnection(connection);
-            }
-        }
-        return eList;
+        return employeeController.getAllEmployees();
     }
 
     // Phương thức để hiển thị danh sách nhân viên trong bảng
@@ -130,30 +118,6 @@ public class NhanVien extends javax.swing.JPanel {
             }
         });
 
-        emailTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailTextFieldActionPerformed(evt);
-            }
-        });
-
-        phoneTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                phoneTextFieldActionPerformed(evt);
-            }
-        });
-
-        salaryTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                salaryTextFieldActionPerformed(evt);
-            }
-        });
-
-        nameTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameTextFieldActionPerformed(evt);
-            }
-        });
-
         jLabel2.setText("Họ Tên");
 
         jLabel3.setText("Email");
@@ -164,17 +128,6 @@ public class NhanVien extends javax.swing.JPanel {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        usernameTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernameTextFieldActionPerformed(evt);
-            }
-        });
-
-        passwordTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordTextFieldActionPerformed(evt);
-            }
-        });
 
         jLabel6.setText("Tài Khoản");
 
@@ -308,11 +261,6 @@ public class NhanVien extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(BangNhanVien);
 
-        findTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                findTextFieldActionPerformed(evt);
-            }
-        });
 
         findBut.setText("Tìm Kiếm");
         findBut.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -409,27 +357,15 @@ public class NhanVien extends javax.swing.JPanel {
             newEmployee.setUsername(username);
             newEmployee.setPassword(password);
 
-            // Thêm nhân viên vào cơ sở dữ liệu
-            Connection connection = null;
-            try {
-                connection = JBDCUntil.getConnection();
-                IEmployeeDAO employeeDAO = new EmployeeDAO(connection);
-                boolean success = employeeDAO.addEmployee(newEmployee);
-                
-                if (success) {
-                    employeeDAO.addEmployeeCredentials(newEmployee.getId(), username, password);
-                    showEmployeeTable();
-                    clearInputFields();
-                    javax.swing.JOptionPane.showMessageDialog(this, "Thêm nhân viên thành công.");
-                } else {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Thêm nhân viên thất bại.");
-                }
-            } catch (SQLException e) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Lỗi khi thêm nhân viên: " + e.getMessage());
-            } finally {
-                if (connection != null) {
-                    JBDCUntil.closeConnection(connection);
-                }
+            // Thêm nhân viên sử dụng controller
+            boolean success = employeeController.addEmployee(newEmployee);
+            
+            if (success) {
+                showEmployeeTable();
+                clearInputFields();
+                javax.swing.JOptionPane.showMessageDialog(this, "Thêm nhân viên thành công.");
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Thêm nhân viên thất bại.");
             }
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Lỗi không xác định: " + e.getMessage());
@@ -454,27 +390,23 @@ public class NhanVien extends javax.swing.JPanel {
                 javax.swing.JOptionPane.YES_NO_OPTION);
 
         if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-            Connection connection = null;
             try {
-                connection = JBDCUntil.getConnection();
-                EmployeeDAO employeeDAO = new EmployeeDAO(connection);
+                // Xóa nhân viên sử dụng controller
+                boolean success = employeeController.deleteEmployee(employeeId);
                 
-                // Xóa nhân viên
-                employeeDAO.deleteEmployee(employeeId);
-                
-                // Cập nhật bảng hiển thị
-                showEmployeeTable();
-                
-                // Xóa nội dung các trường nhập liệu
-                clearInputFields();
-                
-                javax.swing.JOptionPane.showMessageDialog(this, "Xóa nhân viên thành công.");
+                if (success) {
+                    // Cập nhật bảng hiển thị
+                    showEmployeeTable();
+                    
+                    // Xóa nội dung các trường nhập liệu
+                    clearInputFields();
+                    
+                    javax.swing.JOptionPane.showMessageDialog(this, "Xóa nhân viên thành công.");
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Xóa nhân viên thất bại.");
+                }
             } catch (Exception e) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Lỗi khi xóa nhân viên: " + e.getMessage());
-            } finally {
-                if (connection != null) {
-                    JBDCUntil.closeConnection(connection);
-                }
             }
         }
     }//GEN-LAST:event_XoaButActionPerformed
@@ -490,13 +422,9 @@ public class NhanVien extends javax.swing.JPanel {
         // Lấy ID của nhân viên từ hàng được chọn
         int employeeId = (int) BangNhanVien.getValueAt(selectedRow, 0);
 
-        Connection connection = null;
         try {
-            connection = JBDCUntil.getConnection();
-            EmployeeDAO employeeDAO = new EmployeeDAO(connection);
-            
-            // Lấy thông tin nhân viên
-            Employee employee = employeeDAO.getEmployeeById(employeeId);
+            // Lấy thông tin nhân viên sử dụng controller
+            Employee employee = employeeController.getEmployeeById(employeeId);
             
             if (employee != null) {
                 // Hiển thị thông tin trong các TextField
@@ -512,12 +440,9 @@ public class NhanVien extends javax.swing.JPanel {
             }
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Lỗi khi lấy thông tin nhân viên: " + e.getMessage());
-        } finally {
-            if (connection != null) {
-                JBDCUntil.closeConnection(connection);
-            }
         }
     }//GEN-LAST:event_XemButActionPerformed
+   
     private void SuaButActionPerformed(java.awt.event.ActionEvent evt) {
         // Get the employee ID from the text field
         String idText = idTextField.getText().trim();
@@ -556,61 +481,32 @@ public class NhanVien extends javax.swing.JPanel {
             return;
         }
 
-        Connection connection = null;
         try {
-            connection = JBDCUntil.getConnection();
-            EmployeeDAO employeeDAO = new EmployeeDAO(connection);
-
             // Create an updated Employee object
             Employee updatedEmployee = new Employee(employeeId, name, email, phone, "", salary, username, password);
 
-            // Update the employee in the database
-            employeeDAO.updateEmployee(updatedEmployee);
+            // Update the employee using the controller
+            boolean success = employeeController.updateEmployee(updatedEmployee);
 
-            javax.swing.JOptionPane.showMessageDialog(this, "Cập nhật nhân viên thành công.");
-            // Refresh the table to show updated data
-            showEmployeeTable();
-            // Clear input fields
-            clearInputFields();
+            if (success) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Cập nhật nhân viên thành công.");
+                // Refresh the table to show updated data
+                showEmployeeTable();
+                // Clear input fields
+                clearInputFields();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Cập nhật nhân viên thất bại.");
+            }
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật nhân viên: " + e.getMessage());
-        } finally {
-            if (connection != null) {
-                JBDCUntil.closeConnection(connection);
-            }
         }
     }
+    
     private void idTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_idTextFieldActionPerformed
 
-    private void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_emailTextFieldActionPerformed
-
-    private void phoneTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phoneTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_phoneTextFieldActionPerformed
-
-    private void salaryTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salaryTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_salaryTextFieldActionPerformed
-
-    private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameTextFieldActionPerformed
-
-    private void usernameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_usernameTextFieldActionPerformed
-
-    private void passwordTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordTextFieldActionPerformed
-
-    private void findTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_findTextFieldActionPerformed
+    
 
     private void findButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findButActionPerformed
     String searchId = findTextField.getText().trim();
@@ -621,14 +517,11 @@ public class NhanVien extends javax.swing.JPanel {
 
     try {
         int employeeId = Integer.parseInt(searchId);
-        Connection connection = null;
         try {
-            connection = JBDCUntil.getConnection();
-            EmployeeDAO employeeDAO = new EmployeeDAO(connection);
-            Employee employee = employeeDAO.getEmployeeById(employeeId);
+            Employee employee = employeeController.getEmployeeById(employeeId);
 
             if (employee != null) {
-                // Hiển thị thông tin nhân vin tìm được
+                // Hiển thị thông tin nhân viên tìm được
                 idTextField.setText(String.valueOf(employee.getId()));
                 nameTextField.setText(employee.getName());
                 emailTextField.setText(employee.getEmail());
@@ -636,9 +529,9 @@ public class NhanVien extends javax.swing.JPanel {
                 salaryTextField.setText(String.valueOf(employee.getSalary()));
                 
                 // Lấy thông tin đăng nhập
-                String[] credentials = employeeDAO.getEmployeeCredentials(employeeId);
-                usernameTextField.setText(credentials[0]);
-                passwordTextField.setText(credentials[1]);
+                // Giả sử rằng thông tin đăng nhập đã được bao gồm trong đối tượng Employee
+                usernameTextField.setText(employee.getUsername());
+                passwordTextField.setText(employee.getPassword());
 
                 // Cập nhật bảng để chỉ hiển thị nhân viên tìm được
                 javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) BangNhanVien.getModel();
@@ -656,17 +549,14 @@ public class NhanVien extends javax.swing.JPanel {
                 clearInputFields();
                 showEmployeeTable(); // Hiển thị lại toàn bộ danh sách nhân viên
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Lỗi khi tìm kiếm nhân viên: " + e.getMessage());
-        } finally {
-            if (connection != null) {
-                JBDCUntil.closeConnection(connection);
-            }
         }
     } catch (NumberFormatException e) {
         javax.swing.JOptionPane.showMessageDialog(this, "ID nhân viên phải là một số nguyên.");
     }
-    }//GEN-LAST:event_findButActionPerformed
+}//GEN-LAST:event_findButActionPerformed
+    
     public void clearInputFields() {
         nameTextField.setText("");
         emailTextField.setText("");
@@ -675,12 +565,8 @@ public class NhanVien extends javax.swing.JPanel {
         usernameTextField.setText("");
         passwordTextField.setText("");
     }
-    public void deleteEmployee(int employeeId) throws SQLException {
-        // Implementation
-    }
 
    
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable BangNhanVien;
     private javax.swing.JButton SuaBut;

@@ -2,10 +2,7 @@ package main.cinemaproject.view.Admin;
 
 import java.util.ArrayList;
 import main.cinemaproject.model.Customers;
-import main.cinemaproject.database.JBDCUntil;
-import java.sql.Connection;
-import main.cinemaproject.dao.CustomersDAO;
-import java.sql.SQLException;
+import main.cinemaproject.controller.CustomerController;
 /**
  *
  * @author DinhAn
@@ -23,23 +20,8 @@ public class KhachHang extends javax.swing.JPanel {
     // Phương thức để lấy danh sách khách hàng từ cơ sở dữ liệu
     public ArrayList<Customers> cList() {
         ArrayList<Customers> cList = new ArrayList<>();
-        Connection connection = null;
-        try {
-            // Tạo kết nối đến cơ sở dữ liệu
-            connection = JBDCUntil.getConnection();
-            CustomersDAO customersDAO = new CustomersDAO(connection);
-            // Lấy danh sách tất cả khách hàng
-            cList = customersDAO.getAllCustomers();
-        } catch (Exception e) {
-            // Ghi log lỗi hoặc hiển thị thông báo lỗi thân thiện với người dùng
-            System.err.println("Lỗi khi lấy danh sách khách hàng: " + e.getMessage());
-            // TODO: Hiển thị thông báo lỗi cho người dùng
-        } finally {
-            // Đảm bảo kết nối luôn được đóng
-            if (connection != null) {
-                JBDCUntil.closeConnection(connection);
-            }
-        }
+        CustomerController customerController = new CustomerController();
+        cList = customerController.getAllCustomers();
         return cList;
     }
 
@@ -120,30 +102,6 @@ public class KhachHang extends javax.swing.JPanel {
 
         jLabel1.setText("ID");
 
-        idTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idTextFieldActionPerformed(evt);
-            }
-        });
-
-        emailTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailTextFieldActionPerformed(evt);
-            }
-        });
-
-        phoneTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                phoneTextFieldActionPerformed(evt);
-            }
-        });
-
-        nameTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameTextFieldActionPerformed(evt);
-            }
-        });
-
         jLabel2.setText("Họ Tên");
 
         jLabel3.setText("Email");
@@ -154,29 +112,12 @@ public class KhachHang extends javax.swing.JPanel {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        usernameTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernameTextFieldActionPerformed(evt);
-            }
-        });
-
-        passwordTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordTextFieldActionPerformed(evt);
-            }
-        });
-
         jLabel6.setText("Tài Khoản");
 
         jLabel7.setText("Mật Khẩu");
 
         CustomersMemberLevel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sắt Vụn ", "Nhôm", "Vàng", "Kim Cương" }));
-        CustomersMemberLevel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CustomersMemberLevelActionPerformed(evt);
-            }
-        });
-
+        
         ClearBut.setText("Clear");
         ClearBut.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         ClearBut.addActionListener(new java.awt.event.ActionListener() {
@@ -281,6 +222,11 @@ public class KhachHang extends javax.swing.JPanel {
 
         SuaBut.setText("Sửa");
         SuaBut.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        SuaBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SuaButActionPerformed(evt);
+            }
+        });
 
         XoaBut.setText("Xóa");
         XoaBut.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -312,11 +258,7 @@ public class KhachHang extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(BangKhachHang);
 
-        findTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                findTextFieldActionPerformed(evt);
-            }
-        });
+        
 
         findBut.setText("Tìm Kiếm");
         findBut.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -373,6 +315,7 @@ public class KhachHang extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    //ThemBut Action khi được bấm
     private void ThemButActionPerformed(java.awt.event.ActionEvent evt) {
         // Lấy thông tin từ các trường nhập liệu
         String name = nameTextField.getText().trim();
@@ -397,16 +340,10 @@ public class KhachHang extends javax.swing.JPanel {
         newCustomer.setUsername(username);
         newCustomer.setPassword(password);
 
-        // Thêm khách hàng vào cơ sở dữ liệu
-        Connection connection = null;
-        try {
-            connection = JBDCUntil.getConnection();
-            CustomersDAO customersDAO = new CustomersDAO(connection);
-            boolean success = customersDAO.addCustomer(newCustomer);
-            
-            // Thêm thông tin đăng nhập cho khách hàng
-            customersDAO.addCustomerCredentials(newCustomer.getId(), username, password);
+        CustomerController customerController = new CustomerController();
+        boolean success = customerController.addCustomer(newCustomer);
 
+        if (success) {
             // Cập nhật bảng hiển thị
             showCustomerTable();
 
@@ -414,19 +351,12 @@ public class KhachHang extends javax.swing.JPanel {
             clearInputFields();
 
             javax.swing.JOptionPane.showMessageDialog(this, "Thêm khách hàng thành công.");
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Lỗi khi thêm khách hàng: " + e.getMessage());
-        } finally {
-            if (connection != null) {
-                try {
-                    JBDCUntil.closeConnection(connection);
-                } catch (Exception e) {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Lỗi khi đóng kết nối: " + e.getMessage());
-                }
-            }
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Không thể thêm khách hàng. Vui lòng kiểm tra lại thông tin.");
         }
     }
 
+    //XoaBut Action khi được bấm
     private void XoaButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_XoaButActionPerformed
         // Lấy chỉ số hàng được chọn
         int selectedRow = BangKhachHang.getSelectedRow();
@@ -445,14 +375,10 @@ public class KhachHang extends javax.swing.JPanel {
                 javax.swing.JOptionPane.YES_NO_OPTION);
 
         if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-            Connection connection = null;
-            try {
-                connection = JBDCUntil.getConnection();
-                CustomersDAO customersDAO = new CustomersDAO(connection);
-                
-                // Xóa khách hàng
-                customersDAO.deleteCustomer(customerId);
-                
+            CustomerController customerController = new CustomerController();
+            boolean success = customerController.deleteCustomer(customerId);
+            
+            if (success) {
                 // Cập nhật bảng hiển thị
                 showCustomerTable();
                 
@@ -460,20 +386,13 @@ public class KhachHang extends javax.swing.JPanel {
                 clearInputFields();
                 
                 javax.swing.JOptionPane.showMessageDialog(this, "Xóa khách hàng thành công.");
-            } catch (Exception e) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Lỗi khi xóa khách hàng: " + e.getMessage());
-            } finally {
-                if (connection != null) {
-                    try {
-                        JBDCUntil.closeConnection(connection);
-                    } catch (Exception e) {
-                        javax.swing.JOptionPane.showMessageDialog(this, "Lỗi khi đóng kết nối: " + e.getMessage());
-                    }
-                }
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Lỗi khi xóa khách hàng. Vui lòng thử lại.");
             }
         }
     }//GEN-LAST:event_XoaButActionPerformed
 
+    //XemBut Action khi được bấm
     private void XemButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_XemButActionPerformed
         // Lấy chỉ số hàng được chọn
         int selectedRow = BangKhachHang.getSelectedRow();
@@ -485,34 +404,24 @@ public class KhachHang extends javax.swing.JPanel {
         // Lấy ID của khách hàng từ hàng được chọn
         int customerId = (int) BangKhachHang.getValueAt(selectedRow, 0);
 
-        Connection connection = null;
-        try {
-            connection = JBDCUntil.getConnection();
-            CustomersDAO customersDAO = new CustomersDAO(connection);
-            
-            // Lấy thông tin khách hàng
-            Customers customer = customersDAO.getCustomerById(customerId);
-            
-            if (customer != null) {
-                // Hiển thị thông tin trong các TextField
-                idTextField.setText(String.valueOf(customer.getId()));
-                nameTextField.setText(customer.getName());
-                emailTextField.setText(customer.getEmail());
-                phoneTextField.setText(customer.getPhone());
-                CustomersMemberLevel.setSelectedItem(customer.getMembershipLevel());
-                usernameTextField.setText(customer.getUsername());
-                passwordTextField.setText(customer.getPassword());
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin nhân viên.");
-            }
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Lỗi khi lấy thông tin nhân viên: " + e.getMessage());
-        } finally {
-            if (connection != null) {
-                JBDCUntil.closeConnection(connection);
-            }
+        CustomerController customerController = new CustomerController();
+        Customers customer = customerController.getCustomerById(customerId);
+        
+        if (customer != null) {
+            // Hiển thị thông tin trong các TextField
+            idTextField.setText(String.valueOf(customer.getId()));
+            nameTextField.setText(customer.getName());
+            emailTextField.setText(customer.getEmail());
+            phoneTextField.setText(customer.getPhone());
+            CustomersMemberLevel.setSelectedItem(customer.getMembershipLevel());
+            usernameTextField.setText(customer.getUsername());
+            passwordTextField.setText(customer.getPassword());
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin khách hàng.");
         }
     }//GEN-LAST:event_XemButActionPerformed
+    
+    //SuaBut Action khi được bấm
     private void SuaButActionPerformed(java.awt.event.ActionEvent evt) {
         // Get the customer ID from the text field
         String idText = idTextField.getText().trim();
@@ -543,58 +452,30 @@ public class KhachHang extends javax.swing.JPanel {
             return;
         }
 
-        Connection connection = null;
         try {
-            connection = JBDCUntil.getConnection();
-            CustomersDAO customersDAO = new CustomersDAO(connection);
+            CustomerController customerController = new CustomerController();
 
             // Create an updated Customer object
             Customers updatedCustomer = new Customers(customerId, name, email, phone, username, password, membershipLevel);
 
-            // Update the customer in the database
-            customersDAO.updateCustomer(updatedCustomer);
+            // Update the customer using the controller
+            boolean success = customerController.updateCustomer(updatedCustomer);
 
-            javax.swing.JOptionPane.showMessageDialog(this, "Cập nhật khách hàng thành công.");
-            // Refresh the table to show updated data
-            showCustomerTable();
-            // Clear input fields
-            clearInputFields();
+            if (success) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Cập nhật khách hàng thành công.");
+                // Refresh the table to show updated data
+                showCustomerTable();
+                // Clear input fields
+                clearInputFields();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Không thể cập nhật khách hàng. Vui lòng thử lại.");
+            }
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật khách hàng: " + e.getMessage());
-        } finally {
-            if (connection != null) {
-                JBDCUntil.closeConnection(connection);
-            }
         }
     }
-    private void idTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_idTextFieldActionPerformed
 
-    private void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_emailTextFieldActionPerformed
-
-    private void phoneTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phoneTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_phoneTextFieldActionPerformed
-
-    private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameTextFieldActionPerformed
-
-    private void usernameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_usernameTextFieldActionPerformed
-
-    private void passwordTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordTextFieldActionPerformed
-
-    private void findTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_findTextFieldActionPerformed
-
+    //findBut Action khi được bấm
     private void findButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findButActionPerformed
         // Lấy từ khóa tìm kiếm từ findTextField
         String searchTerm = findTextField.getText().trim().toLowerCase();
@@ -603,22 +484,9 @@ public class KhachHang extends javax.swing.JPanel {
             return;
         }
 
-        Connection connection = null;
         try {
-            connection = JBDCUntil.getConnection();
-            CustomersDAO customersDAO = new CustomersDAO(connection);
-            ArrayList<Customers> allCustomers = customersDAO.getAllCustomers();
-            ArrayList<Customers> filteredCustomers = new ArrayList<>();
-
-            for (Customers customer : allCustomers) {
-                if (customer.getName().toLowerCase().contains(searchTerm) ||
-                    customer.getEmail().toLowerCase().contains(searchTerm) ||
-                    customer.getPhone().toLowerCase().contains(searchTerm) ||
-                    customer.getMembershipLevel().toLowerCase().contains(searchTerm) ||
-                    String.valueOf(customer.getId()).contains(searchTerm)) {
-                    filteredCustomers.add(customer);
-                }
-            }
+            CustomerController customerController = new CustomerController();
+            ArrayList<Customers> filteredCustomers = customerController.searchCustomers(searchTerm);
 
             if (filteredCustomers.isEmpty()) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Không tìm thấy khách hàng phù hợp.");
@@ -642,22 +510,17 @@ public class KhachHang extends javax.swing.JPanel {
 
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Lỗi khi tìm kiếm khách hàng: " + e.getMessage());
-        } finally {
-            if (connection != null) {
-                JBDCUntil.closeConnection(connection);
-            }
         }
     }//GEN-LAST:event_findButActionPerformed
 
-    private void CustomersMemberLevelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomersMemberLevelActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CustomersMemberLevelActionPerformed
-
+    //clear thông tin và load lại bảng
     private void ClearButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearButActionPerformed
         // TODO add your handling code here:
         this.clearInputFields();
         this.showCustomerTable();
     }//GEN-LAST:event_ClearButActionPerformed
+    
+    //phương thức clear thông tin trong các trường nhập liệu
     public void clearInputFields() {
         nameTextField.setText("");
         emailTextField.setText("");

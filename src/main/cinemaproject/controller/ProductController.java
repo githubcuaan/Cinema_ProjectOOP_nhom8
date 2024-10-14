@@ -23,6 +23,7 @@ public class ProductController {
         }
     }
 
+    //thêm sản phẩm
     public boolean addProduct(Product product) {
         Connection connection = null;
         try {
@@ -38,6 +39,7 @@ public class ProductController {
         }
     }
 
+    //cập nhật sản phẩm
     public boolean updateProduct(Product product) {
         Connection connection = null;
         try {
@@ -53,6 +55,7 @@ public class ProductController {
         }
     }
 
+    //xóa sản phẩm theo id
     public boolean deleteProduct(int productId) {
         Connection connection = null;
         try {
@@ -68,6 +71,7 @@ public class ProductController {
         }
     }
 
+    //lấy sản phẩm theo id
     public Product getProductById(int productId) {
         Connection connection = null;
         try {
@@ -78,6 +82,36 @@ public class ProductController {
             e.printStackTrace();
             return null;
         } finally {
+            JBDCUntil.closeConnection(connection);
+        }
+    }
+
+    //kiểm tra sản phẩm có tồn tại không
+    public boolean isProductExist(String name, String supplier) {
+        Connection connection = null;
+        try {
+            connection = JBDCUntil.getConnection();
+            ProductDAO productDAO = new ProductDAO(connection);
+            return productDAO.isProductExist(name, supplier);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            JBDCUntil.closeConnection(connection);
+        }
+    }
+
+    //lấy sản phẩm theo tên và nhà cung cấp
+    public Product getProductByNameAndSupplier(String name, String supplier) {
+        Connection connection = null;
+        try {
+            connection = JBDCUntil.getConnection();
+            ProductDAO productDAO = new ProductDAO(connection);
+            return productDAO.getProductByNameAndSupplier(name, supplier);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally { 
             JBDCUntil.closeConnection(connection);
         }
     }

@@ -1,7 +1,7 @@
 package main.cinemaproject.view.Admin;
 
 import java.sql.Connection;
-import main.cinemaproject.dao.MovieDAO;
+import main.cinemaproject.controller.MovieController;
 import main.cinemaproject.model.Movie;
 import main.cinemaproject.model.MovieStatistics;
 import java.util.ArrayList;
@@ -17,21 +17,20 @@ import java.text.ParseException;
  */
 public class DoanhThu extends javax.swing.JPanel {
 
-    private MovieDAO movieDAO;
+    private MovieController movieController;
 
     /**
      * Creates new form DoanhThu
      */
     public DoanhThu() {
         initComponents();
+        movieController = new MovieController();
         loadMovies();
         loadMovieStatistics();
     }
 
     private void loadMovies() {
-        Connection connection = JBDCUntil.getConnection();
-        movieDAO = new MovieDAO(connection);
-        ArrayList<Movie> movies = movieDAO.getAllMovies();
+        ArrayList<Movie> movies = movieController.getAllMovies();
         BoxChonPhim.removeAllItems();
         BoxChonPhim.addItem("Tất cả phim");
         for (Movie movie : movies) {
@@ -40,10 +39,7 @@ public class DoanhThu extends javax.swing.JPanel {
     }
     
     private void loadMovieStatistics() {
-        Connection connection = JBDCUntil.getConnection();
-        movieDAO = new MovieDAO(connection);
-        List<MovieStatistics> movieStatsList = movieDAO.getMovieStatistics();
-        
+        List<MovieStatistics> movieStatsList = movieController.getMovieStatistics();
         updateTable(movieStatsList);
     }
     
@@ -94,11 +90,7 @@ public class DoanhThu extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Doanh Thu "));
 
-        BoxChonPhim.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BoxChonPhimActionPerformed(evt);
-            }
-        });
+        
 
         jLabel1.setText("Chọn Phim :");
 
@@ -108,17 +100,9 @@ public class DoanhThu extends javax.swing.JPanel {
 
         jLabel3.setText("Đến Ngày :");
 
-        dateToText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dateToTextActionPerformed(evt);
-            }
-        });
+        
 
-        dateFromText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dateFromTextActionPerformed(evt);
-            }
-        });
+       
 
         ThongKeBut.setText("Thống Kê");
         ThongKeBut.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -203,25 +187,10 @@ public class DoanhThu extends javax.swing.JPanel {
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 810, 470));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void dateToTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateToTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dateToTextActionPerformed
-
-    private void dateFromTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateFromTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dateFromTextActionPerformed
-
-    private void BoxChonPhimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BoxChonPhimActionPerformed
-        // TODO: Filter statistics based on selected movie
-    }//GEN-LAST:event_BoxChonPhimActionPerformed
-
     private void ThongKeButActionPerformed(java.awt.event.ActionEvent evt) {
         String selectedMovie = (String) BoxChonPhim.getSelectedItem();
         String fromDate = dateFromText.getText();
         String toDate = dateToText.getText();
-        
-        Connection connection = JBDCUntil.getConnection();
-        movieDAO = new MovieDAO(connection);
         
         List<MovieStatistics> filteredStats;
         
@@ -249,15 +218,15 @@ public class DoanhThu extends javax.swing.JPanel {
             
             if (selectedMovie.equals("Tất cả phim")) {
                 if (sqlFromDate == null || sqlToDate == null) {
-                    filteredStats = movieDAO.getMovieStatistics();
+                    filteredStats = movieController.getMovieStatistics();
                 } else {
-                    filteredStats = movieDAO.getMovieStatistics(sqlFromDate, sqlToDate);
+                    filteredStats = movieController.getMovieStatistics(sqlFromDate, sqlToDate);
                 }
             } else {
                 if (sqlFromDate == null || sqlToDate == null) {
-                    filteredStats = movieDAO.getMovieStatistics(selectedMovie);
+                    filteredStats = movieController.getMovieStatistics(selectedMovie);
                 } else {
-                    filteredStats = movieDAO.getMovieStatistics(selectedMovie, sqlFromDate, sqlToDate);
+                    filteredStats = movieController.getMovieStatistics(selectedMovie, sqlFromDate, sqlToDate);
                 }
             }
             
