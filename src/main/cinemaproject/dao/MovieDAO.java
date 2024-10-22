@@ -34,22 +34,23 @@ public class MovieDAO implements IMovieDAO {
 
     // Phương thức tìm bộ phim bằng ID
     @Override
-    public Movie getMovieById(int id) {
+    public Movie getMovieById(int movieId) {
         String query = "SELECT * FROM movies WHERE id = ?";
         Movie movie = null;
 
-        try (PreparedStatement statement = connection.prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
-            statement.setInt(1, id);
-            if (resultSet.next()) {
-                movie = new Movie(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("genre"),
-                        resultSet.getString("release_date"),
-                        resultSet.getString("director"),
-                        resultSet.getInt("duration")
-                );
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, movieId); // Đảm bảo rằng bạn đã thiết lập tham số này
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    movie = new Movie(
+                            resultSet.getInt("id"),
+                            resultSet.getString("name"),
+                            resultSet.getString("genre"),
+                            resultSet.getString("release_date"),
+                            resultSet.getString("director"),
+                            resultSet.getInt("duration")
+                    );
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -237,9 +238,23 @@ public class MovieDAO implements IMovieDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
         return movieStatsList;
     }
+    
+    public int getMovieId(String movieName) {
+        String sql = "SELECT * FROM movies WHERE name = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, movieName); // Đảm bảo rằng bạn đã thiết lập tham số này
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1; // Trả về -1 nếu không tìm thấy phim
+    }
 }
+
 
 

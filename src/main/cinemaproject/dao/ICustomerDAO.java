@@ -13,4 +13,5 @@ public interface ICustomerDAO {
     boolean register(String username, String email, String password);  
     boolean addCustomer(Customers customer);
     ArrayList<Customers> searchCustomers(String searchTerm);
+    int getCustomerIdByUsername(String username);
 }

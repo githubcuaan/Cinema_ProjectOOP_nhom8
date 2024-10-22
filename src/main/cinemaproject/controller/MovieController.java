@@ -52,5 +52,9 @@ public class MovieController {
     public List<MovieStatistics> getMovieStatistics(String movieName) {
         return movieDAO.getMovieStatistics(movieName);
     }
+
+    public int getMovieId(String movieName) {
+        return movieDAO.getMovieId(movieName);
+    }
 }
 

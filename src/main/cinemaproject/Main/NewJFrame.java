@@ -1,6 +1,10 @@
 
 package main.cinemaproject.Main;
 
+import main.cinemaproject.dao.MovieDAO;
+import main.cinemaproject.database.JBDCUntil;
+import java.sql.Connection;
+
 /**
  *
  * @author DinhAn
@@ -12,6 +16,7 @@ public class NewJFrame extends javax.swing.JFrame {
      */
     public NewJFrame() {
         initComponents();
+        
     }
 
     /**
@@ -23,32 +28,44 @@ public class NewJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lichChieuPhim1 = new main.cinemaproject.view.Customer.LichChieuPhim();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        lichChieuPhim2 = new main.cinemaproject.view.Customer.LichChieuPhim();
+        chonGheNgoi1 = new main.cinemaproject.view.Customer.ChonGheNgoi();
+        chonDoAn1 = new main.cinemaproject.view.Customer.ChonDoAn();
+        thanhToan1 = new main.cinemaproject.view.Customer.ThanhToan();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTabbedPane1.addTab("tab1", lichChieuPhim2);
+        jTabbedPane1.addTab("tab2", chonGheNgoi1);
+        jTabbedPane1.addTab("tab3", chonDoAn1);
+        jTabbedPane1.addTab("tab4", thanhToan1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 32, Short.MAX_VALUE)
-                .addComponent(lichChieuPhim1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1010, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(859, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(101, 101, 101)
-                .addComponent(lichChieuPhim1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(484, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 56, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    
 
     /**
      * @param args the command line arguments
      */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -79,9 +96,14 @@ public class NewJFrame extends javax.swing.JFrame {
                 new NewJFrame().setVisible(true);
             }
         });
+ 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private main.cinemaproject.view.Customer.LichChieuPhim lichChieuPhim1;
+    private main.cinemaproject.view.Customer.ChonDoAn chonDoAn1;
+    private main.cinemaproject.view.Customer.ChonGheNgoi chonGheNgoi1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private main.cinemaproject.view.Customer.LichChieuPhim lichChieuPhim2;
+    private main.cinemaproject.view.Customer.ThanhToan thanhToan1;
     // End of variables declaration//GEN-END:variables
 }

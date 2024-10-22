@@ -9,6 +9,7 @@ public class ScreeningStatus {
     private int movieId;
     private Time showtime;
     private Date showdate;
+    private double price;
     private int seatsAvailable;
     private int totalSeats;
 
@@ -16,12 +17,13 @@ public class ScreeningStatus {
     public ScreeningStatus() {}
 
     // Constructor có tham số
-    public ScreeningStatus(int id, String theater, int movieId, Time showtime, Date showdate, int seatsAvailable, int totalSeats) {
+    public ScreeningStatus(int id, String theater, int movieId, Time showtime, Date showdate,double price, int seatsAvailable, int totalSeats) {
         this.id = id;
         this.theater = theater;
         this.movieId = movieId;
         this.showtime = showtime;
         this.showdate = showdate;
+        this.price = price;
         this.seatsAvailable = seatsAvailable;
         this.totalSeats = totalSeats;
     }
@@ -83,6 +85,14 @@ public class ScreeningStatus {
         this.totalSeats = totalSeats;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "ScreeningStatus{" +
@@ -93,6 +103,7 @@ public class ScreeningStatus {
                ", showdate=" + showdate +
                ", seatsAvailable=" + seatsAvailable +
                ", totalSeats=" + totalSeats +
+               ", price=" + price +
                '}';
     }
 }

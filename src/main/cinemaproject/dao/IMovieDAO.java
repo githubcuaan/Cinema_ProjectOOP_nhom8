@@ -9,4 +9,5 @@ public interface IMovieDAO {
     void deleteMovie(int id);
     Movie getMovieById(int id);
     ArrayList<Movie> getAllMovies();
+    int getMovieId(String movieName);
 }

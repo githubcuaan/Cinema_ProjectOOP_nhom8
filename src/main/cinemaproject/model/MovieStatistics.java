@@ -1,5 +1,6 @@
 package main.cinemaproject.model;
 
+//lớp MovieStatistics được tạo ra để lưu trữ thông tin thống kê về phim ở trang DoanhThu.
 public class MovieStatistics {
     private String movieName;
     private String director;

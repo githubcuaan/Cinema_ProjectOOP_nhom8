@@ -41,7 +41,8 @@ public class TicketDAO implements ITicket {
                     resultSet.getInt("customer_id"),
                     resultSet.getDouble("price"),
                     resultSet.getString("purchase_date"),
-                    resultSet.getString("seat_number")
+                    resultSet.getString("seat_number"),
+                    resultSet.getInt("invoice_id")
                 );
                 tickets.add(ticket);
             }

@@ -11,8 +11,7 @@ import main.cinemaproject.view.Login.swing.Button;
 import main.cinemaproject.view.Login.swing.MyTextField;
 import main.cinemaproject.view.Login.swing.MyPasswordField;
 import javax.swing.JOptionPane;
-import main.cinemaproject.dao.CustomersDAO;
-import main.cinemaproject.dao.EmployeeDAO;
+
 import java.sql.Connection;
 import main.cinemaproject.database.JBDCUntil;
 import main.cinemaproject.model.Customers;
@@ -21,17 +20,17 @@ import java.awt.event.ActionEvent;
 import main.cinemaproject.view.Customer.Customer;
 import main.cinemaproject.view.Admin.Admin;
 import javax.swing.SwingUtilities;
-import main.cinemaproject.dao.IEmployeeDAO;
-import java.sql.SQLException;
 
+import main.cinemaproject.controller.AuthController;
 /**
  *
  * @author DinhAn
  */
 public class PanelLoginNRegister extends javax.swing.JLayeredPane {
-    
+    private AuthController authController;
     public PanelLoginNRegister() {
         initComponents();
+        authController = new AuthController();
         initRegister();
         initLogin();
         
@@ -134,42 +133,35 @@ public class PanelLoginNRegister extends javax.swing.JLayeredPane {
     private void login(String username, String password, String role)
     {
         try {
-            Connection connection = JBDCUntil.getConnection();
             if (role.equals("User")) {
-                CustomersDAO customerDAO = new CustomersDAO(connection);
-                Customers customer = customerDAO.login(username, password);
+                authController.loginCustomer(username, password);
+                Customers customer = authController.loginCustomer(username, password);
                 if (customer != null) {
                     JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
-                    Customer customerScreen = new Customer();
+                    Customer customerScreen = new Customer(username);
                     customerScreen.setVisible(true);
                     SwingUtilities.getWindowAncestor(this).dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
                 }
             } else if (role.equals("Admin")) {
-                IEmployeeDAO employeeDAO = new EmployeeDAO(connection);
-                try {
-                    Employee employee = employeeDAO.login(username, password);
-                    if (employee != null) {
-                        JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
-                        Admin adminScreen = new Admin();
-                        adminScreen.setVisible(true);
-                        SwingUtilities.getWindowAncestor(this).dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi khi đăng nhập. Vui lòng thử lại sau.");
-                } finally {
-                    JBDCUntil.closeConnection(connection);
+                authController.loginEmployee(username, password);
+                Employee employee = authController.loginEmployee(username, password);
+                if (employee != null) {
+                    JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
+                    Admin adminScreen = new Admin();
+                    adminScreen.setVisible(true);
+                    SwingUtilities.getWindowAncestor(this).dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            
             JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi khi đăng nhập. Vui lòng thử lại sau.");
         }
     }
+    
     
     //hàm hiển thị register panel
     public void showRegister(boolean show)
@@ -189,16 +181,14 @@ public class PanelLoginNRegister extends javax.swing.JLayeredPane {
     //hàm đăng ký
     private void register(String username, String email, String password) {
         try {
-            Connection connection = JBDCUntil.getConnection();
-            CustomersDAO customerDAO = new CustomersDAO(connection);
-            boolean isRegistered = customerDAO.register(username, email, password);
+            authController.registerCustomer(username, email, password);
+            boolean isRegistered = authController.registerCustomer(username, email, password);
             if (isRegistered) {
                 JOptionPane.showMessageDialog(this, "Đăng ký thành công!");
                 // TODO: Chuyển đến màn hình đăng nhập hoặc màn hình chính của khách hàng
             } else {
                 JOptionPane.showMessageDialog(this, "Đăng ký thất bại. Vui lòng thử lại.");
             }
-            JBDCUntil.closeConnection(connection);
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi khi đăng ký. Vui lòng thử lại sau.");

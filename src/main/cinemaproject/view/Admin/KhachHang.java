@@ -9,11 +9,13 @@ import main.cinemaproject.controller.CustomerController;
  */
 public class KhachHang extends javax.swing.JPanel {
 
+    private CustomerController customerController;
     /**
      * Creates new form NhanVien
      */
     public KhachHang() {
         initComponents();
+        customerController = new CustomerController();
         showCustomerTable();
     }
     
@@ -340,7 +342,6 @@ public class KhachHang extends javax.swing.JPanel {
         newCustomer.setUsername(username);
         newCustomer.setPassword(password);
 
-        CustomerController customerController = new CustomerController();
         boolean success = customerController.addCustomer(newCustomer);
 
         if (success) {
@@ -375,7 +376,6 @@ public class KhachHang extends javax.swing.JPanel {
                 javax.swing.JOptionPane.YES_NO_OPTION);
 
         if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-            CustomerController customerController = new CustomerController();
             boolean success = customerController.deleteCustomer(customerId);
             
             if (success) {
@@ -404,7 +404,6 @@ public class KhachHang extends javax.swing.JPanel {
         // Lấy ID của khách hàng từ hàng được chọn
         int customerId = (int) BangKhachHang.getValueAt(selectedRow, 0);
 
-        CustomerController customerController = new CustomerController();
         Customers customer = customerController.getCustomerById(customerId);
         
         if (customer != null) {
@@ -453,8 +452,6 @@ public class KhachHang extends javax.swing.JPanel {
         }
 
         try {
-            CustomerController customerController = new CustomerController();
-
             // Create an updated Customer object
             Customers updatedCustomer = new Customers(customerId, name, email, phone, username, password, membershipLevel);
 
@@ -485,7 +482,6 @@ public class KhachHang extends javax.swing.JPanel {
         }
 
         try {
-            CustomerController customerController = new CustomerController();
             ArrayList<Customers> filteredCustomers = customerController.searchCustomers(searchTerm);
 
             if (filteredCustomers.isEmpty()) {
