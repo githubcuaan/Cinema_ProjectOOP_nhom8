@@ -3,7 +3,7 @@ package main.cinemaproject.controller;
 import main.cinemaproject.dao.MovieDAO;
 import main.cinemaproject.model.Movie;
 import main.cinemaproject.model.MovieStatistics;
-import main.cinemaproject.database.JBDCUntil;
+import main.cinemaproject.utils.JBDCUtils;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class MovieController {
     private MovieDAO movieDAO;
 
     public MovieController() {
-        Connection connection = JBDCUntil.getConnection();
+        Connection connection = JBDCUtils.getConnection();
         this.movieDAO = new MovieDAO(connection);
     }
 

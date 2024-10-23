@@ -2,10 +2,9 @@ package main.cinemaproject.view.Admin;
 
 import java.util.ArrayList;
 import main.cinemaproject.model.Employee;
-import main.cinemaproject.database.JBDCUntil;
-import java.sql.Connection;
 import main.cinemaproject.controller.EmployeeController;
 import java.sql.SQLException;
+import main.cinemaproject.utils.ValidationUtils;
 /**
  *
  * @author DinhAn
@@ -94,6 +93,7 @@ public class NhanVien extends javax.swing.JPanel {
         passwordTextField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        clearBut = new javax.swing.JButton();
         XemBut = new javax.swing.JButton();
         ThemBut = new javax.swing.JButton();
         SuaBut = new javax.swing.JButton();
@@ -112,11 +112,9 @@ public class NhanVien extends javax.swing.JPanel {
 
         jLabel1.setText("ID");
 
-        idTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idTextFieldActionPerformed(evt);
-            }
-        });
+        idTextField.setEditable(false);
+        
+      
 
         jLabel2.setText("Họ Tên");
 
@@ -128,10 +126,19 @@ public class NhanVien extends javax.swing.JPanel {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        
 
         jLabel6.setText("Tài Khoản");
 
         jLabel7.setText("Mật Khẩu");
+
+        clearBut.setText("Clear");
+        clearBut.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        clearBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearButActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -157,10 +164,12 @@ public class NhanVien extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(13, 13, 13)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(salaryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel5))
                     .addComponent(phoneTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(clearBut, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(salaryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
@@ -194,16 +203,18 @@ public class NhanVien extends javax.swing.JPanel {
                             .addComponent(jLabel4)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(usernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7)))
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(usernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel6))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel7)))
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(clearBut))))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -338,6 +349,15 @@ public class NhanVien extends javax.swing.JPanel {
                 return;
             }
 
+            if(!ValidationUtils.isValidEmail(email)){
+                javax.swing.JOptionPane.showMessageDialog(this, "Email không hợp lệ.");
+                return;
+            }
+
+            if(!ValidationUtils.isValidPhoneNumber(phone)){
+                javax.swing.JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ.");
+                return;
+            }
             // Kiểm tra và chuyển đổi lương
             double salary;
             try {
@@ -502,12 +522,6 @@ public class NhanVien extends javax.swing.JPanel {
         }
     }
     
-    private void idTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_idTextFieldActionPerformed
-
-    
-
     private void findButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findButActionPerformed
     String searchId = findTextField.getText().trim();
     if (searchId.isEmpty()) {
@@ -556,8 +570,14 @@ public class NhanVien extends javax.swing.JPanel {
         javax.swing.JOptionPane.showMessageDialog(this, "ID nhân viên phải là một số nguyên.");
     }
 }//GEN-LAST:event_findButActionPerformed
+
+    private void clearButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButActionPerformed
+        this.clearInputFields();
+        this.showEmployeeTable();
+    }//GEN-LAST:event_clearButActionPerformed
     
     public void clearInputFields() {
+        idTextField.setText("");
         nameTextField.setText("");
         emailTextField.setText("");
         phoneTextField.setText("");
@@ -573,6 +593,7 @@ public class NhanVien extends javax.swing.JPanel {
     private javax.swing.JButton ThemBut;
     private javax.swing.JButton XemBut;
     private javax.swing.JButton XoaBut;
+    private javax.swing.JButton clearBut;
     private javax.swing.JTextField emailTextField;
     private javax.swing.JButton findBut;
     private javax.swing.JTextField findTextField;

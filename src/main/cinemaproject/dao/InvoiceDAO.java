@@ -3,13 +3,13 @@ package main.cinemaproject.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import main.cinemaproject.database.JBDCUntil;
+import main.cinemaproject.utils.JBDCUtils;
 import main.cinemaproject.model.Invoice;
 
 public class InvoiceDAO {
     private Connection connection;
     public InvoiceDAO(Connection connection) {
-        this.connection = JBDCUntil.getConnection();
+        this.connection = JBDCUtils.getConnection();
     }
     
     public int addInvoice(Invoice invoice) {

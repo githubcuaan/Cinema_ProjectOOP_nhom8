@@ -12,8 +12,6 @@ import main.cinemaproject.view.Login.swing.MyTextField;
 import main.cinemaproject.view.Login.swing.MyPasswordField;
 import javax.swing.JOptionPane;
 
-import java.sql.Connection;
-import main.cinemaproject.database.JBDCUntil;
 import main.cinemaproject.model.Customers;
 import main.cinemaproject.model.Employee;
 import java.awt.event.ActionEvent;
@@ -181,13 +179,10 @@ public class PanelLoginNRegister extends javax.swing.JLayeredPane {
     //hàm đăng ký
     private void register(String username, String email, String password) {
         try {
-            authController.registerCustomer(username, email, password);
             boolean isRegistered = authController.registerCustomer(username, email, password);
             if (isRegistered) {
                 JOptionPane.showMessageDialog(this, "Đăng ký thành công!");
                 // TODO: Chuyển đến màn hình đăng nhập hoặc màn hình chính của khách hàng
-            } else {
-                JOptionPane.showMessageDialog(this, "Đăng ký thất bại. Vui lòng thử lại.");
             }
         } catch (Exception e) {
             e.printStackTrace();

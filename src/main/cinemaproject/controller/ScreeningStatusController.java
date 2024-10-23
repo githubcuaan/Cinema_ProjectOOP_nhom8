@@ -2,7 +2,7 @@ package main.cinemaproject.controller;
 
 import main.cinemaproject.dao.ScreeningStatusDAO;
 import main.cinemaproject.model.ScreeningStatus;
-import main.cinemaproject.database.JBDCUntil;
+import main.cinemaproject.utils.JBDCUtils;
 import main.cinemaproject.model.ScreeningInfo;
 import java.sql.Connection;
 
@@ -12,7 +12,7 @@ public class ScreeningStatusController {
     private ScreeningStatusDAO screeningStatusDAO;
 
     public ScreeningStatusController() {
-        Connection connection = JBDCUntil.getConnection();
+        Connection connection = JBDCUtils.getConnection();
         this.screeningStatusDAO = new ScreeningStatusDAO(connection);
     }
 

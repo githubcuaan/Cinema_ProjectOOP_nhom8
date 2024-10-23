@@ -7,7 +7,7 @@ import main.cinemaproject.model.MovieStatistics;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import main.cinemaproject.database.JBDCUntil;
+import main.cinemaproject.utils.JBDCUtils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.ParseException;

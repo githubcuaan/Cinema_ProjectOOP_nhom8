@@ -7,13 +7,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.Statement;
-import main.cinemaproject.database.JBDCUntil;
+import main.cinemaproject.utils.JBDCUtils;
 
 public class CustomersDAO implements ICustomerDAO {
     private Connection connection;
 
     public CustomersDAO() {
-        this.connection = JBDCUntil.getConnection();
+        this.connection = JBDCUtils.getConnection();
     }
 
     public CustomersDAO(Connection connection) {
@@ -218,7 +218,7 @@ public class CustomersDAO implements ICustomerDAO {
     public ArrayList<Customers> searchCustomers(String searchTerm) {
         ArrayList<Customers> filteredCustomers = new ArrayList<>();
         String sql = "SELECT * FROM customers WHERE name LIKE ? OR email LIKE ? OR phone LIKE ?";
-        try (Connection conn = JBDCUntil.getConnection();
+        try (Connection conn = JBDCUtils.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             String likeSearchTerm = "%" + searchTerm + "%";
             pstmt.setString(1, likeSearchTerm);
@@ -228,6 +228,11 @@ public class CustomersDAO implements ICustomerDAO {
             while (rs.next()) {
                 Customers customer = new Customers();
                 // Set customer properties from ResultSet
+                customer.setId(rs.getInt("id")); // Assuming there's an 'id' column
+                customer.setName(rs.getString("name"));
+                customer.setEmail(rs.getString("email"));
+                customer.setPhone(rs.getString("phone"));
+                customer.setMembershipLevel(rs.getString("membershiplevel")); // Assuming there's a 'membership_level' column
                 filteredCustomers.add(customer);
             }
         } catch (SQLException e) {
@@ -251,4 +256,5 @@ public class CustomersDAO implements ICustomerDAO {
         }
         return -1;
     }
+
 }

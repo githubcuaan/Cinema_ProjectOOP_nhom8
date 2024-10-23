@@ -2,14 +2,14 @@ package main.cinemaproject.controller;
 
 import java.util.ArrayList;
 import main.cinemaproject.dao.TicketDAO;
-import main.cinemaproject.database.JBDCUntil;
+import main.cinemaproject.utils.JBDCUtils;
 import main.cinemaproject.model.Ticket;
 
 public class TicketController {
     private TicketDAO ticketDAO;
 
     public TicketController() {
-        this.ticketDAO = new TicketDAO(JBDCUntil.getConnection());
+        this.ticketDAO = new TicketDAO(JBDCUtils.getConnection());
     }
 
     public void addTicket(Ticket ticket) {

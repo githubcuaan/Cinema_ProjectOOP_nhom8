@@ -1,13 +1,13 @@
 package main.cinemaproject.controller;
 
-import main.cinemaproject.database.JBDCUntil;
+import main.cinemaproject.utils.JBDCUtils;
 import main.cinemaproject.dao.OrderItemDAO;
 import main.cinemaproject.model.OrderItem;
 import java.sql.Connection;
 import java.sql.SQLException;
 public class OrderItemController {
     private OrderItemDAO orderItemDAO;
-    private Connection connection = JBDCUntil.getConnection();
+    private Connection connection = JBDCUtils.getConnection();
 
     public OrderItemController() {
         this.orderItemDAO = new OrderItemDAO(connection);

@@ -3,6 +3,8 @@ package main.cinemaproject.view.Admin;
 import java.util.ArrayList;
 import main.cinemaproject.model.Customers;
 import main.cinemaproject.controller.CustomerController;
+import main.cinemaproject.utils.ValidationUtils;
+
 /**
  *
  * @author DinhAn
@@ -45,10 +47,7 @@ public class KhachHang extends javax.swing.JPanel {
         
         // Tự động điều chỉnh kích thước các cột
         BangKhachHang.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        
-        // Tự động điều chỉnh chiều cao hàng
-        BangKhachHang.setRowHeight(BangKhachHang.getRowHeight() + 5);
-        
+
         // Tạo một renderer tùy chỉnh để wrap text
         javax.swing.table.DefaultTableCellRenderer renderer = new javax.swing.table.DefaultTableCellRenderer() {
             @Override
@@ -104,6 +103,9 @@ public class KhachHang extends javax.swing.JPanel {
 
         jLabel1.setText("ID");
 
+        idTextField.setEditable(false);
+     
+
         jLabel2.setText("Họ Tên");
 
         jLabel3.setText("Email");
@@ -114,12 +116,15 @@ public class KhachHang extends javax.swing.JPanel {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        
+
         jLabel6.setText("Tài Khoản");
 
         jLabel7.setText("Mật Khẩu");
 
         CustomersMemberLevel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sắt Vụn ", "Nhôm", "Vàng", "Kim Cương" }));
         
+
         ClearBut.setText("Clear");
         ClearBut.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         ClearBut.addActionListener(new java.awt.event.ActionListener() {
@@ -258,6 +263,7 @@ public class KhachHang extends javax.swing.JPanel {
                 return types [columnIndex];
             }
         });
+        BangKhachHang.setRowHeight(BangKhachHang.getRowHeight() + 5);
         jScrollPane1.setViewportView(BangKhachHang);
 
         
@@ -333,6 +339,15 @@ public class KhachHang extends javax.swing.JPanel {
             return;
         }
 
+        if (!ValidationUtils.isValidEmail(email)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Email không hợp lệ.");
+            return;
+        }
+
+        if (!ValidationUtils.isValidPhoneNumber(phone)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ.");
+            return;
+        }
         // Tạo đối tượng Customer mới
         Customers newCustomer = new Customers();
         newCustomer.setName(name);
@@ -451,6 +466,17 @@ public class KhachHang extends javax.swing.JPanel {
             return;
         }
 
+        //kiểm tra email hợp lệ
+        if (!ValidationUtils.isValidEmail(email)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Email không hợp lệ.");
+            return;
+        }   
+        
+        //kiểm tra số điện thoại hợp lệ
+        if(!ValidationUtils.isValidPhoneNumber(phone)){
+            javax.swing.JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ.");
+            return;
+        }
         try {
             // Create an updated Customer object
             Customers updatedCustomer = new Customers(customerId, name, email, phone, username, password, membershipLevel);
@@ -518,6 +544,7 @@ public class KhachHang extends javax.swing.JPanel {
     
     //phương thức clear thông tin trong các trường nhập liệu
     public void clearInputFields() {
+        idTextField.setText("");
         nameTextField.setText("");
         emailTextField.setText("");
         phoneTextField.setText("");

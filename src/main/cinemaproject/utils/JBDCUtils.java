@@ -1,5 +1,5 @@
 
-package main.cinemaproject.database;
+package main.cinemaproject.utils;
 
 /**
  *
@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class JBDCUntil {
+public class JBDCUtils {
     public static Connection getConnection()
     {
         Connection c = null;
