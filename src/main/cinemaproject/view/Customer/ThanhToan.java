@@ -342,7 +342,7 @@ public class ThanhToan extends javax.swing.JPanel {
         newInvoice.setCustomer_id(Integer.parseInt(nameText.getText()));
         newInvoice.setTotal_amount(Double.parseDouble(TongTienVe.getText()));
         newInvoice.setPurchase_date(new Date());
-        // int invoiceId = invoiceController.addInvoice(newInvoice);
+         int invoiceId = invoiceController.addInvoice(newInvoice);
 
         // Tạo vé mới cho mỗi ghế đã chọn
         for (String seat : selectedSeats) {
@@ -369,7 +369,7 @@ public class ThanhToan extends javax.swing.JPanel {
         newTicket.setMovieId(movieId);
         newTicket.setCustomerId(customerId);
         newTicket.setPrice(price);
-//        newTicket.setPurchaseDate(purchaseDate);
+        newTicket.setPurchaseDate(purchaseDate);
         newTicket.setSeatNumber(seatNumber);
         newTicket.setInvoiceId(invoiceId);
         

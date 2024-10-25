@@ -8,12 +8,13 @@ public class Ticket {
     private String purchaseDate;  // Định dạng yyyy-mm-dd
     private String seatNumber;  // Số ghế ngồi
     private int invoiceId;
+    private int screeningId; //thêm mã đang chiếu để truy vấn số ghế đặt.
 
     // Constructor không tham số
     public Ticket() {}
 
     // Constructor có tham số
-    public Ticket(int id, int movieId, int customerId, double price, String purchaseDate, String seatNumber, int invoiceId) {
+    public Ticket(int id, int movieId, int customerId, double price, String purchaseDate, String seatNumber, int invoiceId, int screeningId) {
         this.id = id;
         this.movieId = movieId;
         this.customerId = customerId;
@@ -21,6 +22,7 @@ public class Ticket {
         this.purchaseDate = purchaseDate;
         this.seatNumber = seatNumber;
         this.invoiceId = invoiceId;
+        this.screeningId = screeningId;
     }
 
     // Getter và Setter
@@ -80,6 +82,15 @@ public class Ticket {
         this.invoiceId = invoiceId;
     }
 
+    public int getScreeningId() {
+        return screeningId;
+    }
+
+    public void setScreeningId(int screeningId) {
+        this.screeningId = screeningId;
+    }
+    
+    
     // Override phương thức toString() để in thông tin vé
     @Override
     public String toString() {

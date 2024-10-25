@@ -1,6 +1,7 @@
 package main.cinemaproject.controller;
 
 import java.util.ArrayList;
+
 import main.cinemaproject.dao.TicketDAO;
 import main.cinemaproject.utils.JBDCUtils;
 import main.cinemaproject.model.Ticket;
@@ -26,5 +27,9 @@ public class TicketController {
 
     public void deleteTicket(int id) {
         ticketDAO.deleteTicket(id);
+    }
+
+    public ArrayList<String> getReservedSeats(int screeningId) {
+        return ticketDAO.getReservedSeats(screeningId);
     }
 }

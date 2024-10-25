@@ -1,4 +1,3 @@
-
 package main.cinemaproject.view.Customer;
 
 import java.awt.Color;
@@ -10,6 +9,10 @@ import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
+import javax.swing.JOptionPane;
+
+
+import main.cinemaproject.controller.TicketController;
 
 /**
  *
@@ -17,7 +20,13 @@ import javax.swing.JTabbedPane;
  */
 public class ChonGheNgoi extends javax.swing.JPanel {
     
+    private int screeningId; // Thêm biến để lưu screeningId
     private List<String> selectedSeats = new ArrayList<>();
+    private List<String> reservedSeats = new ArrayList<>();
+
+    private TicketController ticketController = new TicketController();
+
+
     /**
      * Creates new form ChonGheNgoi
      */
@@ -399,7 +408,7 @@ public class ChonGheNgoi extends javax.swing.JPanel {
     }
 
     private void GheA3ActionPerformed(java.awt.event.ActionEvent evt) {
-            handleSeatSelection(GheA3);
+        handleSeatSelection(GheA3);
     }
 
     private void GheA4ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -471,15 +480,111 @@ public class ChonGheNgoi extends javax.swing.JPanel {
     }
 
     private void handleSeatSelection(JButton seatButton) {
-        if (selectedSeats.contains(seatButton.getText())) {
-            selectedSeats.remove(seatButton.getText());
+        String seatNumber = seatButton.getText();
+        
+        // Kiểm tra xem ghế đã được đặt hay chưa
+        if (reservedSeats.contains(seatNumber)) {
+            // Hiển thị thông báo nếu ghế đã được đặt
+            JOptionPane.showMessageDialog(this, "Ghế " + seatNumber + " đã được đặt.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return; // Không cho phép chọn ghế đã đặt
+        }
+
+        // Nếu ghế chưa được đặt, cho phép chọn
+        if (selectedSeats.contains(seatNumber)) {
+            selectedSeats.remove(seatNumber);
             seatButton.setBackground(null);
         } else {
-            selectedSeats.add(seatButton.getText());
+            selectedSeats.add(seatNumber);
             seatButton.setBackground(Color.GREEN);
         }
     }
 
+    private void highlightReservedSeats() {
+        for (String seat : reservedSeats) {
+            // Tô đỏ ghế đã đặt
+            switch (seat) {
+                case "A1":
+                    GheA1.setBackground(Color.RED);
+                    break;
+                case "A2":
+                    GheA2.setBackground(Color.RED);
+                    break;
+                case "A3":
+                    GheA3.setBackground(Color.RED);
+                    break;
+                case "A4":
+                    GheA4.setBackground(Color.RED);
+                    break;
+                case "A5":
+                    GheA5.setBackground(Color.RED);
+                    break;
+                case "A6":
+                    GheA6.setBackground(Color.RED);
+                    break;
+                case "A7":
+                    GheA7.setBackground(Color.RED);
+                    break;
+                case "A8":
+                    GheA8.setBackground(Color.RED);
+                    break;
+                case "B1":
+                    GheB1.setBackground(Color.RED);
+                    break;
+                case "B2":
+                    GheB2.setBackground(Color.RED);
+                    break;
+                case "B3":
+                    GheB3.setBackground(Color.RED);
+                    break;
+                case "B4":
+                    GheB4.setBackground(Color.RED);
+                    break;
+                case "B5":
+                    GheB5.setBackground(Color.RED);
+                    break;
+                case "B6":
+                    GheB6.setBackground(Color.RED);
+                    break;
+                case "B7":
+                    GheB7.setBackground(Color.RED);
+                    break;
+                case "B8":
+                    GheB8.setBackground(Color.RED);
+                    break;
+                case "C1":
+                    GheC1.setBackground(Color.RED);
+                    break;
+                case "C2":
+                    GheC2.setBackground(Color.RED);
+                    break;
+                case "C3":
+                    GheC3.setBackground(Color.RED);
+                    break;
+                case "C4":
+                    GheC4.setBackground(Color.RED);
+                    break;
+            }
+        }
+    }
+    
+    // Phương thức để cập nhật danh sách ghế đã đặt
+    public void setReservedSeats(List<String> reservedSeats) {
+        this.reservedSeats = reservedSeats;
+        highlightReservedSeats();
+    }
+
+    // Phương thức để tải danh sách ghế đã đặt từ TicketController
+    public void loadReservedSeats(int screeningId) {
+        // Lấy danh sách ghế đã đặt từ TicketController
+        reservedSeats = ticketController.getReservedSeats(screeningId);
+        // Cập nhật giao diện người dùng để tô đỏ các ghế đã đặt
+        setReservedSeats(reservedSeats);
+    }
+
+    public void setScreeningId(int screeningId) {
+        this.screeningId = screeningId;
+        loadReservedSeats(screeningId); // Gọi loadReservedSeats khi screeningId được thiết lập
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton GheA1;
     private javax.swing.JButton GheA2;

@@ -241,6 +241,8 @@ public class LichChieuPhim extends javax.swing.JPanel {
                 thanhToan.setScreeningStatusId(screeningStatusId);
                 
                 ChonGheNgoi chonGheNgoi = (ChonGheNgoi) tabbedPane.getComponentAt(tabIndex);
+                chonGheNgoi.setScreeningId(screeningStatusId);
+                System.out.println(screeningStatusId);
                 chonGheNgoi.setInfo(theater, selectedMovie, showtime, formattedDate);
             } else {
                 JOptionPane.showMessageDialog(this, "Screening status ID not found.");

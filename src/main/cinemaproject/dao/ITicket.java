@@ -8,4 +8,5 @@ public interface ITicket {
     public ArrayList<Ticket> getAllTickets();
     public void updateTicket(Ticket ticket);
     public void deleteTicket(int id);
+    public ArrayList<String> getReservedSeats(int screeningId);
 }

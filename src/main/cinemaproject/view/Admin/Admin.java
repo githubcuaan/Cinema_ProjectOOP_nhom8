@@ -35,7 +35,7 @@ public class Admin extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         ThongTinCaNhan = new main.cinemaproject.view.Admin.conponents.Button4Cover();
         jLabel7 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        adminName = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         TabTong = new javax.swing.JTabbedPane();
         khachHang1 = new main.cinemaproject.view.Admin.KhachHang();
@@ -219,8 +219,8 @@ public class Admin extends javax.swing.JFrame {
                 .addComponent(jLabel7))
         );
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel9.setText("Admin");
+        adminName.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        adminName.setText("Admin");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -246,7 +246,7 @@ public class Admin extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(66, 66, 66)
-                .addComponent(jLabel9)
+                .addComponent(adminName)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -255,7 +255,7 @@ public class Admin extends javax.swing.JFrame {
                 .addGap(56, 56, 56)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel9)
+                .addComponent(adminName)
                 .addGap(108, 108, 108)
                 .addComponent(KhachHangBut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -381,6 +381,7 @@ public class Admin extends javax.swing.JFrame {
     private main.cinemaproject.view.Admin.conponents.Button4Cover SanPhamBut;
     private javax.swing.JTabbedPane TabTong;
     private main.cinemaproject.view.Admin.conponents.Button4Cover ThongTinCaNhan;
+    private javax.swing.JLabel adminName;
     private main.cinemaproject.view.Admin.DoanhThu doanhThu1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -390,7 +391,6 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private main.cinemaproject.view.Admin.KhachHang khachHang1;
