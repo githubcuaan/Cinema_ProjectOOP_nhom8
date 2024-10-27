@@ -1,13 +1,9 @@
 package main.cinemaproject.view.Customer;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JFrame;
-import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
 import javax.swing.JOptionPane;
 
@@ -384,6 +380,12 @@ public class ChonGheNgoi extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nextButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButActionPerformed
+        // Kiểm tra xem có ghế nào được chọn không
+        if (selectedSeats.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn ít nhất một ghế trước khi tiếp tục.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return; // Thoát nếu không có ghế nào được chọn
+        }
+
         int tabIndex = 2;
         JTabbedPane tabbedPane = (JTabbedPane) this.getParent();
         tabbedPane.setSelectedIndex(tabIndex);

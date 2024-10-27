@@ -43,10 +43,6 @@ public class ScreeningStatusController {
         return screeningStatusDAO.getAllTheaters();
     }
 
-    public List<ScreeningStatus> getScreeningStatusByMovieId(int movieId) {
-        return screeningStatusDAO.getScreeningStatusByMovieId(movieId);
-    }
-
     public int getScreeningStatusId(String theater, String date, String showtime) {
         return screeningStatusDAO.getScreeningStatusId(theater, date, showtime);
     }

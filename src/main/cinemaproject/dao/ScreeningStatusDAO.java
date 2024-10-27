@@ -38,9 +38,7 @@ public class ScreeningStatusDAO implements IScreeningStatusDAO {
     public ScreeningStatus getScreeningById(int id) {
         String sql = "SELECT * FROM screening_status WHERE id = ?";
         ScreeningStatus screeningStatus = null;
-        try (Connection conn = connection;
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) { // Sử dụng PreparedStatement trực tiếp
             pstmt.setInt(1, id);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
@@ -179,32 +177,6 @@ public class ScreeningStatusDAO implements IScreeningStatusDAO {
             e.printStackTrace();
         }
         return theaters;
-    }
-
-    public List<ScreeningStatus> getScreeningStatusByMovieId(int movieId) {
-        List<ScreeningStatus> screeningStatusList = new ArrayList<>();
-        String sql = "SELECT * FROM screening_status WHERE movie_id = ?";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setInt(1, movieId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    ScreeningStatus screeningStatus = new ScreeningStatus(
-                        rs.getInt("id"),
-                        rs.getString("theater"),
-                        rs.getInt("movie_id"), 
-                        rs.getTime("showtime"),
-                        rs.getDate("showdate"),
-                        rs.getDouble("ticket_price"),
-                        rs.getInt("seats_available"),
-                        rs.getInt("total_seats")
-                    );
-                    screeningStatusList.add(screeningStatus);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return screeningStatusList;
     }
 
     public int getScreeningStatusId( String theater, String date, String showtime) {

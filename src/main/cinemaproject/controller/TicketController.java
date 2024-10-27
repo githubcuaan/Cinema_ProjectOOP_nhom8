@@ -13,8 +13,8 @@ public class TicketController {
         this.ticketDAO = new TicketDAO(JBDCUtils.getConnection());
     }
 
-    public void addTicket(Ticket ticket) {
-        ticketDAO.addTicket(ticket);
+    public boolean addTicket(Ticket ticket) {
+        return ticketDAO.addTicket(ticket);
     }
 
     public ArrayList<Ticket> getAllTickets() {

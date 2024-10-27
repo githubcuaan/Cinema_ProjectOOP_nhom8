@@ -1,25 +1,31 @@
 package main.cinemaproject.view.Customer;
 
 import java.util.Date;
-import main.cinemaproject.model.OrderItem;
-import main.cinemaproject.controller.*;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JTabbedPane;
+
+import main.cinemaproject.model.OrderItem;
+import main.cinemaproject.controller.*;
 import main.cinemaproject.model.Invoice;
 import main.cinemaproject.model.Movie;
 import main.cinemaproject.model.ScreeningStatus;
 import main.cinemaproject.model.Ticket;
+import java.text.SimpleDateFormat;
 /**
  *
  * @author DinhAn
  */
 public class ThanhToan extends javax.swing.JPanel {
     private int screeningStatusId;
+    private int movieId;
     private List<String> selectedSeats;
     private MovieController movieController;
     private ScreeningStatusController screeningStatusController;
     private double tongTienHangTotal = 0; // Biến lưu tổng tiền hàng
+
+    private CustomerController customerController;
     private TicketController ticketController;
     private OrderItemController orderItemController;
     private InvoiceController invoiceController;
@@ -30,6 +36,10 @@ public class ThanhToan extends javax.swing.JPanel {
         initComponents();
         movieController = new MovieController();
         screeningStatusController = new ScreeningStatusController();
+        invoiceController = new InvoiceController();
+        customerController = new CustomerController();
+        ticketController = new TicketController();
+        orderItemController = new OrderItemController();
     }
 
     //phương thức điền vào các thông tin phim dựa trên screeningStatusId
@@ -45,6 +55,9 @@ public class ThanhToan extends javax.swing.JPanel {
         gioChieu.setText(screeningStatus.getShowtime().toString());
         rap.setText(screeningStatus.getTheater());
         giaVe1.setText(String.valueOf(screeningStatus.getPrice()));
+
+        //gán giá trị cho movieId
+        movieId = screeningStatus.getMovieId();
     }
     
     @SuppressWarnings("unchecked")
@@ -334,46 +347,87 @@ public class ThanhToan extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_emailTextActionPerformed
     
-    private void ThanhToanActionPerformed(java.awt.event.ActionEvent evt)
-    {
-    try {
-        // Tạo hóa đơn mới
-        Invoice newInvoice = new Invoice();
-        newInvoice.setCustomer_id(Integer.parseInt(nameText.getText()));
-        newInvoice.setTotal_amount(Double.parseDouble(TongTienVe.getText()));
-        newInvoice.setPurchase_date(new Date());
-         int invoiceId = invoiceController.addInvoice(newInvoice);
+    //chức năng thanh toán
+    private void ThanhToanActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            // Kiểm tra thông tin người dùng
+            if (nameText.getText().isEmpty() || phoneText.getText().isEmpty() || emailText.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin khách hàng.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
-        // Tạo vé mới cho mỗi ghế đã chọn
-        for (String seat : selectedSeats) {
-//            createNewTicket(screeningStatusId, Integer.parseInt(nameText.getText()), Double.parseDouble(giaVe1.getText()), new Date(), seat, invoiceId);
+            // Tạo hóa đơn mới
+            Invoice newInvoice = new Invoice();
+            int customerId = customerController.getCustomerIdByUsername(nameText.getText());
+
+            if (customerId == -1) {
+                JOptionPane.showMessageDialog(this, "Khách hàng không tồn tại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            newInvoice.setCustomer_id(customerId);
+            double tongTienVe = Double.parseDouble(TongTienVe.getText());
+            double tongTienHang = tongTienHangTotal;
+            newInvoice.setTotal_amount(tongTienVe + tongTienHang);
+            newInvoice.setPurchase_date(new Date());
+            int invoiceId = invoiceController.addInvoice(newInvoice);   
+
+            if (invoiceId == 0) {
+                JOptionPane.showMessageDialog(this, "Lỗi khi tạo hóa đơn. Vui lòng thử lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return; // Thoát nếu không thành công
+            }
+
+            // Kiểm tra xem screeningStatusId có hợp lệ không
+            if (screeningStatusId <= 0) {
+                JOptionPane.showMessageDialog(this, "Lỗi: ID buổi chiếu không hợp lệ.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return; // Thoát nếu ID không hợp lệ
+            }
+
+            // Tạo vé mới cho mỗi ghế đã chọn
+            for (String seat : selectedSeats) {
+                boolean ticketCreated = createNewTicket(screeningStatusId, movieId, customerId, Double.parseDouble(giaVe1.getText()), new Date(), seat, invoiceId);
+                if (!ticketCreated) {
+                    JOptionPane.showMessageDialog(this, "Lỗi khi tạo vé cho ghế: " + seat, "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return; // Thoát nếu không thành công
+                }
+            }
+
+            // Tạo các sản phẩm trong hóa đơn
+            DefaultTableModel model = (DefaultTableModel) BangThanhToan.getModel();
+            for (int i = 0; i < model.getRowCount(); i++) {
+                addOrderItem(i, invoiceId, movieId, (int) model.getValueAt(i, 1), (double) model.getValueAt(i, 2));
+            }
+
+            // Tạo một optionPane trước khi thanh toán
+            int totalAmount = (int) (tongTienVe + tongTienHang);
+            int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn thanh toán " + totalAmount + " VND không?", "Xác nhận thanh toán", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                // Thông báo thành công
+                JOptionPane.showMessageDialog(null, "Thanh toán thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                navigateToHomePage(); // Chuyển hướng đến trang ban đầu
+            } else {
+                return; // Thoát nếu không đồng ý thanh toán
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Vui lòng kiểm tra lại thông tin nhập vào.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Lỗi trong quá trình thanh toán. Vui lòng thử lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
-
-        // Tạo các sản phẩm trong hóa đơn
-        DefaultTableModel model = (DefaultTableModel) BangThanhToan.getModel();
-        for (int i = 0; i < model.getRowCount(); i++) {
-//            addOrderItem(i, invoiceId, movieController.getMovieById(screeningStatusId).getId(), (int) model.getValueAt(i, 1), (double) model.getValueAt(i, 2));
-        }
-
-        // Thông báo thành công
-        JOptionPane.showMessageDialog(null, "Thanh toán thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-    } catch (Exception e) {
-        e.printStackTrace();
-        // Thông báo lỗi
-        JOptionPane.showMessageDialog(null, "Lỗi trong quá trình thanh toán. Vui lòng thử lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-    }
     }
 
-    public void createNewTicket(int movieId, int customerId, double price, Date purchaseDate, String seatNumber, int invoiceId) {
+    public boolean createNewTicket(int screeningId, int movieId, int customerId, double price, Date purchaseDate, String seatNumber, int invoiceId) {
         Ticket newTicket = new Ticket();
+        newTicket.setScreeningId(screeningId);
         newTicket.setMovieId(movieId);
         newTicket.setCustomerId(customerId);
         newTicket.setPrice(price);
-        newTicket.setPurchaseDate(purchaseDate);
+        newTicket.setPurchaseDate(new SimpleDateFormat("yyyy-MM-dd").format(purchaseDate));
         newTicket.setSeatNumber(seatNumber);
         newTicket.setInvoiceId(invoiceId);
         
-        ticketController.addTicket(newTicket);
+        return ticketController.addTicket(newTicket); // Giả sử phương thức này trả về true nếu thành công
     }
 
     public void addOrderItem(int id, int invoiceId, int productId, int quantity, double price) {
@@ -387,11 +441,13 @@ public class ThanhToan extends javax.swing.JPanel {
         orderItemController.addOrderItem(newOrderItem);
     }
 
+    //id chiếu phim được lấy từ lichChieuPhim
     public void setScreeningStatusId(int screeningStatusId) {
         this.screeningStatusId = screeningStatusId;
         fillMovieInfo(screeningStatusId); 
     }
 
+    //đặt giá trị cho các ghế được đặt từ chonGhe
     public void setSelectedSeats(List<String> selectedSeats) {
         this.selectedSeats = selectedSeats;
         soGhe1.setText(String.join(", ", selectedSeats));
@@ -411,6 +467,14 @@ public class ThanhToan extends javax.swing.JPanel {
         double tongTienHang = soLuong * giaBan; // Tính tổng tiền cho sản phẩm mới
         tongTienHangTotal += tongTienHang; // Cộng dồn vào tổng tiền hàng
         TongTienHang.setText(String.valueOf(tongTienHangTotal)); // Cập nhật nhãn TongTienHang
+    }
+   
+    //phươn thức chuyển về trang chủ.
+    public void navigateToHomePage()
+    {
+        JTabbedPane tabbedPane = (JTabbedPane) this.getParent();
+        int homeTabIndex = 0;
+        tabbedPane.setSelectedIndex(homeTabIndex);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable BangThanhToan;

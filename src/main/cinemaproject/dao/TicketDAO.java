@@ -15,7 +15,7 @@ public class TicketDAO implements ITicket {
     }
 
     @Override
-    public void addTicket(Ticket ticket) {
+    public boolean addTicket(Ticket ticket) {
         String sql = "INSERT INTO tickets (customer_id, movie_id, screening_id, seat_number, price, purchase_date) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, ticket.getCustomerId());
@@ -24,9 +24,10 @@ public class TicketDAO implements ITicket {
             pstmt.setString(4, ticket.getSeatNumber());
             pstmt.setDouble(5, ticket.getPrice());
             pstmt.setString(6, ticket.getPurchaseDate());
-            pstmt.executeUpdate();
+            return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
 

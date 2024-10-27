@@ -13,7 +13,7 @@ public class InvoiceController {
         this.invoiceDAO = new InvoiceDAO(connection);
     }
 
-    public void addInvoice(Invoice invoice) {
-        invoiceDAO.addInvoice(invoice);
+    public int addInvoice(Invoice invoice) {
+        return invoiceDAO.addInvoice(invoice);
     }
 }

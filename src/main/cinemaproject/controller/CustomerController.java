@@ -5,6 +5,7 @@ import main.cinemaproject.model.Customers;
 import main.cinemaproject.utils.JBDCUtils;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CustomerController {
@@ -89,5 +90,27 @@ public class CustomerController {
     public ArrayList<Customers> searchCustomers(String searchTerm) {
         CustomersDAO customersDAO = new CustomersDAO();
         return customersDAO.searchCustomers(searchTerm);
+    }
+
+    //lấy id khách hàng theo username
+    public int getCustomerIdByUsername(String username)
+    {
+        Connection connection = null;
+        try
+        {
+            connection = JBDCUtils.getConnection();
+            CustomersDAO customersDAO = new CustomersDAO();
+            int customerId = customersDAO.getCustomerIdByUsername(username);
+            return customerId;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return -1;
+        }
+        finally
+        {
+            JBDCUtils.closeConnection(connection);
+        }
     }
 }
