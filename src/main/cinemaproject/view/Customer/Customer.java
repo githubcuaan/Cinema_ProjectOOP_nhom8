@@ -1,6 +1,6 @@
-
 package main.cinemaproject.view.Customer;
 
+import javax.swing.JDialog;
 import main.cinemaproject.view.Admin.*;
 import main.cinemaproject.view.Login.LoginFrame.LoginFrame;
 
@@ -29,7 +29,7 @@ public class Customer extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         ThongTinCaNhan = new main.cinemaproject.view.Admin.conponents.Button4Cover();
-        jLabel1 = new javax.swing.JLabel();
+        info = new javax.swing.JLabel();
         DangXuat = new main.cinemaproject.view.Admin.conponents.Button4Cover();
         jLabel2 = new javax.swing.JLabel();
         phimDangChieu = new main.cinemaproject.view.Admin.conponents.Button4Cover();
@@ -54,9 +54,14 @@ public class Customer extends javax.swing.JFrame {
         jLabel6.setText("Hi!");
 
         ThongTinCaNhan.setPreferredSize(new java.awt.Dimension(200, 25));
+        ThongTinCaNhan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ThongTinCaNhanMouseClicked(evt);
+            }
+        });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/icons8_test_account_25px.png"))); // NOI18N
-        jLabel1.setText("Thông Tin Cá Nhân");
+        info.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/icons8_test_account_25px.png"))); // NOI18N
+        info.setText("Thông Tin Cá Nhân");
 
         javax.swing.GroupLayout ThongTinCaNhanLayout = new javax.swing.GroupLayout(ThongTinCaNhan);
         ThongTinCaNhan.setLayout(ThongTinCaNhanLayout);
@@ -64,14 +69,14 @@ public class Customer extends javax.swing.JFrame {
             ThongTinCaNhanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ThongTinCaNhanLayout.createSequentialGroup()
                 .addContainerGap(36, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(info)
                 .addGap(34, 34, 34))
         );
         ThongTinCaNhanLayout.setVerticalGroup(
             ThongTinCaNhanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ThongTinCaNhanLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1))
+                .addComponent(info))
         );
 
         DangXuat.setPreferredSize(new java.awt.Dimension(200, 25));
@@ -226,6 +231,12 @@ public class Customer extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_DangXuatMouseClicked
 
+    private void ThongTinCaNhanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ThongTinCaNhanMouseClicked
+        DoiThongTin doiThongTin = new DoiThongTin();
+        doiThongTin.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); // Đảm bảo rằng nó không đóng cửa sổ cha
+        doiThongTin.setVisible(true);
+    }//GEN-LAST:event_ThongTinCaNhanMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -269,7 +280,7 @@ public class Customer extends javax.swing.JFrame {
     private main.cinemaproject.view.Admin.conponents.Button4Cover button4Cover4;
     private main.cinemaproject.view.Customer.ChonDoAn chonDoAn1;
     private main.cinemaproject.view.Customer.ChonGheNgoi chonGheNgoi1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel info;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

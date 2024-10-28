@@ -117,7 +117,7 @@ public class Admin extends javax.swing.JFrame {
             .addGroup(KhachHangButLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(jLabel2)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         KhachHangButLayout.setVerticalGroup(
             KhachHangButLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
