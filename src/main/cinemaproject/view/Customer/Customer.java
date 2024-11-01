@@ -234,6 +234,7 @@ public class Customer extends javax.swing.JFrame {
     private void ThongTinCaNhanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ThongTinCaNhanMouseClicked
         DoiThongTin doiThongTin = new DoiThongTin();
         doiThongTin.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); // Đảm bảo rằng nó không đóng cửa sổ cha
+        doiThongTin.setUserId(usernameString);
         doiThongTin.setVisible(true);
     }//GEN-LAST:event_ThongTinCaNhanMouseClicked
 

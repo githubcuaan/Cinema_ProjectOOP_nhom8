@@ -1,9 +1,11 @@
-package main.cinemaproject.view.Customer;
+package main.cinemaproject.view.Admin;
 
+import main.cinemaproject.view.Customer.*;
 import javax.swing.JOptionPane;
 
-import main.cinemaproject.controller.CustomerController;
+import main.cinemaproject.controller.EmployeeController;
 import main.cinemaproject.model.Customers;
+import main.cinemaproject.model.Employee;
 
 /**
  *
@@ -12,14 +14,14 @@ import main.cinemaproject.model.Customers;
 public class DoiThongTin extends javax.swing.JFrame {
     
     private int userId;
-    private Customers user;
-    private CustomerController customerController;
+    private Employee user;
+    private EmployeeController employeeController;
     /**
      * Creates new form DoiThongTin
      */
     public DoiThongTin() {
         initComponents();
-        customerController = new CustomerController();
+        employeeController = new EmployeeController();
         fill();
     }
 
@@ -283,6 +285,7 @@ public class DoiThongTin extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(DoiThongTin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -294,7 +297,7 @@ public class DoiThongTin extends javax.swing.JFrame {
     
     public void setUserId(String username)
     {
-        this.userId = customerController.getCustomerIdByUsername(username);
+        this.userId = employeeController.getCustomerIdByUsername(username);
         fill();
     }
     
