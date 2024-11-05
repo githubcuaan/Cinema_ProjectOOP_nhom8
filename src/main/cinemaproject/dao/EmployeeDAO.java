@@ -167,4 +167,20 @@ public class EmployeeDAO implements IEmployeeDAO{
         }
         return false;
     }
+
+    @Override
+    public int getIdByUsername(String username)
+    {
+        String query = "SELECT id FROM employees WHERE username = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 }

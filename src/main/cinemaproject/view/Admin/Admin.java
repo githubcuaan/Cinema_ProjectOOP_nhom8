@@ -1,6 +1,7 @@
 
 package main.cinemaproject.view.Admin;
 
+import javax.swing.JDialog;
 import main.cinemaproject.view.Login.LoginFrame.LoginFrame;
 
 /**
@@ -8,10 +9,10 @@ import main.cinemaproject.view.Login.LoginFrame.LoginFrame;
  * @author DinhAn
  */
 public class Admin extends javax.swing.JFrame {
-
-   
-    public Admin() {
+    private String username;
+    public Admin(String username) {
         initComponents();
+        this.username = username;
     }
 
 
@@ -57,6 +58,7 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/icons8_shutdown_25px (1).png"))); // NOI18N
         jLabel8.setText("Đăng Xuất");
 
@@ -82,6 +84,7 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/icons8-employee-48.png"))); // NOI18N
         jLabel1.setText("Nhân Viên");
 
@@ -107,6 +110,7 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/icons8-budget-48.png"))); // NOI18N
         jLabel2.setText("Khách Hàng");
 
@@ -132,6 +136,7 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/icons8-money-48.png"))); // NOI18N
         jLabel3.setText("Doanh Thu");
 
@@ -157,6 +162,7 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/ticket.png"))); // NOI18N
         jLabel4.setText("Sản Phẩm");
 
@@ -176,6 +182,7 @@ public class Admin extends javax.swing.JFrame {
                 .addComponent(jLabel4))
         );
 
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/icons8-history-48.png"))); // NOI18N
         jLabel5.setText("Lịch Sử");
 
@@ -196,10 +203,17 @@ public class Admin extends javax.swing.JFrame {
         );
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Hi!");
 
         ThongTinCaNhan.setPreferredSize(new java.awt.Dimension(50, 25));
+        ThongTinCaNhan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ThongTinCaNhanMouseClicked(evt);
+            }
+        });
 
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/icons8_test_account_25px.png"))); // NOI18N
         jLabel7.setText("Thông Tin Cá Nhân");
 
@@ -220,6 +234,7 @@ public class Admin extends javax.swing.JFrame {
         );
 
         adminName.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        adminName.setForeground(new java.awt.Color(255, 255, 255));
         adminName.setText("Admin");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -266,7 +281,7 @@ public class Admin extends javax.swing.JFrame {
                 .addComponent(SanPhamBut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LichSuBut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
                 .addComponent(ThongTinCaNhan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(DangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -292,6 +307,8 @@ public class Admin extends javax.swing.JFrame {
 
         TabTong.setBackground(new java.awt.Color(255, 255, 255));
         TabTong.setPreferredSize(new java.awt.Dimension(920, 650));
+
+        khachHang1.setForeground(new java.awt.Color(255, 255, 255));
         TabTong.addTab("tab1", khachHang1);
         TabTong.addTab("tab2", nhanVien1);
         TabTong.addTab("tab3", doanhThu1);
@@ -337,40 +354,16 @@ public class Admin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_DangXuatMouseClicked
 
+    private void ThongTinCaNhanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ThongTinCaNhanMouseClicked
+        DoiThongTinNhanVien doiThongTin = new DoiThongTinNhanVien();
+        doiThongTin.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); // Đảm bảo rằng nó không đóng cửa sổ cha
+        doiThongTin.setUserId(username);
+        doiThongTin.setVisible(true);
+    }//GEN-LAST:event_ThongTinCaNhanMouseClicked
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Admin().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private main.cinemaproject.view.Admin.conponents.Button4Cover DangXuat;

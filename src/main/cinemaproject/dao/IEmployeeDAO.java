@@ -11,4 +11,5 @@ public interface IEmployeeDAO {
     boolean updateEmployee(Employee employee) throws SQLException;
     boolean addEmployee(Employee employee) throws SQLException;
     boolean isUsernameExists(String username) throws SQLException;
+    int getIdByUsername(String username);
 }

@@ -11,7 +11,7 @@ import main.cinemaproject.model.Employee;
  *
  * @author DinhAn
  */
-public class DoiThongTin extends javax.swing.JFrame {
+public class DoiThongTinNhanVien extends javax.swing.JFrame {
     
     private int userId;
     private Employee user;
@@ -19,7 +19,7 @@ public class DoiThongTin extends javax.swing.JFrame {
     /**
      * Creates new form DoiThongTin
      */
-    public DoiThongTin() {
+    public DoiThongTinNhanVien() {
         initComponents();
         employeeController = new EmployeeController();
         fill();
@@ -221,7 +221,7 @@ public class DoiThongTin extends javax.swing.JFrame {
         user.setEmail(diahiEmail);
 
         // Cập nhật
-        boolean success = customerController.updateCustomer(user);
+        boolean success = employeeController.updateEmployee(user);
 
         // Thông báo nếu thành công
         if (success) {
@@ -250,7 +250,7 @@ public class DoiThongTin extends javax.swing.JFrame {
         user.setPassword(pass);
 
         // cap nhat
-        boolean success = customerController.updateCustomer(user);
+        boolean success = employeeController.updateEmployee(user);
 
         if (success) {
             JOptionPane.showMessageDialog(this, "Thông tin khách hàng đã được cập nhật thành công!");
@@ -276,13 +276,13 @@ public class DoiThongTin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DoiThongTin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DoiThongTinNhanVien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DoiThongTin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DoiThongTinNhanVien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DoiThongTin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DoiThongTinNhanVien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DoiThongTin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DoiThongTinNhanVien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -290,20 +290,20 @@ public class DoiThongTin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DoiThongTin().setVisible(true);
+                new DoiThongTinNhanVien().setVisible(true);
             }
         });
     }
     
     public void setUserId(String username)
     {
-        this.userId = employeeController.getCustomerIdByUsername(username);
+        this.userId = employeeController.getIdByUsername(username);
         fill();
     }
     
     private void fill()
     {
-        user = customerController.getCustomerById(userId);
+        user = employeeController.getEmployeeById(userId);
         if(user != null)
         {
             //ThongTin

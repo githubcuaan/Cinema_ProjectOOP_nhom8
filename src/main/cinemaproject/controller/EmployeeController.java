@@ -84,4 +84,20 @@ public class EmployeeController {
         }
     }
 
+    public int getIdByUsername(String username)
+    {
+        try {
+            connection = JBDCUtils.getConnection();
+            EmployeeDAO employeeDAO = new EmployeeDAO(connection);
+            int employeeId = employeeDAO.getIdByUsername(username);
+            return employeeId;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+        finally
+        {
+            JBDCUtils.closeConnection(connection);
+        }
+    }
 }

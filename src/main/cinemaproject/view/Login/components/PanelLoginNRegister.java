@@ -149,7 +149,7 @@ public class PanelLoginNRegister extends javax.swing.JLayeredPane {
                 Employee employee = authController.loginEmployee(username, password);
                 if (employee != null) {
                     JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
-                    Admin adminScreen = new Admin();
+                    Admin adminScreen = new Admin(username);
                     adminScreen.setVisible(true);
                     SwingUtilities.getWindowAncestor(this).dispose();
                 } else {
