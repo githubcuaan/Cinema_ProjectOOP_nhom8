@@ -26,7 +26,7 @@ public class NhanVien extends javax.swing.JPanel {
     public ArrayList<Employee> eList() throws SQLException {
         return employeeController.getAllEmployees();
     }
-
+    
     // Phương thức để hiển thị danh sách nhân viên trong bảng
     public void showEmployeeTable() {
         ArrayList<Employee> eTable;

@@ -21,6 +21,16 @@ public class Movie {
         this.duration = duration;
     }
 
+    public Movie(String name, String genre, String releaseDate, String director, int duration) {
+        this.name = name;
+        this.genre = genre;
+        this.releaseDate = releaseDate;
+        this.director = director;
+        this.duration = duration;
+    }
+    
+    
+
     // Getter và Setter
     public int getId() {
         return id;
