@@ -34,10 +34,10 @@ public class QuanLyRap extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        themBut = new javax.swing.JButton();
+        suaBut = new javax.swing.JButton();
+        xoaBut = new javax.swing.JButton();
+        xemBut = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         bangRap = new javax.swing.JTable();
 
@@ -58,26 +58,26 @@ public class QuanLyRap extends javax.swing.JPanel {
 
         jLabel5.setText("Thông Tin Mô Tả");
 
-        jButton1.setText("Thêm");
+        themBut.setText("Thêm");
 
-        jButton4.setText("Sửa");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        suaBut.setText("Sửa");
+        suaBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                suaButActionPerformed(evt);
             }
         });
 
-        jButton5.setText("Xóa");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        xoaBut.setText("Xóa");
+        xoaBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                xoaButActionPerformed(evt);
             }
         });
 
-        jButton6.setText("Xem");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        xemBut.setText("Xem");
+        xemBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                xemButActionPerformed(evt);
             }
         });
 
@@ -112,13 +112,13 @@ public class QuanLyRap extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1)
+                                .addComponent(themBut)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton4))
+                                .addComponent(suaBut))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton5)
+                                .addComponent(xoaBut)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton6)))))
+                                .addComponent(xemBut)))))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -144,12 +144,12 @@ public class QuanLyRap extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton4))
+                            .addComponent(themBut)
+                            .addComponent(suaBut))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton5)
-                            .addComponent(jButton6))))
+                            .addComponent(xoaBut)
+                            .addComponent(xemBut))))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
@@ -185,25 +185,21 @@ public class QuanLyRap extends javax.swing.JPanel {
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 920, 460));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void suaButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suaButActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_suaButActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void xoaButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xoaButActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_xoaButActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void xemButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xemButActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_xemButActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable bangRap;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -211,10 +207,14 @@ public class QuanLyRap extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton suaBut;
+    private javax.swing.JButton themBut;
     private javax.swing.JTextField txDiaChi;
     private javax.swing.JTextField txID;
     private javax.swing.JTextField txSDT;
     private javax.swing.JTextField txTen;
     private javax.swing.JTextField txThongTin;
+    private javax.swing.JButton xemBut;
+    private javax.swing.JButton xoaBut;
     // End of variables declaration//GEN-END:variables
 }

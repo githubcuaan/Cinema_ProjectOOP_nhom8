@@ -125,7 +125,7 @@ public class ScreeningStatusDAO implements IScreeningStatusDAO {
     public List<ScreeningInfo> getScreeningInfo(String selectedMovie, String selectedTheater, String selectedDate) {
         List<ScreeningInfo> screeningInfoList = new ArrayList<>();
         String sql = "SELECT " +
-            "ss.theater AS 'Tên Rạp', " +
+            "t.name AS 'Tên Rạp', " +
             "m.name AS 'Tên Phim', " +
             "ss.showtime AS 'Giờ Chiếu', " +
             "ss.ticket_price AS 'Giá Vé', " +
@@ -135,8 +135,9 @@ public class ScreeningStatusDAO implements IScreeningStatusDAO {
             "END AS 'Tình Trạng' " +
             "FROM screening_status ss " +
             "JOIN movies m ON ss.movie_id = m.id " +
+            "JOIN theater t ON ss.theater_id = t.id " +
             "WHERE (? = 'Tất Cả Phim' OR m.name = ?) " +
-            "AND (? = 'Tất Cả Rạp' OR ss.theater = ?) " +
+            "AND (? = 'Tất Cả Rạp' OR t.name = ?) " +
             "AND (? = '' OR DATE(ss.showdate) = ?)";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -165,19 +166,6 @@ public class ScreeningStatusDAO implements IScreeningStatusDAO {
         return screeningInfoList;
     }
 
-    public List<String> getAllTheaters() {
-        List<String> theaters = new ArrayList<>();
-        String sql = "SELECT DISTINCT theater FROM screening_status";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
-            while (rs.next()) {
-                theaters.add(rs.getString("theater"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return theaters;
-    }
 
     public int getScreeningStatusId( String theater, String date, String showtime) {
         String sql = "SELECT id FROM screening_status WHERE theater = ? AND showdate = ? AND showtime = ?";

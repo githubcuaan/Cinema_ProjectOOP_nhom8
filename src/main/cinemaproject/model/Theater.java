@@ -18,7 +18,7 @@ public class Theater {
         this.phone = phone;
         this.description = description;
     }
-
+    
     public Theater() {
     }
 

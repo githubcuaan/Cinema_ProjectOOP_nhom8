@@ -2,6 +2,7 @@ package main.cinemaproject.view.Customer;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.text.ListFormat.Style;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -9,6 +10,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.table.DefaultTableModel;
 import main.cinemaproject.controller.MovieController;
 import main.cinemaproject.controller.ScreeningStatusController;
+import main.cinemaproject.controller.TheaterController;
 import main.cinemaproject.model.Movie;
 import main.cinemaproject.model.ScreeningInfo;
 
@@ -19,11 +21,13 @@ import main.cinemaproject.model.ScreeningInfo;
 public class LichChieuPhim extends javax.swing.JPanel {
     
     MovieController movieController;
+    TheaterController theaterController;
     ScreeningStatusController screeningStatusController;
 
     public LichChieuPhim() {
         initComponents();
         movieController = new MovieController();
+        theaterController = new TheaterController();
         screeningStatusController = new ScreeningStatusController();
         loadMovies();
         loadTheaters();
@@ -33,15 +37,17 @@ public class LichChieuPhim extends javax.swing.JPanel {
         
         List<Movie> movies = movieController.getAllMovies();
         BoxChonPhim.removeAllItems();
+        BoxChonPhim.addItem("Tất Cả Phim");
         for (Movie movie : movies) {
             BoxChonPhim.addItem(movie.getName());
         }
     }
 
     private void loadTheaters() {
-        List<String> theaters = screeningStatusController.getAllTheaters();
+        List<String> theaters = theaterController.getAllTheaterNames();
 
         BoxChonRap.removeAllItems();
+        BoxChonRap.addItem("Tất Cả Rạp");
         for (String theater : theaters) {
             BoxChonRap.addItem(theater);
         }
@@ -267,8 +273,12 @@ public class LichChieuPhim extends javax.swing.JPanel {
             return;
         }
 
+        System.out.println(selectedMovie + selectedTheater + formattedDate);//debug
+
         ScreeningStatusController screeningController = new ScreeningStatusController();
         List<ScreeningInfo> screeningInfoList = screeningController.getScreeningInfo(selectedMovie, selectedTheater, formattedDate);
+
+        System.out.println(screeningInfoList);//debug
 
         DefaultTableModel model = (DefaultTableModel) BangChieuPhim.getModel();
         model.setRowCount(0);
