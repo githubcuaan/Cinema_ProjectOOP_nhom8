@@ -61,12 +61,7 @@ public class Customer extends javax.swing.JFrame {
         info.setForeground(new java.awt.Color(255, 255, 255));
         info.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/icons8_test_account_25px.png"))); // NOI18N
         info.setText("Thông Tin Cá Nhân");
-        info.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                infoMouseClicked(evt);
-            }
-        });
-
+       
         javax.swing.GroupLayout ThongTinCaNhanLayout = new javax.swing.GroupLayout(ThongTinCaNhan);
         ThongTinCaNhan.setLayout(ThongTinCaNhanLayout);
         ThongTinCaNhanLayout.setHorizontalGroup(
@@ -218,13 +213,6 @@ public class Customer extends javax.swing.JFrame {
         doiThongTin.setVisible(true);
     }//GEN-LAST:event_ThongTinCaNhanMouseClicked
 
-    private void infoMouseClicked(java.awt.event.MouseEvent evt)
-    {
-        DoiThongTin doiThongTin = new DoiThongTin();
-        doiThongTin.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); // Đảm bảo rằng nó không đóng cửa sổ cha
-        doiThongTin.setUserId(usernameString);
-        doiThongTin.setVisible(true);
-    }
     /**
      * @param args the command line arguments
      */
@@ -278,4 +266,8 @@ public class Customer extends javax.swing.JFrame {
     private main.cinemaproject.view.Customer.ThanhToan thanhToan1;
     private javax.swing.JLabel username;
     // End of variables declaration//GEN-END:variables
+
+    public String getUsername() {
+        return usernameString; // Trả về tên người dùng đã đăng nhập
+    }
 }

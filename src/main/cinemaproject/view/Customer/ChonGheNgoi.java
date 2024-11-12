@@ -72,6 +72,7 @@ public class ChonGheNgoi extends javax.swing.JPanel {
         jPanel6 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         nextBut = new javax.swing.JButton();
+        backBut = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(920, 650));
@@ -115,7 +116,7 @@ public class ChonGheNgoi extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(413, 413, 413)
                 .addComponent(ManChieu, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(413, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -376,7 +377,16 @@ public class ChonGheNgoi extends javax.swing.JPanel {
                 nextButActionPerformed(evt);
             }
         });
-        add(nextBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(775, 573, 90, 30));
+        add(nextBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 570, 90, 30));
+
+        backBut.setText("Quay Lại");
+        backBut.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        backBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButActionPerformed(evt);
+            }
+        });
+        add(backBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 570, 90, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void nextButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButActionPerformed
@@ -393,6 +403,28 @@ public class ChonGheNgoi extends javax.swing.JPanel {
         ChonDoAn chonDoAn = (ChonDoAn) tabbedPane.getComponentAt(tabIndex);
         chonDoAn.setSelectedSeats(selectedSeats);
     }//GEN-LAST:event_nextButActionPerformed
+
+    private void backButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButActionPerformed
+        // Xóa danh sách ghế đã chọn
+        selectedSeats.clear();
+        
+        // Cập nhật giao diện để làm mới ghế ngồi
+        resetSeatSelection();
+
+        // Quay lại tab chọn phim
+        int tabIndex = 0;
+        JTabbedPane tabbedPane = (JTabbedPane) this.getParent();
+        tabbedPane.setSelectedIndex(tabIndex);
+    }//GEN-LAST:event_backButActionPerformed
+
+    private void resetSeatSelection() {
+        // Đặt lại màu nền cho tất cả các nút ghế
+        for (JButton seatButton : new JButton[]{GheA1, GheA2, GheA3, GheA4, GheA5, GheA6, GheA7, GheA8,
+                                             GheB1, GheB2, GheB3, GheB4, GheB5, GheB6, GheB7, GheB8,
+                                             GheC1, GheC2, GheC3, GheC4}) {
+            seatButton.setBackground(null); // Đặt lại màu nền
+        }
+    }
 
     public void setInfo(String theater, String movieName, String showtime, String date) {
         TenRap1.setText(theater);
@@ -613,6 +645,7 @@ public class ChonGheNgoi extends javax.swing.JPanel {
     private javax.swing.JLabel NgayChieu;
     private javax.swing.JLabel TenPhim;
     private javax.swing.JLabel TenRap1;
+    private javax.swing.JButton backBut;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

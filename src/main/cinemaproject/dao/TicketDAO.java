@@ -16,15 +16,17 @@ public class TicketDAO implements ITicket {
 
     @Override
     public boolean addTicket(Ticket ticket) {
-        String sql = "INSERT INTO tickets (customer_id, movie_id, screening_id, seat_number, price, purchase_date) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO tickets (screening_id, movie_id, customer_id, price, purchase_date, seat_number, invoice_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setInt(1, ticket.getCustomerId());
+            pstmt.setInt(1, ticket.getScreeningId());
             pstmt.setInt(2, ticket.getMovieId());
-            pstmt.setInt(3, ticket.getScreeningId());
-            pstmt.setString(4, ticket.getSeatNumber());
-            pstmt.setDouble(5, ticket.getPrice());
-            pstmt.setString(6, ticket.getPurchaseDate());
-            return pstmt.executeUpdate() > 0;
+            pstmt.setInt(3, ticket.getCustomerId());
+            pstmt.setDouble(4, ticket.getPrice());
+            pstmt.setString(5, ticket.getPurchaseDate());
+            pstmt.setString(6, ticket.getSeatNumber());
+            pstmt.setInt(7, ticket.getInvoiceId());
+            pstmt.executeUpdate();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

@@ -59,6 +59,7 @@ public class ChonDoAn extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         nextBut = new javax.swing.JButton();
+        backBut = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         BangDaChon = new javax.swing.JTable();
@@ -102,20 +103,31 @@ public class ChonDoAn extends javax.swing.JPanel {
             }
         });
 
+        backBut.setText("Quay Lại");
+        backBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(96, 96, 96)
+                .addGap(17, 17, 17)
+                .addComponent(backBut, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
                 .addComponent(nextBut, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(297, Short.MAX_VALUE))
+                .addContainerGap(254, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addComponent(nextBut, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nextBut, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(backBut, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(403, Short.MAX_VALUE))
         );
 
@@ -332,6 +344,16 @@ public class ChonDoAn extends javax.swing.JPanel {
             thanhToanPanel.addProductToOrder(tenSanPham, soLuong, giaBan);
         }
     }//GEN-LAST:event_nextButActionPerformed
+
+    private void backButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButActionPerformed
+        //xóa các ghế đã chọn từ trước
+        selectedSeats.clear();
+
+        //Quay lại tab chọn ghế
+        int tabIndex = 1;
+        JTabbedPane tabbedPane = (JTabbedPane) this.getParent();
+        tabbedPane.setSelectedIndex(tabIndex);
+    }//GEN-LAST:event_backButActionPerformed
    
     private void themSanPhamVaoBangDaChon(String ten, int soLuong, double giaBan) {
         DefaultTableModel model = (DefaultTableModel) BangDaChon.getModel();
@@ -343,6 +365,7 @@ public class ChonDoAn extends javax.swing.JPanel {
     private javax.swing.JButton SuaBut;
     private javax.swing.JButton ThemBut;
     private javax.swing.JButton XoaBut;
+    private javax.swing.JButton backBut;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

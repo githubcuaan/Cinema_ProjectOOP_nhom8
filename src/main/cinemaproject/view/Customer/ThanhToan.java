@@ -2,6 +2,8 @@ package main.cinemaproject.view.Customer;
 
 import java.util.Date;
 import java.util.List;
+
+import javax.print.attribute.standard.JobHoldUntil;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTabbedPane;
@@ -21,10 +23,11 @@ public class ThanhToan extends javax.swing.JPanel {
     private int screeningStatusId;
     private int movieId;
     private List<String> selectedSeats;
+    private double tongTienHangTotal = 0; // Biến lưu tổng tiền hàng
+    private String currentUsername;
+
     private MovieController movieController;
     private ScreeningStatusController screeningStatusController;
-    private double tongTienHangTotal = 0; // Biến lưu tổng tiền hàng
-
     private CustomerController customerController;
     private TicketController ticketController;
     private OrderItemController orderItemController;
@@ -101,6 +104,7 @@ public class ThanhToan extends javax.swing.JPanel {
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         TongTienVe = new javax.swing.JLabel();
+        backBut = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(920, 650));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -159,7 +163,7 @@ public class ThanhToan extends javax.swing.JPanel {
 
         jLabel3.setText("Số Điện Thoại");
 
-        jLabel4.setText("Tên");
+        jLabel4.setText("Tên Người Dùng");
 
         jLabel5.setText("Email");
 
@@ -175,42 +179,38 @@ public class ThanhToan extends javax.swing.JPanel {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 3, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nameText, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(jLabel2)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(phoneText, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ThanhToan)
+                            .addComponent(emailText, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(79, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 23, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(emailText, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nameText, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(phoneText, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(73, 73, 73))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(ThanhToan)
-                        .addGap(98, 98, 98))))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(72, 72, 72))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(43, 43, 43)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -224,9 +224,9 @@ public class ThanhToan extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(emailText, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addGap(40, 40, 40)
+                .addGap(53, 53, 53)
                 .addComponent(ThanhToan)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
         add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 300, 400));
@@ -341,21 +341,44 @@ public class ThanhToan extends javax.swing.JPanel {
         jPanel4.add(TongTienVe, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 450, -1, 30));
 
         add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, 500, 520));
+
+        backBut.setText("Quay Lại");
+        backBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButActionPerformed(evt);
+            }
+        });
+        add(backBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void emailTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_emailTextActionPerformed
+
+    private void backButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButActionPerformed
+        int tabIndex = 2;
+        JTabbedPane tabbedPane = (JTabbedPane) this.getParent();
+        tabbedPane.setSelectedIndex(tabIndex);
+    }//GEN-LAST:event_backButActionPerformed
     
     //chức năng thanh toán
     private void ThanhToanActionPerformed(java.awt.event.ActionEvent evt) {
         try {
+            Customer customerFrame = (Customer) this.getTopLevelAncestor();
+
             // Kiểm tra thông tin người dùng
             if (nameText.getText().isEmpty() || phoneText.getText().isEmpty() || emailText.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin khách hàng.", "Thông báo", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
+            this.currentUsername = customerFrame.getUsername();
+
+            // Kiểm tra xem tên người dùng có đúng không
+            if (!nameText.getText().equals(currentUsername)) {
+                JOptionPane.showMessageDialog(this, "Tên người dùng không đúng.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+              return;
+            }
             // Tạo hóa đơn mới
             Invoice newInvoice = new Invoice();
             int customerId = customerController.getCustomerIdByUsername(nameText.getText());
@@ -370,7 +393,8 @@ public class ThanhToan extends javax.swing.JPanel {
             double tongTienHang = tongTienHangTotal;
             newInvoice.setTotal_amount(tongTienVe + tongTienHang);
             newInvoice.setPurchase_date(new Date());
-            int invoiceId = invoiceController.addInvoice(newInvoice);   
+            int invoiceId = invoiceController.addInvoice(newInvoice);
+            System.out.println(invoiceId);
 
             if (invoiceId == 0) {
                 JOptionPane.showMessageDialog(this, "Lỗi khi tạo hóa đơn. Vui lòng thử lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -481,6 +505,7 @@ public class ThanhToan extends javax.swing.JPanel {
     private javax.swing.JButton ThanhToan;
     private javax.swing.JLabel TongTienHang;
     private javax.swing.JLabel TongTienVe;
+    private javax.swing.JButton backBut;
     private javax.swing.JTextField emailText;
     private javax.swing.JLabel giaVe1;
     private javax.swing.JLabel gioChieu;

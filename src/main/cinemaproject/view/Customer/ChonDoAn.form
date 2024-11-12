@@ -105,9 +105,11 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                      <Component id="backBut" min="-2" pref="95" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                       <Component id="nextBut" min="-2" pref="95" max="-2" attributes="0"/>
-                      <EmptySpace pref="297" max="32767" attributes="0"/>
+                      <EmptySpace pref="254" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -115,7 +117,10 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                      <Component id="nextBut" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="nextBut" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                          <Component id="backBut" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace pref="403" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -128,6 +133,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nextButActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="backBut">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Quay L&#x1ea1;i"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backButActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
