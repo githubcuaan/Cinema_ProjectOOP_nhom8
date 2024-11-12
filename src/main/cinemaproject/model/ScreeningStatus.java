@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class ScreeningStatus {
     private int id;
-    private String theater;
+    private int theater_id;
     private int movieId;
     private Time showtime;
     private Date showdate;
@@ -17,9 +17,9 @@ public class ScreeningStatus {
     public ScreeningStatus() {}
 
     // Constructor có tham số
-    public ScreeningStatus(int id, String theater, int movieId, Time showtime, Date showdate,double price, int seatsAvailable, int totalSeats) {
+    public ScreeningStatus(int id, int theater_id, int movieId, Time showtime, Date showdate,double price, int seatsAvailable, int totalSeats) {
         this.id = id;
-        this.theater = theater;
+        this.theater_id = theater_id;
         this.movieId = movieId;
         this.showtime = showtime;
         this.showdate = showdate;
@@ -37,12 +37,12 @@ public class ScreeningStatus {
         this.id = id;
     }
 
-    public String getTheater() {
-        return theater;
+    public int getTheaterId() {
+        return theater_id;
     }
 
-    public void setTheater(String theater) {
-        this.theater = theater;
+    public void setTheater(int theater_id) {
+        this.theater_id = theater_id;
     }
 
     public int getMovieId() {
@@ -97,7 +97,7 @@ public class ScreeningStatus {
     public String toString() {
         return "ScreeningStatus{" +
                "id=" + id +
-               ", theater='" + theater + '\'' +
+               ", theater='" + theater_id + '\'' +
                ", movieId=" + movieId +
                ", showtime=" + showtime +
                ", showdate=" + showdate +

@@ -21,7 +21,7 @@ public class ScreeningStatusDAO implements IScreeningStatusDAO {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setInt(1, screening.getMovieId());
-            pstmt.setString(2, screening.getTheater());
+            pstmt.setInt(2, screening.getTheaterId());
             pstmt.setTime(3, screening.getShowtime());
             pstmt.setDate(4, new java.sql.Date(screening.getShowdate().getTime()));
             pstmt.setInt(5, screening.getSeatsAvailable());
@@ -44,7 +44,7 @@ public class ScreeningStatusDAO implements IScreeningStatusDAO {
                 if (rs.next()) {
                     screeningStatus = new ScreeningStatus(
                         rs.getInt("id"),
-                        rs.getString("theater"),
+                        rs.getInt("theater_id"),
                         rs.getInt("movie_id"), 
                         rs.getTime("showtime"),
                         rs.getDate("showdate"),
@@ -70,7 +70,7 @@ public class ScreeningStatusDAO implements IScreeningStatusDAO {
             while (rs.next()) {
                 screenings.add(new ScreeningStatus(
                     rs.getInt("id"),
-                    rs.getString("theater"),
+                    rs.getInt("theater_id"),
                     rs.getInt("movie_id"),
                     rs.getTime("showtime"),
                     rs.getDate("showdate"),
@@ -91,7 +91,7 @@ public class ScreeningStatusDAO implements IScreeningStatusDAO {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setInt(1, screening.getMovieId());
-            pstmt.setString(2, screening.getTheater());
+            pstmt.setInt(2, screening.getTheaterId());
             pstmt.setTime(3, screening.getShowtime());
             pstmt.setDate(4, new java.sql.Date(screening.getShowdate().getTime()));
             pstmt.setInt(5, screening.getSeatsAvailable());
@@ -168,7 +168,9 @@ public class ScreeningStatusDAO implements IScreeningStatusDAO {
 
 
     public int getScreeningStatusId( String theater, String date, String showtime) {
-        String sql = "SELECT id FROM screening_status WHERE theater = ? AND showdate = ? AND showtime = ?";
+        String sql = "SELECT ss.id FROM screening_status ss " +
+                     "JOIN theater t ON ss.theater_id = t.id " +
+                     "WHERE t.name = ? AND ss.showdate = ? AND ss.showtime = ? ";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, theater);
             pstmt.setString(2, date);

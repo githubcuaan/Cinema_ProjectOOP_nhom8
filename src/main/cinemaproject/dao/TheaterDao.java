@@ -15,7 +15,30 @@ public class TheaterDao {
     {
         this.connection = c;
     }
-
+    
+    public Theater getTheaterById(int id)
+    {
+        String querry = "SELECT * FROM theater WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(querry)) {
+            statement.setInt(1, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    // Trả về đối tượng Theater nếu tìm thấy
+                    return new Theater(
+                        resultSet.getInt("id"),
+                       resultSet.getString("name"),
+                    resultSet.getString("location"),
+                      resultSet.getString("phone"),
+                  resultSet.getString("description")
+                    );
+                }
+            }    
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
     public ArrayList<Theater> getAllTheaters() {
         String querry = "SECLECT * FROM theater";
         ArrayList<Theater> theaters = new ArrayList<>();

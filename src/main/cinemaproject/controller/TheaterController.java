@@ -16,6 +16,12 @@ public class TheaterController {
         this.theaterDao = new TheaterDao(connection);
     }
 
+    public Theater getTheaterById(int id)
+    {
+        return theaterDao.getTheaterById(id);
+    }
+
+
     public ArrayList<Theater> getAllTheaters() {
         return theaterDao.getAllTheaters();
     }

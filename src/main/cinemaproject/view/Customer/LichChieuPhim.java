@@ -219,7 +219,7 @@ public class LichChieuPhim extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Please select a movie first.");
                 return; // Exit if no movie is selected
             }
-            String theater = (String) BoxChonRap.getSelectedItem();
+            String theater = (String) BangChieuPhim.getValueAt(row, 0);
             String date = dateChoose.getText();
             String showtime = (String) BangChieuPhim.getValueAt(row, 2);
             
@@ -248,7 +248,7 @@ public class LichChieuPhim extends javax.swing.JPanel {
                 
                 ChonGheNgoi chonGheNgoi = (ChonGheNgoi) tabbedPane.getComponentAt(tabIndex);
                 chonGheNgoi.setScreeningId(screeningStatusId);
-                System.out.println(screeningStatusId);
+                System.out.println("screeningStatusId test in lichchieu:"+ screeningStatusId);
                 chonGheNgoi.setInfo(theater, selectedMovie, showtime, formattedDate);
             } else {
                 JOptionPane.showMessageDialog(this, "Screening status ID not found.");

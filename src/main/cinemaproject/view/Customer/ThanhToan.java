@@ -32,6 +32,7 @@ public class ThanhToan extends javax.swing.JPanel {
     private TicketController ticketController;
     private OrderItemController orderItemController;
     private InvoiceController invoiceController;
+    private TheaterController theaterController;
     /**
      * Creates new form ThanhToan
      */
@@ -43,6 +44,7 @@ public class ThanhToan extends javax.swing.JPanel {
         customerController = new CustomerController();
         ticketController = new TicketController();
         orderItemController = new OrderItemController();
+        theaterController = new TheaterController();
     }
 
     //phương thức điền vào các thông tin phim dựa trên screeningStatusId
@@ -56,7 +58,8 @@ public class ThanhToan extends javax.swing.JPanel {
         tenPhim.setText(movieController.getMovieById(screeningStatus.getMovieId()).getName());
         ngayChieu.setText(screeningStatus.getShowdate().toString());
         gioChieu.setText(screeningStatus.getShowtime().toString());
-        rap.setText(screeningStatus.getTheater());
+        rap.setText(theaterController.getTheaterById(screeningStatus.getTheaterId()).getName());
+        System.out.println("thetaer: "+screeningStatus.getTheaterId());
         giaVe1.setText(String.valueOf(screeningStatus.getPrice()));
 
         //gán giá trị cho movieId
@@ -284,7 +287,7 @@ public class ThanhToan extends javax.swing.JPanel {
         jPanel4.add(rap, new org.netbeans.lib.awtextra.AbsoluteConstraints(81, 252, -1, -1));
 
         TongTienHang.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        TongTienHang.setText("TÊN PHIM");
+        TongTienHang.setText("0");
         jPanel4.add(TongTienHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 450, -1, 30));
 
         jLabel13.setText("Số Ghế :");
