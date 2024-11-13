@@ -21,16 +21,21 @@ public class TongQuanLy extends javax.swing.JPanel {
         setColor(quanLyPhimBut);
         
         // Thêm ChangeListener cho jTabbedPane1
-        jTabbedPane1.addChangeListener(new ChangeListener() {
+        Tab.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 // Kiểm tra tab hiện tại
-                if (jTabbedPane1.getSelectedComponent() == quanLyPhim1) {
+                if (Tab.getSelectedComponent() == quanLyPhim1) {
                     setColor(quanLyPhimBut); // Đặt màu cho quanLyPhimBut
                     resetColor(quanLyRapChieuBut); // Đặt lại màu cho các nút khác
                     resetColor(quanLyXuatChieuBut);
+                } else if (Tab.getSelectedComponent() == quanLyRap1) {
+                    setColor(quanLyRapChieuBut); // Đặt màu cho quanLyRapChieuBut
+                    resetColor(quanLyPhimBut); // Đặt lại màu cho các nút khác
+                    resetColor(quanLyXuatChieuBut);
                 } else {
                     resetColor(quanLyPhimBut); // Đặt lại màu nếu không phải tab QuanLyPhim1
+                    resetColor(quanLyRapChieuBut); // Đặt lại màu nếu không phải tab quanLyRap1
                 }
             }
         });
@@ -64,8 +69,9 @@ public class TongQuanLy extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         quanLyXuatChieuBut = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        Tab = new javax.swing.JTabbedPane();
         quanLyPhim1 = new main.cinemaproject.view.Admin.QuanLyPhim();
+        quanLyRap1 = new main.cinemaproject.view.Admin.QuanLyRap();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -181,31 +187,27 @@ public class TongQuanLy extends javax.swing.JPanel {
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 920, 90));
 
-        jTabbedPane1.addTab("tab1", quanLyPhim1);
+        Tab.addTab("tab1", quanLyPhim1);
+        Tab.addTab("tab2", quanLyRap1);
 
-        add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 920, 580));
+        add(Tab, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 920, 580));
     }// </editor-fold>//GEN-END:initComponents
 
     private void quanLyPhimButMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quanLyPhimButMouseClicked
-    //     this.setColor(quanLyPhimBut);
-    //     this.resetColor(quanLyRapChieuBut);
-    //     this.resetColor(quanLyXuatChieuBut);
+        Tab.setSelectedComponent(quanLyPhim1);
     }//GEN-LAST:event_quanLyPhimButMouseClicked
 
     private void quanLyRapChieuButMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quanLyRapChieuButMouseClicked
-    //     this.setColor(quanLyRapChieuBut);
-    //     this.resetColor(quanLyPhimBut);
-    //     this.resetColor(quanLyXuatChieuBut);
+        Tab.setSelectedComponent(quanLyRap1);
     }//GEN-LAST:event_quanLyRapChieuButMouseClicked
 
     private void quanLyXuatChieuButMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quanLyXuatChieuButMouseClicked
-    //     this.setColor(quanLyXuatChieuBut);
-    //     this.resetColor(quanLyPhimBut);
-    //     this.resetColor(quanLyRapChieuBut);
+        
     }//GEN-LAST:event_quanLyXuatChieuButMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane Tab;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -213,9 +215,9 @@ public class TongQuanLy extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private main.cinemaproject.view.Admin.QuanLyPhim quanLyPhim1;
     private javax.swing.JPanel quanLyPhimBut;
+    private main.cinemaproject.view.Admin.QuanLyRap quanLyRap1;
     private javax.swing.JPanel quanLyRapChieuBut;
     private javax.swing.JPanel quanLyXuatChieuBut;
     // End of variables declaration//GEN-END:variables

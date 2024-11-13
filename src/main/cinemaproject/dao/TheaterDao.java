@@ -40,7 +40,7 @@ public class TheaterDao {
     }
     
     public ArrayList<Theater> getAllTheaters() {
-        String querry = "SECLECT * FROM theater";
+        String querry = "SELECT * FROM theater";
         ArrayList<Theater> theaters = new ArrayList<>();
 
         //chuan bi cau lenh sql
@@ -80,4 +80,50 @@ public class TheaterDao {
     
         return theaterNames;  // Trả về danh sách tên rạp
     }    
+    
+    public boolean deleteTheater(int theaterId)
+    {
+        String querry = "DELETE FROM theater WHERE id = ? ";
+        try (PreparedStatement statement = connection.prepareStatement(querry)) {
+            statement.setInt(1, theaterId);
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected >0;
+        } catch (Exception e) {
+           System.out.println("co loi lon gi khi xoa"+e.getMessage());
+           return false;
+        }
+    }
+
+    public boolean addTheater(Theater theater)
+    {
+        String querry = "INSERT INTO theater (name, location, phone, description) VALUES (?,?,?,?) ";
+        try (PreparedStatement statement = connection.prepareStatement(querry)) {
+            statement.setString(1, theater.getName());
+            statement.setString(2, theater.getLocation());
+            statement.setString(3, theater.getPhone());
+            statement.setString(4, theater.getDescription());
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected >0;
+        } catch (Exception e) {
+            System.out.println("co loi khi them"+e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean updateTheater(Theater theater)
+    {
+        String querry = "UPDATE theater SET name = ?, location = ?, phone = ?, description = ? WHERE id = ? ";
+        try (PreparedStatement statement = connection.prepareStatement(querry)) {
+            statement.setString(1, theater.getName());
+            statement.setString(2, theater.getLocation());
+            statement.setString(3, theater.getPhone());
+            statement.setString(4, theater.getDescription());
+            statement.setString(5, String.valueOf(theater.getId()));
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected >0;
+        } catch (Exception e) {
+            System.out.println("co loi khi cap nhat:"+e.getMessage());
+            return false;
+        }
+    }
 }

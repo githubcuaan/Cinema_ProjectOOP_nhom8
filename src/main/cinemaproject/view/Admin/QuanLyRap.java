@@ -1,19 +1,63 @@
-
 package main.cinemaproject.view.Admin;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+
+import main.cinemaproject.Main.tesst;
+import main.cinemaproject.controller.TheaterController;
+import main.cinemaproject.model.Theater;
+import main.cinemaproject.utils.ValidationUtils;
 
 /**
  *
  * @author DinhAn
  */
 public class QuanLyRap extends javax.swing.JPanel {
-
+    private TheaterController theaterController;
     /**
      * Creates new form QuanLyRap
      */
     public QuanLyRap() {
         initComponents();
+        theaterController = new TheaterController();
+        showTheaterTable();
+        bangRap.setRowHeight(bangRap.getRowHeight()+5);
     }
 
+    public ArrayList<Theater> tList() throws SQLException
+    {
+        return theaterController.getAllTheaters();
+    }
+
+    public void showTheaterTable()
+    {
+        ArrayList<Theater> tTable;
+        try {
+            tTable = tList();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) bangRap.getModel();
+        model.setRowCount(0);
+
+        for (Theater t : tTable)
+        {
+            model.addRow(new Object[]{
+                t.getId(),
+                t.getName(),
+                t.getLocation(),
+                t.getPhone()
+            });
+        }
+        bangRap.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,7 +73,6 @@ public class QuanLyRap extends javax.swing.JPanel {
         txDiaChi = new javax.swing.JTextField();
         txTen = new javax.swing.JTextField();
         txSDT = new javax.swing.JTextField();
-        txThongTin = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -38,6 +81,9 @@ public class QuanLyRap extends javax.swing.JPanel {
         suaBut = new javax.swing.JButton();
         xoaBut = new javax.swing.JButton();
         xemBut = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txThongTin = new javax.swing.JTextArea();
+        clear = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         bangRap = new javax.swing.JTable();
 
@@ -45,20 +91,36 @@ public class QuanLyRap extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Thêm Rạp Chiếu"));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("ID");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, -1, -1));
 
         txID.setEditable(false);
+        jPanel1.add(txID, new org.netbeans.lib.awtextra.AbsoluteConstraints(98, 53, 150, 30));
+        jPanel1.add(txDiaChi, new org.netbeans.lib.awtextra.AbsoluteConstraints(98, 109, 150, 30));
+        jPanel1.add(txTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(353, 53, 150, 30));
+        jPanel1.add(txSDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(353, 109, 150, 30));
 
         jLabel2.setText("Địa Chỉ");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(54, 116, -1, -1));
 
         jLabel3.setText("Tên");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(328, 60, -1, -1));
 
         jLabel4.setText("Số Điện Thoại");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(273, 116, -1, -1));
 
         jLabel5.setText("Thông Tin Mô Tả");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(552, 27, -1, -1));
 
         themBut.setText("Thêm");
+        themBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                themButActionPerformed(evt);
+            }
+        });
+        jPanel1.add(themBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 40, -1, -1));
 
         suaBut.setText("Sửa");
         suaBut.addActionListener(new java.awt.event.ActionListener() {
@@ -66,6 +128,7 @@ public class QuanLyRap extends javax.swing.JPanel {
                 suaButActionPerformed(evt);
             }
         });
+        jPanel1.add(suaBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 40, -1, -1));
 
         xoaBut.setText("Xóa");
         xoaBut.addActionListener(new java.awt.event.ActionListener() {
@@ -73,6 +136,7 @@ public class QuanLyRap extends javax.swing.JPanel {
                 xoaButActionPerformed(evt);
             }
         });
+        jPanel1.add(xoaBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 80, -1, -1));
 
         xemBut.setText("Xem");
         xemBut.addActionListener(new java.awt.event.ActionListener() {
@@ -80,80 +144,23 @@ public class QuanLyRap extends javax.swing.JPanel {
                 xemButActionPerformed(evt);
             }
         });
+        jPanel1.add(xemBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 80, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txID, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txTen, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(51, 51, 51)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txThongTin, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(themBut)
-                                .addGap(18, 18, 18)
-                                .addComponent(suaBut))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(xoaBut)
-                                .addGap(18, 18, 18)
-                                .addComponent(xemBut)))))
-                .addContainerGap(31, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5)
-                .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(txID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txTen, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4)))
-                    .addComponent(txThongTin, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(themBut)
-                            .addComponent(suaBut))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(xoaBut)
-                            .addComponent(xemBut))))
-                .addContainerGap(34, Short.MAX_VALUE))
-        );
+        txThongTin.setColumns(20);
+        txThongTin.setRows(5);
+        jScrollPane2.setViewportView(txThongTin);
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 920, 170));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(552, 53, 159, -1));
+
+        clear.setText("Clear");
+        clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearActionPerformed(evt);
+            }
+        });
+        jPanel1.add(clear, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 120, -1, -1));
+
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 920, 170));
 
         bangRap.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -182,24 +189,174 @@ public class QuanLyRap extends javax.swing.JPanel {
             bangRap.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 920, 460));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 900, 420));
     }// </editor-fold>//GEN-END:initComponents
 
     private void suaButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suaButActionPerformed
-        // TODO add your handling code here:
+        // Lấy chỉ số hàng được chọn
+        int selectedRow = bangRap.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn 1 Rạp Để Sửa!", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        // Lấy ID của rạp từ hàng được chọn
+        int theaterId = (int) bangRap.getValueAt(selectedRow, 0);
+
+        // Lấy thông tin rạp hiện tại
+        String name = txTen.getText();
+        String location = txDiaChi.getText();
+        String phone = txSDT.getText();
+        String description = txThongTin.getText();
+
+        // Kiểm tra các trường bắt buộc
+        if (name.isEmpty() || location.isEmpty() || phone.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin.");
+            return;
+        }
+
+        // Kiểm tra số điện thoại có hợp lệ hay không
+        if(!ValidationUtils.isValidPhoneNumber(phone)){
+            JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ.");
+            return;
+        }
+
+        // Tạo đối tượng Theater mới với thông tin sửa đổi
+        Theater updatedTheater = new Theater(theaterId, name, location, phone, description);
+
+        // Sửa rạp sử dụng controller
+        try {
+            boolean success = theaterController.updateTheater(updatedTheater);
+            if (success) {
+                JOptionPane.showMessageDialog(this, "Sửa Rạp Thành Công");
+                showTheaterTable(); // Cập nhật bảng hiển thị sau khi sửa
+                clearInputFields();
+            } else {
+                JOptionPane.showMessageDialog(this, "Sửa Rạp Thất Bại");
+            }
+        } catch (Exception e) {
+            System.out.println("Lỗi khi sửa rạp: " + e.getMessage());
+        }
     }//GEN-LAST:event_suaButActionPerformed
 
     private void xoaButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xoaButActionPerformed
-        // TODO add your handling code here:
+        //lay chi so hang
+        int selectedRow = bangRap.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn 1 Rạp Để Xóa!", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        //lay id cua rap
+        int theaterId = (int) bangRap.getValueAt(selectedRow, 0);
+
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this,
+        "Bạn có chắc chắn muốn xóa rạp này?",
+        "Xác nhận xóa",
+        javax.swing.JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                boolean success = theaterController.deleteTheater(theaterId);
+                if(success)
+                {
+                    JOptionPane.showMessageDialog(this, "Xóa Rạp Thành Công");
+                    showTheaterTable(); // Cập nhật bảng hiển thị sau khi xóa
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "Xóa Rạp Thất Bại"); 
+                }
+            } catch (Exception e) {
+                System.out.println("Loi Khi xoa"+e.getMessage());
+            }
+        }
     }//GEN-LAST:event_xoaButActionPerformed
 
     private void xemButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xemButActionPerformed
-        // TODO add your handling code here:
+        //lay hang dc chon
+        int selectedRow = bangRap.getSelectedRow();
+        if(selectedRow == -1)
+        {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Một Rạp!", "Thông Báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        //lay id cua rap
+        int theatId = (int) bangRap.getValueAt(selectedRow, 0);
+
+        try {
+            Theater theater = theaterController.getTheaterById(theatId);
+            if (theater != null) {
+                txID.setText(String.valueOf(theater.getId()));
+                txTen.setText(theater.getName());
+                txDiaChi.setText(theater.getLocation());
+                txSDT.setText(theater.getPhone());
+                txThongTin.setText(theater.getDescription());
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Không Tìm Thấy Thông Tin Nhân Viên!");
+            }
+        } catch (Exception e) {
+            System.out.println("co loi luc cho xem tt"+e.getMessage());
+        }
     }//GEN-LAST:event_xemButActionPerformed
 
+    private void themButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_themButActionPerformed
+        // Lấy thông tin từ các trường nhập liệu
+        String tenRap = txTen.getText();
+        String diaChi = txDiaChi.getText();
+        String sdt = txSDT.getText();
+        String thongTin = txThongTin.getText();
+
+        // Kiểm tra các trường bắt buộc
+        if (tenRap.isEmpty() || diaChi.isEmpty() || sdt.isEmpty() || thongTin.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin.");
+            return;
+        }
+
+        // Kiểm tra số điện thoại
+        if (!ValidationUtils.isValidPhoneNumber(sdt)) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ.");
+            return;
+        }
+
+        // Tạo đối tượng Theater mới
+        Theater newTheater = new Theater();
+        newTheater.setName(tenRap);
+        newTheater.setLocation(diaChi);
+        newTheater.setPhone(sdt);
+        newTheater.setDescription(thongTin);
+
+        // Thêm rạp chiếu sử dụng controller
+        boolean success = theaterController.addTheater(newTheater);
+        
+        if (success) {
+            showTheaterTable(); // Cập nhật bảng hiển thị sau khi thêm
+            clearInputFields();
+            JOptionPane.showMessageDialog(this, "Thêm rạp chiếu thành công.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Thêm rạp chiếu thất bại.");
+        }
+    }//GEN-LAST:event_themButActionPerformed
+
+    private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
+        clearInputFields();
+        showTheaterTable();
+    }//GEN-LAST:event_clearActionPerformed
+
+    public void clearInputFields()
+    {
+        txTen.setText("");
+        txDiaChi.setText("");
+        txSDT.setText("");
+        txThongTin.setText("");
+        txID.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable bangRap;
+    private javax.swing.JButton clear;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -207,13 +364,14 @@ public class QuanLyRap extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton suaBut;
     private javax.swing.JButton themBut;
     private javax.swing.JTextField txDiaChi;
     private javax.swing.JTextField txID;
     private javax.swing.JTextField txSDT;
     private javax.swing.JTextField txTen;
-    private javax.swing.JTextField txThongTin;
+    private javax.swing.JTextArea txThongTin;
     private javax.swing.JButton xemBut;
     private javax.swing.JButton xoaBut;
     // End of variables declaration//GEN-END:variables

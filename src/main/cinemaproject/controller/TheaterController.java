@@ -30,4 +30,19 @@ public class TheaterController {
     {
         return theaterDao.getAllTheaterNames();
     }
+
+    public boolean deleteTheater(int theaterId)
+    {
+        return theaterDao.deleteTheater(theaterId);
+    }
+
+    public boolean addTheater(Theater theater)
+    {
+        return theaterDao.addTheater(theater);
+    }
+
+    public boolean updateTheater(Theater theater)
+    {
+        return theaterDao.updateTheater(theater);
+    }
 }
