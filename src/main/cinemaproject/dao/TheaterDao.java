@@ -126,4 +126,18 @@ public class TheaterDao {
             return false;
         }
     }
+
+    public int getTheaterId(String theaterName) {
+        String query = "SELECT id FROM theater WHERE name = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, theaterName);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("id");
+            }
+        } catch (Exception e) {
+            System.out.println("Error while getting theater id: " + e.getMessage());
+        }
+        return -1;
+    }
 }

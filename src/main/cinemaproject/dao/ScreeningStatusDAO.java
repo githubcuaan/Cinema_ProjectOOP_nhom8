@@ -16,7 +16,7 @@ public class ScreeningStatusDAO implements IScreeningStatusDAO {
     }
 
     public boolean addScreening(ScreeningStatus screening) {
-        String sql = "INSERT INTO screening_status (movie_id, theater, showtime, showdate, seats_available, total_seats) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO screening_status (movie_id, theater_id, showtime, showdate, seats_available, total_seats, ticket_price) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = connection;
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
@@ -26,6 +26,7 @@ public class ScreeningStatusDAO implements IScreeningStatusDAO {
             pstmt.setDate(4, new java.sql.Date(screening.getShowdate().getTime()));
             pstmt.setInt(5, screening.getSeatsAvailable());
             pstmt.setInt(6, screening.getTotalSeats());
+            pstmt.setDouble(7, screening.getPrice()); 
             
             int affectedRows = pstmt.executeUpdate();
             return affectedRows > 0;
@@ -86,7 +87,7 @@ public class ScreeningStatusDAO implements IScreeningStatusDAO {
     }
     
     public boolean updateScreening(ScreeningStatus screening) {
-        String sql = "UPDATE screening_status SET movie_id = ?, theater = ?, showtime = ?, showdate = ?, seats_available = ?, total_seats = ? WHERE id = ?";
+        String sql = "UPDATE screening_status SET movie_id = ?, theater_id = ?, showtime = ?, showdate = ?, seats_available = ?, total_seats = ?,ticket_price = ? WHERE id = ?";
         try (Connection conn = connection;
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
@@ -189,4 +190,36 @@ public class ScreeningStatusDAO implements IScreeningStatusDAO {
         }
         return 0;
     }
+
+    // Phương thức lấy tất cả thông tin screening
+    public List<ScreeningStatus> getAllScreening() {
+        List<ScreeningStatus> screeningList = new ArrayList<>();
+        String sql = "SELECT ss.id, m.name AS movie_name, ss.showtime, ss.showdate, " +
+                     "ss.ticket_price, ss.seats_available, ss.total_seats, t.name AS theater_name " +
+                     "FROM screening_status ss " +
+                     "JOIN movies m ON ss.movie_id = m.id " +
+                     "JOIN theater t ON ss.theater_id = t.id";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            
+            while (rs.next()) {
+                ScreeningStatus screening = new ScreeningStatus();
+                screening.setId(rs.getInt("id"));
+                screening.setShowtime(rs.getTime("showtime"));
+                screening.setShowdate(rs.getDate("showdate"));
+                screening.setPrice(rs.getDouble("ticket_price"));
+                screening.setSeatsAvailable(rs.getInt("seats_available"));
+                screening.setTotalSeats(rs.getInt("total_seats"));
+                screening.setMovieName(rs.getString("movie_name")); // Thiết lập tên phim
+                screening.setTheaterName(rs.getString("theater_name")); // Thiết lập tên rạp
+                screeningList.add(screening);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return screeningList;
+    }
+
 }

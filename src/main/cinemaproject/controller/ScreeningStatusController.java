@@ -42,4 +42,9 @@ public class ScreeningStatusController {
     public int getScreeningStatusId(String theater, String date, String showtime) {
         return screeningStatusDAO.getScreeningStatusId(theater, date, showtime);
     }
+
+    public List<ScreeningStatus> getAllScreening()
+    {
+        return screeningStatusDAO.getAllScreening();
+    }
 }

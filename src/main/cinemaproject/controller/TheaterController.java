@@ -45,4 +45,9 @@ public class TheaterController {
     {
         return theaterDao.updateTheater(theater);
     }
+
+    public int getTheaterId(String theaterName)
+    {
+        return theaterDao.getTheaterId(theaterName);
+    }
 }

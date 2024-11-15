@@ -13,6 +13,10 @@ public class ScreeningStatus {
     private int seatsAvailable;
     private int totalSeats;
 
+    //tạo thêm thuộc tính để truy vấn
+    private String movieName;
+    private String theaterName;
+
     // Constructor không tham số
     public ScreeningStatus() {}
 
@@ -28,6 +32,34 @@ public class ScreeningStatus {
         this.totalSeats = totalSeats;
     }
 
+    public ScreeningStatus(int theater_id, int movieId, Time showtime, Date showdate, double price, String movieName, String theaterName) {
+        this.showtime = showtime;
+        this.showdate = showdate;
+        this.price = price;
+        this.movieName = movieName;
+        this.theaterName = theaterName;
+        this.movieId = movieId;
+        this.theater_id = theater_id;
+    }
+
+
+    public String getMovieName() {
+        return movieName;
+    }
+
+    public void setMovieName(String movieName) {
+        this.movieName = movieName;
+    }
+
+    public String getTheaterName() {
+        return theaterName;
+    }
+
+    public void setTheaterName(String theaterName) {
+        this.theaterName = theaterName;
+    }
+
+    
     // Getter và Setter
     public int getId() {
         return id;
@@ -41,7 +73,7 @@ public class ScreeningStatus {
         return theater_id;
     }
 
-    public void setTheater(int theater_id) {
+    public void setTheaterId(int theater_id) {
         this.theater_id = theater_id;
     }
 
