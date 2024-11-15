@@ -204,8 +204,26 @@ public class QuanLySuatChieu extends javax.swing.JPanel {
             new String [] {
                 "ID", "Tên Phim", "Giờ Chiếu", "Ngày Chiếu", "Giá Vé", "Số Ghế Trống", "Tổng Số Ghế", "Tên Rạp"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(BangSuatChieu);
+        if (BangSuatChieu.getColumnModel().getColumnCount() > 0) {
+            BangSuatChieu.getColumnModel().getColumn(0).setResizable(false);
+            BangSuatChieu.getColumnModel().getColumn(1).setResizable(false);
+            BangSuatChieu.getColumnModel().getColumn(2).setResizable(false);
+            BangSuatChieu.getColumnModel().getColumn(3).setResizable(false);
+            BangSuatChieu.getColumnModel().getColumn(4).setResizable(false);
+            BangSuatChieu.getColumnModel().getColumn(5).setResizable(false);
+            BangSuatChieu.getColumnModel().getColumn(6).setResizable(false);
+            BangSuatChieu.getColumnModel().getColumn(7).setResizable(false);
+        }
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 750, 460));
     }// </editor-fold>//GEN-END:initComponents

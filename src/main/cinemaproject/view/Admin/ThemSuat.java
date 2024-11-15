@@ -211,6 +211,8 @@ public class ThemSuat extends javax.swing.JFrame {
         String showtimeStr = chonGio.getText(); // Định dạng hh:mm AM/PM
         String showdateStr = chonNgay.getText(); // Định dạng yyyy-MM-dd
         String priceStr = chonGia.getText(); // Chuỗi giá vé
+        int availableSeat = 20;
+        int totalSeat = 20;
 
         // Kiểm tra đầu vào
         if (selectedMovie.isEmpty() || selectedTheater.isEmpty() || showtimeStr.isEmpty() || showdateStr.isEmpty() || priceStr.isEmpty()) {
@@ -252,6 +254,8 @@ public class ThemSuat extends javax.swing.JFrame {
         screening.setTheaterId(theaterController.getTheaterId(selectedTheater)); // Lấy ID rạp
         screening.setShowtime(showtime);
         screening.setShowdate(showdate);
+        screening.setSeatsAvailable(availableSeat);
+        screening.setTotalSeats(totalSeat);
         screening.setPrice(Double.parseDouble(priceStr)); // Lấy giá từ jTextField1
 
         // Gọi phương thức thêm screening status
@@ -259,6 +263,7 @@ public class ThemSuat extends javax.swing.JFrame {
 
         if (success) {
             JOptionPane.showMessageDialog(this, "Thêm suất chiếu thành công!");
+            QuanLySuatChieu.refreshScreeningData();
         } else {
             JOptionPane.showMessageDialog(this, "Thêm suất chiếu thất bại!");
         }
