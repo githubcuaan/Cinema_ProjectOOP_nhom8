@@ -221,4 +221,40 @@ public class ScreeningStatusDAO implements IScreeningStatusDAO {
         return screeningList;
     }
 
+    // Phương thức tìm kiếm suất chiếu theo tên phim, tên rạp, ngày chiếu, giờ chiếu
+    public List<ScreeningStatus> searchScreening(String searchText) {
+        List<ScreeningStatus> screeningList = new ArrayList<>();
+        String sql = "SELECT ss.id, m.name AS movie_name, ss.showtime, ss.showdate, " +
+                     "ss.ticket_price, ss.seats_available, ss.total_seats, t.name AS theater_name " +
+                     "FROM screening_status ss " +
+                     "JOIN movies m ON ss.movie_id = m.id " +
+                     "JOIN theater t ON ss.theater_id = t.id " +
+                     "WHERE m.name LIKE ? OR t.name LIKE ? OR ss.showdate LIKE ? OR ss.showtime LIKE ?";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, "%" + searchText + "%");
+            pstmt.setString(2, "%" + searchText + "%");
+            pstmt.setString(3, "%" + searchText + "%");
+            pstmt.setString(4, "%" + searchText + "%");
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    ScreeningStatus screening = new ScreeningStatus();
+                    screening.setId(rs.getInt("id"));
+                    screening.setShowtime(rs.getTime("showtime"));
+                    screening.setShowdate(rs.getDate("showdate"));
+                    screening.setPrice(rs.getDouble("ticket_price"));
+                    screening.setSeatsAvailable(rs.getInt("seats_available"));
+                    screening.setTotalSeats(rs.getInt("total_seats"));
+                    screening.setMovieName(rs.getString("movie_name")); // Thiết lập tên phim
+                    screening.setTheaterName(rs.getString("theater_name")); // Thiết lập tên rạp
+                    screeningList.add(screening);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return screeningList;
+    }
 }

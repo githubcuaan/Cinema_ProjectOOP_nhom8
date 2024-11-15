@@ -28,12 +28,16 @@ public class TongQuanLy extends javax.swing.JPanel {
                 if (Tab.getSelectedComponent() == quanLyPhim1) {
                     setColor(quanLyPhimBut); // Đặt màu cho quanLyPhimBut
                     resetColor(quanLyRapChieuBut); // Đặt lại màu cho các nút khác
-                    resetColor(quanLyXuatChieuBut);
+                    resetColor(quanLySuatChieuBut);
                 } else if (Tab.getSelectedComponent() == quanLyRap1) {
                     setColor(quanLyRapChieuBut); // Đặt màu cho quanLyRapChieuBut
                     resetColor(quanLyPhimBut); // Đặt lại màu cho các nút khác
-                    resetColor(quanLyXuatChieuBut);
-                } else {
+                    resetColor(quanLySuatChieuBut);
+                } else if(Tab.getSelectedComponent() == quanLySuatChieu1) {
+                    setColor(quanLySuatChieuBut);
+                    resetColor(quanLyPhimBut);
+                    resetColor(quanLyRapChieuBut);
+                }else {
                     resetColor(quanLyPhimBut); // Đặt lại màu nếu không phải tab QuanLyPhim1
                     resetColor(quanLyRapChieuBut); // Đặt lại màu nếu không phải tab quanLyRap1
                 }
@@ -67,11 +71,12 @@ public class TongQuanLy extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         quanLyRapChieuBut = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        quanLyXuatChieuBut = new javax.swing.JPanel();
+        quanLySuatChieuBut = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         Tab = new javax.swing.JTabbedPane();
         quanLyPhim1 = new main.cinemaproject.view.Admin.QuanLyPhim();
         quanLyRap1 = new main.cinemaproject.view.Admin.QuanLyRap();
+        quanLySuatChieu1 = new main.cinemaproject.view.Admin.QuanLySuatChieu();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -154,12 +159,12 @@ public class TongQuanLy extends javax.swing.JPanel {
 
         jPanel1.add(quanLyRapChieuBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, -1, 50));
 
-        quanLyXuatChieuBut.setBackground(new java.awt.Color(0, 153, 51));
-        quanLyXuatChieuBut.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        quanLyXuatChieuBut.setPreferredSize(new java.awt.Dimension(250, 50));
-        quanLyXuatChieuBut.addMouseListener(new java.awt.event.MouseAdapter() {
+        quanLySuatChieuBut.setBackground(new java.awt.Color(0, 153, 51));
+        quanLySuatChieuBut.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        quanLySuatChieuBut.setPreferredSize(new java.awt.Dimension(250, 50));
+        quanLySuatChieuBut.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                quanLyXuatChieuButMouseClicked(evt);
+                quanLySuatChieuButMouseClicked(evt);
             }
         });
 
@@ -167,28 +172,29 @@ public class TongQuanLy extends javax.swing.JPanel {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/icons8-documentary-48.png"))); // NOI18N
         jLabel3.setText("Quản Lý Suất Chiếu");
 
-        javax.swing.GroupLayout quanLyXuatChieuButLayout = new javax.swing.GroupLayout(quanLyXuatChieuBut);
-        quanLyXuatChieuBut.setLayout(quanLyXuatChieuButLayout);
-        quanLyXuatChieuButLayout.setHorizontalGroup(
-            quanLyXuatChieuButLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(quanLyXuatChieuButLayout.createSequentialGroup()
+        javax.swing.GroupLayout quanLySuatChieuButLayout = new javax.swing.GroupLayout(quanLySuatChieuBut);
+        quanLySuatChieuBut.setLayout(quanLySuatChieuButLayout);
+        quanLySuatChieuButLayout.setHorizontalGroup(
+            quanLySuatChieuButLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(quanLySuatChieuButLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel3)
                 .addContainerGap(23, Short.MAX_VALUE))
         );
-        quanLyXuatChieuButLayout.setVerticalGroup(
-            quanLyXuatChieuButLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, quanLyXuatChieuButLayout.createSequentialGroup()
+        quanLySuatChieuButLayout.setVerticalGroup(
+            quanLySuatChieuButLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, quanLySuatChieuButLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel3))
         );
 
-        jPanel1.add(quanLyXuatChieuBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, 270, -1));
+        jPanel1.add(quanLySuatChieuBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, 270, -1));
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 920, 90));
 
         Tab.addTab("tab1", quanLyPhim1);
         Tab.addTab("tab2", quanLyRap1);
+        Tab.addTab("tab3", quanLySuatChieu1);
 
         add(Tab, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 920, 580));
     }// </editor-fold>//GEN-END:initComponents
@@ -201,9 +207,9 @@ public class TongQuanLy extends javax.swing.JPanel {
         Tab.setSelectedComponent(quanLyRap1);
     }//GEN-LAST:event_quanLyRapChieuButMouseClicked
 
-    private void quanLyXuatChieuButMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quanLyXuatChieuButMouseClicked
-        
-    }//GEN-LAST:event_quanLyXuatChieuButMouseClicked
+    private void quanLySuatChieuButMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quanLySuatChieuButMouseClicked
+        Tab.setSelectedComponent(quanLySuatChieu1);
+    }//GEN-LAST:event_quanLySuatChieuButMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -219,6 +225,7 @@ public class TongQuanLy extends javax.swing.JPanel {
     private javax.swing.JPanel quanLyPhimBut;
     private main.cinemaproject.view.Admin.QuanLyRap quanLyRap1;
     private javax.swing.JPanel quanLyRapChieuBut;
-    private javax.swing.JPanel quanLyXuatChieuBut;
+    private main.cinemaproject.view.Admin.QuanLySuatChieu quanLySuatChieu1;
+    private javax.swing.JPanel quanLySuatChieuBut;
     // End of variables declaration//GEN-END:variables
 }

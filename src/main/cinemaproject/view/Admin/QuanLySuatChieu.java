@@ -50,8 +50,8 @@ public class QuanLySuatChieu extends javax.swing.JPanel {
         ThemBut = new main.cinemaproject.view.Admin.conponents.buttonWhite();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        buttonWhite1 = new main.cinemaproject.view.Admin.conponents.buttonWhite();
+        timTx = new javax.swing.JTextField();
+        timBut = new main.cinemaproject.view.Admin.conponents.buttonWhite();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         BangSuatChieu = new javax.swing.JTable();
@@ -163,10 +163,15 @@ public class QuanLySuatChieu extends javax.swing.JPanel {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm Kiếm"));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField1.setText("Tìm Kiếm");
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 175, 37));
+        timTx.setText("Tìm Kiếm");
+        jPanel2.add(timTx, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 175, 37));
 
-        buttonWhite1.setBackground(new java.awt.Color(204, 204, 204));
+        timBut.setBackground(new java.awt.Color(204, 204, 204));
+        timBut.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                timButMouseClicked(evt);
+            }
+        });
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/icons8-search-40.png"))); // NOI18N
@@ -175,22 +180,22 @@ public class QuanLySuatChieu extends javax.swing.JPanel {
         jLabel5.setIconTextGap(0);
         jLabel5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        javax.swing.GroupLayout buttonWhite1Layout = new javax.swing.GroupLayout(buttonWhite1);
-        buttonWhite1.setLayout(buttonWhite1Layout);
-        buttonWhite1Layout.setHorizontalGroup(
-            buttonWhite1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonWhite1Layout.createSequentialGroup()
+        javax.swing.GroupLayout timButLayout = new javax.swing.GroupLayout(timBut);
+        timBut.setLayout(timButLayout);
+        timButLayout.setHorizontalGroup(
+            timButLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, timButLayout.createSequentialGroup()
                 .addGap(0, 10, Short.MAX_VALUE)
                 .addComponent(jLabel5))
         );
-        buttonWhite1Layout.setVerticalGroup(
-            buttonWhite1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(buttonWhite1Layout.createSequentialGroup()
+        timButLayout.setVerticalGroup(
+            timButLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(timButLayout.createSequentialGroup()
                 .addComponent(jLabel5)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel2.add(buttonWhite1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 60, -1));
+        jPanel2.add(timBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 60, -1));
 
         add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, 370, 90));
 
@@ -270,6 +275,12 @@ public class QuanLySuatChieu extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_xoaButMouseClicked
 
+    private void timButMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_timButMouseClicked
+        String searchText = timTx.getText().trim(); // Lấy giá trị từ trường tìm kiếm
+        List<ScreeningStatus> screenings = screeningStatusController.searchScreening(searchText); // Gọi phương thức tìm kiếm
+        updateTable(screenings); // Cập nhật bảng với kết quả tìm kiếm
+    }//GEN-LAST:event_timButMouseClicked
+
     //lấy dữ liệu từ screeningstatus cho vào bảng
     public void loadScreeningData() {
         List<ScreeningStatus> screenings = screeningStatusController.getAllScreening();
@@ -310,7 +321,6 @@ public class QuanLySuatChieu extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable BangSuatChieu;
     private main.cinemaproject.view.Admin.conponents.buttonWhite ThemBut;
-    private main.cinemaproject.view.Admin.conponents.buttonWhite buttonWhite1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -319,8 +329,9 @@ public class QuanLySuatChieu extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private main.cinemaproject.view.Admin.conponents.buttonWhite suaBut;
+    private main.cinemaproject.view.Admin.conponents.buttonWhite timBut;
+    private javax.swing.JTextField timTx;
     private main.cinemaproject.view.Admin.conponents.buttonWhite xoaBut;
     // End of variables declaration//GEN-END:variables
 }

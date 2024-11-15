@@ -47,4 +47,8 @@ public class ScreeningStatusController {
     {
         return screeningStatusDAO.getAllScreening();
     }
+
+    public List<ScreeningStatus> searchScreening(String searchText) {
+        return screeningStatusDAO.searchScreening(searchText);
+    }
 }
