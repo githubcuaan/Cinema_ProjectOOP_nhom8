@@ -110,15 +110,14 @@ public class ScreeningStatusDAO implements IScreeningStatusDAO {
     
     public boolean deleteScreening(int id) {
         String sql = "DELETE FROM screening_status WHERE id = ?";
-        try (Connection conn = connection;
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) { // Sử dụng PreparedStatement trực tiếp
             pstmt.setInt(1, id);
             
             int affectedRows = pstmt.executeUpdate();
             return affectedRows > 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            // Có thể thêm logging hoặc thông báo lỗi ở đây
             return false;
         }
     }
