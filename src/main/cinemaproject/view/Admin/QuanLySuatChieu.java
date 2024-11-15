@@ -232,7 +232,24 @@ public class QuanLySuatChieu extends javax.swing.JPanel {
     }//GEN-LAST:event_suaButMouseClicked
 
     private void xoaButMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_xoaButMouseClicked
-        // TODO add your handling code here:
+        int selectedRow = BangSuatChieu.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một suất chiếu để xóa!");
+            return;
+        }
+        
+        int screeningId = (int)BangSuatChieu.getValueAt(selectedRow, 0);
+
+        int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa suất chiếu này không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            boolean success = screeningStatusController.deleteScreening(screeningId);
+            if (success) {
+                JOptionPane.showMessageDialog(this, "Xóa suất chiếu thành công!");
+                loadScreeningData(); // Tải lại dữ liệu sau khi xóa
+            } else {
+                JOptionPane.showMessageDialog(this, "Xóa suất chiếu thất bại!");
+            }
+        }
     }//GEN-LAST:event_xoaButMouseClicked
 
     //lấy dữ liệu từ screeningstatus cho vào bảng

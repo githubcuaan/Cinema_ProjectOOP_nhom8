@@ -225,10 +225,10 @@ public class ThemSuat extends javax.swing.JFrame {
         }
 
         // Kiểm tra định dạng ngày chiếu
-        if (!ValidationUtils.isValidDate(showdateStr)) {
-            JOptionPane.showMessageDialog(this, "Định dạng ngày chiếu không đúng. Vui lòng nhập lại!");
-            return;
-        }
+        // if (!ValidationUtils.isValidDate(showdateStr)) {
+        //     JOptionPane.showMessageDialog(this, "Định dạng ngày chiếu không đúng. Vui lòng nhập lại!");
+        //     return;
+        // }
 
         // Kiểm tra giá vé
         try {
