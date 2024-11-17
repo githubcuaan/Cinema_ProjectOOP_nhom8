@@ -1,13 +1,11 @@
 package main.cinemaproject.view.Admin;
 
-import java.sql.Connection;
 import main.cinemaproject.controller.MovieController;
 import main.cinemaproject.model.Movie;
 import main.cinemaproject.model.MovieStatistics;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import main.cinemaproject.utils.JBDCUtils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.ParseException;

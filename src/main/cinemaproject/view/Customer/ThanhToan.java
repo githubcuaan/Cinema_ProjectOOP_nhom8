@@ -3,7 +3,6 @@ package main.cinemaproject.view.Customer;
 import java.util.Date;
 import java.util.List;
 
-import javax.print.attribute.standard.JobHoldUntil;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTabbedPane;
@@ -11,7 +10,6 @@ import javax.swing.JTabbedPane;
 import main.cinemaproject.model.OrderItem;
 import main.cinemaproject.controller.*;
 import main.cinemaproject.model.Invoice;
-import main.cinemaproject.model.Movie;
 import main.cinemaproject.model.ScreeningStatus;
 import main.cinemaproject.model.Ticket;
 import java.text.SimpleDateFormat;

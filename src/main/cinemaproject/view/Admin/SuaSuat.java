@@ -12,7 +12,6 @@ import main.cinemaproject.utils.ValidationUtils;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import java.sql.Date;
-import java.sql.Time;
 import java.util.List;
 
 /**

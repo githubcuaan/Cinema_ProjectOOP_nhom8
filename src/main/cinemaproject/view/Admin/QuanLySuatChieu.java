@@ -166,7 +166,6 @@ public class QuanLySuatChieu extends javax.swing.JPanel {
         timTx.setText("Tìm Kiếm");
         jPanel2.add(timTx, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 175, 37));
 
-        timBut.setBackground(new java.awt.Color(204, 204, 204));
         timBut.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 timButMouseClicked(evt);
@@ -185,12 +184,13 @@ public class QuanLySuatChieu extends javax.swing.JPanel {
         timButLayout.setHorizontalGroup(
             timButLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, timButLayout.createSequentialGroup()
-                .addGap(0, 10, Short.MAX_VALUE)
-                .addComponent(jLabel5))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addContainerGap())
         );
         timButLayout.setVerticalGroup(
             timButLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(timButLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, timButLayout.createSequentialGroup()
                 .addComponent(jLabel5)
                 .addGap(0, 0, Short.MAX_VALUE))
         );

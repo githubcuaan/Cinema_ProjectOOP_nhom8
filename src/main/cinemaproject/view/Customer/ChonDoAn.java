@@ -4,7 +4,6 @@ package main.cinemaproject.view.Customer;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTabbedPane;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 
 

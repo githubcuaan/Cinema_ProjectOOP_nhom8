@@ -5,10 +5,8 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import main.cinemaproject.Main.tesst;
 import main.cinemaproject.controller.TheaterController;
 import main.cinemaproject.model.Theater;
 import main.cinemaproject.utils.ValidationUtils;

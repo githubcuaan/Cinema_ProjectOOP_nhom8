@@ -1,10 +1,8 @@
 package main.cinemaproject.view.Admin;
 
-import main.cinemaproject.view.Customer.*;
 import javax.swing.JOptionPane;
 
 import main.cinemaproject.controller.EmployeeController;
-import main.cinemaproject.model.Customers;
 import main.cinemaproject.model.Employee;
 
 /**
