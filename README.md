@@ -22,6 +22,7 @@
 ![Alt text](./img/quanlykhach.png)
 ![Alt text](./img/quanlynhanvien.png)
 ![Alt text](./img/doanhthu.png)
+![Alt text](./img/quanlyvatpham.png)
 ![Alt text](./img/quanlyphim.png)
 ![Alt text](./img/quanlyrap.png)
 ![Alt text](./img/quanlysuatchieu.png)
