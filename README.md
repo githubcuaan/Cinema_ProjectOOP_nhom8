@@ -15,3 +15,17 @@
 ### Tài khoản ADMIN
 - Tài khoản: thuyduong
 - Mật khẩu: thuyduong
+
+### Giao diện
+![Alt text](./img/dangnhap.png)
+![Alt text](./img/dangki.png)
+![Alt text](./img/quanlykhach.png)
+![Alt text](./img/quanlynhanvien.png)
+![Alt text](./img/doanhthu.png)
+![Alt text](./img/quanlyphim.png)
+![Alt text](./img/quanlyrap.png)
+![Alt text](./img/quanlysuatchieu.png)
+![Alt text](./img/chonphim.png)
+![Alt text](./img/chonghe.png)
+![Alt text](./img/chondoan.png)
+![Alt text](./img/thanhtoan.png)
