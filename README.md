@@ -26,6 +26,7 @@
 ![Alt text](./img/quanlyphim.png)
 ![Alt text](./img/quanlyrap.png)
 ![Alt text](./img/quanlysuatchieu.png)
+![Alt text](./img/themsuat.png)
 ![Alt text](./img/chonphim.png)
 ![Alt text](./img/chonghe.png)
 ![Alt text](./img/chondoan.png)
