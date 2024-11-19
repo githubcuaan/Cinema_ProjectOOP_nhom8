@@ -18,7 +18,7 @@ public class Button4Cover extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(0, 153, 51));
+        setBackground(new java.awt.Color(54, 127, 80));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 formMouseEntered(evt);
@@ -47,7 +47,7 @@ public class Button4Cover extends javax.swing.JPanel {
     
     public void resetColor(JPanel p)
     {
-        p.setBackground(new Color(0,153,51));
+        p.setBackground(new Color(54,127,80));
     }
     
     private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered

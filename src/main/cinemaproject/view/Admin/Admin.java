@@ -20,7 +20,7 @@ public class Admin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        panelTab = new javax.swing.JPanel();
         DangXuat = new main.cinemaproject.view.Admin.conponents.Button4Cover();
         jLabel8 = new javax.swing.JLabel();
         NhanVienBut = new main.cinemaproject.view.Admin.conponents.Button4Cover();
@@ -37,7 +37,7 @@ public class Admin extends javax.swing.JFrame {
         ThongTinCaNhan = new main.cinemaproject.view.Admin.conponents.Button4Cover();
         jLabel7 = new javax.swing.JLabel();
         adminName = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        panelup = new javax.swing.JPanel();
         TabTong = new javax.swing.JTabbedPane();
         khachHang1 = new main.cinemaproject.view.Admin.KhachHang();
         nhanVien1 = new main.cinemaproject.view.Admin.NhanVien();
@@ -49,8 +49,8 @@ public class Admin extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(0, 153, 51));
-        jPanel1.setPreferredSize(new java.awt.Dimension(200, 730));
+        panelTab.setBackground(new java.awt.Color(54, 127, 80));
+        panelTab.setPreferredSize(new java.awt.Dimension(200, 730));
 
         DangXuat.setPreferredSize(new java.awt.Dimension(50, 25));
         DangXuat.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -79,6 +79,7 @@ public class Admin extends javax.swing.JFrame {
                 .addComponent(jLabel8))
         );
 
+        NhanVienBut.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.gray, java.awt.Color.gray, null, null));
         NhanVienBut.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 NhanVienButMouseClicked(evt);
@@ -96,7 +97,7 @@ public class Admin extends javax.swing.JFrame {
             .addGroup(NhanVienButLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(jLabel1)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         NhanVienButLayout.setVerticalGroup(
             NhanVienButLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,6 +106,7 @@ public class Admin extends javax.swing.JFrame {
                 .addComponent(jLabel1))
         );
 
+        KhachHangBut.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.gray, java.awt.Color.gray, null, null));
         KhachHangBut.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 KhachHangButMouseClicked(evt);
@@ -122,7 +124,7 @@ public class Admin extends javax.swing.JFrame {
             .addGroup(KhachHangButLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(jLabel2)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         KhachHangButLayout.setVerticalGroup(
             KhachHangButLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,6 +133,7 @@ public class Admin extends javax.swing.JFrame {
                 .addComponent(jLabel2))
         );
 
+        DoanhThuBut.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.gray, java.awt.Color.gray, null, null));
         DoanhThuBut.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 DoanhThuButMouseClicked(evt);
@@ -148,7 +151,7 @@ public class Admin extends javax.swing.JFrame {
             .addGroup(DoanhThuButLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(jLabel3)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         DoanhThuButLayout.setVerticalGroup(
             DoanhThuButLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,6 +160,7 @@ public class Admin extends javax.swing.JFrame {
                 .addComponent(jLabel3))
         );
 
+        SanPhamBut.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.gray, java.awt.Color.gray, null, null));
         SanPhamBut.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 SanPhamButMouseClicked(evt);
@@ -174,7 +178,7 @@ public class Admin extends javax.swing.JFrame {
             .addGroup(SanPhamButLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(jLabel4)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         SanPhamButLayout.setVerticalGroup(
             SanPhamButLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,6 +187,7 @@ public class Admin extends javax.swing.JFrame {
                 .addComponent(jLabel4))
         );
 
+        LichSuBut.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.gray, java.awt.Color.gray, null, null));
         LichSuBut.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 LichSuButMouseClicked(evt);
@@ -200,7 +205,7 @@ public class Admin extends javax.swing.JFrame {
             .addGroup(LichSuButLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(jLabel5)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         LichSuButLayout.setVerticalGroup(
             LichSuButLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,38 +249,41 @@ public class Admin extends javax.swing.JFrame {
         adminName.setForeground(new java.awt.Color(255, 255, 255));
         adminName.setText("Admin");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(NhanVienBut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(DoanhThuBut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SanPhamBut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LichSuBut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelTabLayout = new javax.swing.GroupLayout(panelTab);
+        panelTab.setLayout(panelTabLayout);
+        panelTabLayout.setHorizontalGroup(
+            panelTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTabLayout.createSequentialGroup()
+                .addComponent(DangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(panelTabLayout.createSequentialGroup()
+                .addGroup(panelTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelTabLayout.createSequentialGroup()
                         .addGap(78, 78, 78)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(ThongTinCaNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(panelTabLayout.createSequentialGroup()
                         .addGap(66, 66, 66)
-                        .addComponent(adminName)))
+                        .addComponent(adminName))
+                    .addGroup(panelTabLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addGroup(panelTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(LichSuBut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(SanPhamBut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(DoanhThuBut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(NhanVienBut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(KhachHangBut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(KhachHangBut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(DangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panelTabLayout.setVerticalGroup(
+            panelTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTabLayout.createSequentialGroup()
                 .addGap(56, 56, 56)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(adminName)
-                .addGap(108, 108, 108)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
                 .addComponent(KhachHangBut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(NhanVienBut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -285,34 +293,35 @@ public class Admin extends javax.swing.JFrame {
                 .addComponent(SanPhamBut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LichSuBut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
+                .addGap(77, 77, 77)
                 .addComponent(ThongTinCaNhan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(DangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(65, 65, 65))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(panelTab, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        jPanel2.setBackground(new java.awt.Color(0, 153, 51));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        panelup.setBackground(new java.awt.Color(54, 127, 80));
+        panelup.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 918, Short.MAX_VALUE)
+        javax.swing.GroupLayout panelupLayout = new javax.swing.GroupLayout(panelup);
+        panelup.setLayout(panelupLayout);
+        panelupLayout.setHorizontalGroup(
+            panelupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 928, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelupLayout.setVerticalGroup(
+            panelupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 58, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 920, 60));
+        getContentPane().add(panelup, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 930, 60));
 
         TabTong.setBackground(new java.awt.Color(255, 255, 255));
         TabTong.setPreferredSize(new java.awt.Dimension(920, 650));
 
+        khachHang1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.gray, java.awt.Color.gray, null, null));
         khachHang1.setForeground(new java.awt.Color(255, 255, 255));
         TabTong.addTab("tab1", khachHang1);
         TabTong.addTab("tab2", nhanVien1);
@@ -394,10 +403,10 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private main.cinemaproject.view.Admin.KhachHang khachHang1;
     private main.cinemaproject.view.Admin.NhanVien nhanVien1;
+    private javax.swing.JPanel panelTab;
+    private javax.swing.JPanel panelup;
     private main.cinemaproject.view.Admin.SanPham sanPham1;
     private main.cinemaproject.view.Admin.TongQuanLy tongQuanLy1;
     // End of variables declaration//GEN-END:variables

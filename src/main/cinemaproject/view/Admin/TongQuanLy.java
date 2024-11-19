@@ -52,7 +52,7 @@ public class TongQuanLy extends javax.swing.JPanel {
     
     public void resetColor(JPanel p)
     {
-        p.setBackground(new Color(0,153,51));
+        p.setBackground(new Color(54,127,80));
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -92,7 +92,7 @@ public class TongQuanLy extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(0, 153, 51));
+        jPanel1.setBackground(new java.awt.Color(54, 127, 80));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -101,8 +101,8 @@ public class TongQuanLy extends javax.swing.JPanel {
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(607, 14, 11, 62));
 
-        quanLyPhimBut.setBackground(new java.awt.Color(0, 153, 51));
-        quanLyPhimBut.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        quanLyPhimBut.setBackground(new java.awt.Color(54, 127, 80));
+        quanLyPhimBut.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.gray, java.awt.Color.gray, null, null));
         quanLyPhimBut.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 quanLyPhimButMouseClicked(evt);
@@ -110,6 +110,7 @@ public class TongQuanLy extends javax.swing.JPanel {
         });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/film-50.png"))); // NOI18N
         jLabel1.setText("Quản Lý Phim");
 
@@ -129,8 +130,8 @@ public class TongQuanLy extends javax.swing.JPanel {
 
         jPanel1.add(quanLyPhimBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 250, 50));
 
-        quanLyRapChieuBut.setBackground(new java.awt.Color(0, 153, 51));
-        quanLyRapChieuBut.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        quanLyRapChieuBut.setBackground(new java.awt.Color(54, 127, 80));
+        quanLyRapChieuBut.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.gray, java.awt.Color.gray, null, null));
         quanLyRapChieuBut.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 quanLyRapChieuButMouseClicked(evt);
@@ -138,6 +139,7 @@ public class TongQuanLy extends javax.swing.JPanel {
         });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/icons8-theater-50.png"))); // NOI18N
         jLabel4.setText("Quản Lý Rạp");
 
@@ -159,8 +161,8 @@ public class TongQuanLy extends javax.swing.JPanel {
 
         jPanel1.add(quanLyRapChieuBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, -1, 50));
 
-        quanLySuatChieuBut.setBackground(new java.awt.Color(0, 153, 51));
-        quanLySuatChieuBut.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        quanLySuatChieuBut.setBackground(new java.awt.Color(54, 127, 80));
+        quanLySuatChieuBut.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.gray, java.awt.Color.gray, null, null));
         quanLySuatChieuBut.setPreferredSize(new java.awt.Dimension(250, 50));
         quanLySuatChieuBut.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -169,6 +171,7 @@ public class TongQuanLy extends javax.swing.JPanel {
         });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/icons8-documentary-48.png"))); // NOI18N
         jLabel3.setText("Quản Lý Suất Chiếu");
 

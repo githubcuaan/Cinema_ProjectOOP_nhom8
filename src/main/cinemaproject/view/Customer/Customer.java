@@ -44,7 +44,7 @@ public class Customer extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(0, 153, 51));
+        jPanel1.setBackground(new java.awt.Color(54, 127, 80));
         jPanel1.setPreferredSize(new java.awt.Dimension(200, 730));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -61,7 +61,12 @@ public class Customer extends javax.swing.JFrame {
         info.setForeground(new java.awt.Color(255, 255, 255));
         info.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icon/icons8_test_account_25px.png"))); // NOI18N
         info.setText("Thông Tin Cá Nhân");
-       
+        info.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                infoMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout ThongTinCaNhanLayout = new javax.swing.GroupLayout(ThongTinCaNhan);
         ThongTinCaNhan.setLayout(ThongTinCaNhanLayout);
         ThongTinCaNhanLayout.setHorizontalGroup(
@@ -212,7 +217,10 @@ public class Customer extends javax.swing.JFrame {
         doiThongTin.setUserId(usernameString);
         doiThongTin.setVisible(true);
     }//GEN-LAST:event_ThongTinCaNhanMouseClicked
-
+    
+    private void infoMouseClicked(java.awt.event.MouseEvent evt) {
+        
+    }
     /**
      * @param args the command line arguments
      */
