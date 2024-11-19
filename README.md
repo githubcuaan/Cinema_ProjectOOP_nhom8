@@ -1,6 +1,6 @@
 <!-- author: dinhan -->
 # Quản lý vé xem phim
-Đồ án môn Lập trình hướng đối tượng sử dụng Java Swing + MySQL +Mô Hình MVC
+Đồ án môn Lập trình hướng đối tượng sử dụng Java Swing + MySQL + Mô Hình MVC
 ## Getting Started
 
 1. Tải source code về:
