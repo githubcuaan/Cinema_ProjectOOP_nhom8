@@ -264,6 +264,7 @@ public class ThemSuat extends javax.swing.JFrame {
         if (success) {
             JOptionPane.showMessageDialog(this, "Thêm suất chiếu thành công!");
             QuanLySuatChieu.refreshScreeningData();
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Thêm suất chiếu thất bại!");
         }

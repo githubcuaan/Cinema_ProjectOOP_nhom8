@@ -1,17 +1,13 @@
 package main.cinemaproject.view.Admin;
 
-import java.awt.Color;
-import java.sql.Time;
 
 import main.cinemaproject.controller.ScreeningStatusController;
 import main.cinemaproject.model.ScreeningStatus;
 import javax.swing.table.DefaultTableModel;
 
-import java.util.Date;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 /**
@@ -183,10 +179,10 @@ public class QuanLySuatChieu extends javax.swing.JPanel {
         timBut.setLayout(timButLayout);
         timButLayout.setHorizontalGroup(
             timButLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, timButLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(timButLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel5)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         timButLayout.setVerticalGroup(
             timButLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
