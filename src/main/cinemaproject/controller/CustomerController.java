@@ -87,7 +87,9 @@ public class CustomerController {
     }
 
     public ArrayList<Customers> searchCustomers(String searchTerm) {
-        CustomersDAO customersDAO = new CustomersDAO();
+        Connection connection = null;
+        connection = JBDCUtils.getConnection();
+        CustomersDAO customersDAO = new CustomersDAO(connection);
         return customersDAO.searchCustomers(searchTerm);
     }
 
@@ -98,7 +100,7 @@ public class CustomerController {
         try
         {
             connection = JBDCUtils.getConnection();
-            CustomersDAO customersDAO = new CustomersDAO();
+            CustomersDAO customersDAO = new CustomersDAO(connection);
             int customerId = customersDAO.getCustomerIdByUsername(username);
             return customerId;
         }

@@ -7,9 +7,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 public class OrderItemController {
     private OrderItemDAO orderItemDAO;
-    private Connection connection = JBDCUtils.getConnection();
+    private Connection connection;
 
     public OrderItemController() {
+        this.connection  = JBDCUtils.getConnection();
         this.orderItemDAO = new OrderItemDAO(connection);
     }
 

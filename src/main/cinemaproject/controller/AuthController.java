@@ -70,7 +70,8 @@ public class AuthController {
     // Kiểm tra xem tên người dùng đã tồn tại chưa
     public boolean isUsernameTaken(String username) {
         String query = "SELECT COUNT(*) FROM customers WHERE username = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection connection = JBDCUtils.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -80,5 +81,15 @@ public class AuthController {
             e.printStackTrace();
         }
         return false; // Trả về false nếu không có lỗi xảy ra và không tìm thấy tên người dùng
+    }
+
+    public void close() {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

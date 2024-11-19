@@ -141,6 +141,7 @@ public class PanelLoginNRegister extends javax.swing.JLayeredPane {
                     Customer customerScreen = new Customer(username);
                     customerScreen.setVisible(true);
                     SwingUtilities.getWindowAncestor(this).dispose();
+                    authController.close();
                 } else {
                     JOptionPane.showMessageDialog(this, "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
                 }
@@ -152,6 +153,7 @@ public class PanelLoginNRegister extends javax.swing.JLayeredPane {
                     Admin adminScreen = new Admin(username);
                     adminScreen.setVisible(true);
                     SwingUtilities.getWindowAncestor(this).dispose();
+                    authController.close();
                 } else {
                     JOptionPane.showMessageDialog(this, "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
                 }

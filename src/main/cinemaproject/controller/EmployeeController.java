@@ -14,6 +14,7 @@ public class EmployeeController {
     public ArrayList<Employee> getAllEmployees() {
         try {
             connection = JBDCUtils.getConnection();
+            if (connection == null) return new ArrayList<>(); // Handle connection failure
             EmployeeDAO employeeDAO = new EmployeeDAO(connection);
             return employeeDAO.getAllEmployee();
         } catch (Exception e) {
@@ -27,6 +28,7 @@ public class EmployeeController {
     public boolean addEmployee(Employee employee) {
         try {
             connection = JBDCUtils.getConnection();
+            if (connection == null) return false; // Handle connection failure
             EmployeeDAO employeeDAO = new EmployeeDAO(connection);
             if (employeeDAO.isUsernameExists(employee.getUsername())) {
                 javax.swing.JOptionPane.showMessageDialog(null, "Username đã tồn tại, hãy chọn tên khác");

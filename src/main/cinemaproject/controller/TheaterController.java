@@ -9,10 +9,11 @@ import main.cinemaproject.utils.JBDCUtils;
 
 public class TheaterController {
     private TheaterDao theaterDao;
-    private Connection connection = JBDCUtils.getConnection();
+    private Connection connection;
 
     public TheaterController()
     {
+        this.connection  = JBDCUtils.getConnection();
         this.theaterDao = new TheaterDao(connection);
     }
 

@@ -42,6 +42,7 @@ public class Customer extends javax.swing.JFrame {
         thanhToan1 = new main.cinemaproject.view.Customer.ThanhToan();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(54, 127, 80));

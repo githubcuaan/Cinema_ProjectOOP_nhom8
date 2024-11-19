@@ -5,13 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import main.cinemaproject.utils.JBDCUtils;
 import main.cinemaproject.model.Invoice;
 
 public class InvoiceDAO {
     private Connection connection;
     public InvoiceDAO(Connection connection) {
-        this.connection = JBDCUtils.getConnection();
+        this.connection = connection;
     }
     
     public int addInvoice(Invoice invoice) {

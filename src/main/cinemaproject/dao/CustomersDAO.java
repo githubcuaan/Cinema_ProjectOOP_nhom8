@@ -12,10 +12,6 @@ import main.cinemaproject.utils.JBDCUtils;
 public class CustomersDAO implements ICustomerDAO {
     private Connection connection;
 
-    public CustomersDAO() {
-        this.connection = JBDCUtils.getConnection();
-    }
-
     public CustomersDAO(Connection connection) {
         this.connection = connection;
     }
