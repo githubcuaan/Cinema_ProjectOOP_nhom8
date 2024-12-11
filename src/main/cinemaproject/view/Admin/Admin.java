@@ -1,4 +1,3 @@
-
 package main.cinemaproject.view.Admin;
 
 import javax.swing.JDialog;
@@ -47,7 +46,7 @@ public class Admin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().setLayout(null);
 
         panelTab.setBackground(new java.awt.Color(54, 127, 80));
         panelTab.setPreferredSize(new java.awt.Dimension(200, 730));
