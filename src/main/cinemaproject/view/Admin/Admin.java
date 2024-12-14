@@ -1,6 +1,7 @@
 package main.cinemaproject.view.Admin;
 
 import javax.swing.JDialog;
+
 import main.cinemaproject.view.Login.LoginFrame.LoginFrame;
 
 /**
@@ -14,6 +15,10 @@ public class Admin extends javax.swing.JFrame {
         this.username = username;
     }
 
+    public Admin()
+    {
+        initComponents();
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -46,10 +51,11 @@ public class Admin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
-        getContentPane().setLayout(null);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelTab.setBackground(new java.awt.Color(54, 127, 80));
-        panelTab.setPreferredSize(new java.awt.Dimension(200, 730));
+        panelTab.setPreferredSize(new java.awt.Dimension(200, 800));
+        getContentPane().add(panelTab, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 800));
 
         DangXuat.setPreferredSize(new java.awt.Dimension(50, 25));
         DangXuat.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -299,26 +305,13 @@ public class Admin extends javax.swing.JFrame {
                 .addGap(65, 65, 65))
         );
 
-        getContentPane().add(panelTab, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
         panelup.setBackground(new java.awt.Color(54, 127, 80));
         panelup.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-
-        javax.swing.GroupLayout panelupLayout = new javax.swing.GroupLayout(panelup);
-        panelup.setLayout(panelupLayout);
-        panelupLayout.setHorizontalGroup(
-            panelupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 928, Short.MAX_VALUE)
-        );
-        panelupLayout.setVerticalGroup(
-            panelupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 58, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(panelup, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 930, 60));
+        getContentPane().add(panelup, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 930, 100));
 
         TabTong.setBackground(new java.awt.Color(255, 255, 255));
         TabTong.setPreferredSize(new java.awt.Dimension(920, 650));
+        getContentPane().add(TabTong, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 920, 710));
 
         khachHang1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.gray, java.awt.Color.gray, null, null));
         khachHang1.setForeground(new java.awt.Color(255, 255, 255));
@@ -327,8 +320,6 @@ public class Admin extends javax.swing.JFrame {
         TabTong.addTab("tab3", doanhThu1);
         TabTong.addTab("tab4", sanPham1);
         TabTong.addTab("tab5", tongQuanLy1);
-
-        getContentPane().add(TabTong, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 920, 710));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -382,7 +373,38 @@ public class Admin extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+     public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
 
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Admin().setVisible(true);
+            }
+        });
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private main.cinemaproject.view.Admin.conponents.Button4Cover DangXuat;
     private main.cinemaproject.view.Admin.conponents.Button4Cover DoanhThuBut;
