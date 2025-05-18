@@ -13,8 +13,8 @@
 3. Sử dụng netbeans để chạy source code.
 
 ### Tài khoản ADMIN
-- Tài khoản: thuyduong
-- Mật khẩu: thuyduong
+- Tài khoản: admin   
+- Mật khẩu: lien he tao
 
 ### Giao diện
 ![Alt text](./img/dangnhap.png)
